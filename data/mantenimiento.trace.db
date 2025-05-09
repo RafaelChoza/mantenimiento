@@ -1,0 +1,24 @@
+2025-05-08 16:10:12.224017-06:00 database: flush
+org.h2.message.DbException: General error: "org.h2.mvstore.MVStoreException: Writing to sun.nio.ch.FileChannelImpl@25c1f5ee failed; length 8192 at 0 [2.3.232/2]" [50000-232]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	... 60 more
+2025-05-08 18:52:45.669242-06:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MANTENIMIENTO_ORDEN" not found (this database is empty); SQL statement:
+select mo1_0.id,mo1_0.area,mo1_0.attention_required,mo1_0.close_date,mo1_0.comments,mo1_0.covers_installed,mo1_0.description_part,mo1_0.electricity_connected,mo1_0.equipment_disposal,mo1_0.gards_installed,mo1_0.id_machine,mo1_0.interlocks_tested,mo1_0.notificate_calibration,mo1_0.observations,mo1_0.part_number,mo1_0.part_origin,mo1_0.personnel_asigned,mo1_0.programmed_date,mo1_0.reception_date,mo1_0.reception_time,mo1_0.requestor_last_name,mo1_0.requestor_name,mo1_0.service_date,mo1_0.service_description,mo1_0.service_solution,mo1_0.service_time,mo1_0.stopped_machine,mo1_0.usedparts from mantenimiento_orden mo1_0 [42104-232]
+2025-05-08 18:53:31.836722-06:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MANTENIMIENTO_ORDEN" not found (this database is empty); SQL statement:
+select mo1_0.id,mo1_0.area,mo1_0.attention_required,mo1_0.close_date,mo1_0.comments,mo1_0.covers_installed,mo1_0.description_part,mo1_0.electricity_connected,mo1_0.equipment_disposal,mo1_0.gards_installed,mo1_0.id_machine,mo1_0.interlocks_tested,mo1_0.notificate_calibration,mo1_0.observations,mo1_0.part_number,mo1_0.part_origin,mo1_0.personnel_asigned,mo1_0.programmed_date,mo1_0.reception_date,mo1_0.reception_time,mo1_0.requestor_last_name,mo1_0.requestor_name,mo1_0.service_date,mo1_0.service_description,mo1_0.service_solution,mo1_0.service_time,mo1_0.stopped_machine,mo1_0.usedparts from mantenimiento_orden mo1_0 [42104-232]
+2025-05-08 18:53:32.937169-06:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MANTENIMIENTO_ORDEN" not found (this database is empty); SQL statement:
+select mo1_0.id,mo1_0.area,mo1_0.attention_required,mo1_0.close_date,mo1_0.comments,mo1_0.covers_installed,mo1_0.description_part,mo1_0.electricity_connected,mo1_0.equipment_disposal,mo1_0.gards_installed,mo1_0.id_machine,mo1_0.interlocks_tested,mo1_0.notificate_calibration,mo1_0.observations,mo1_0.part_number,mo1_0.part_origin,mo1_0.personnel_asigned,mo1_0.programmed_date,mo1_0.reception_date,mo1_0.reception_time,mo1_0.requestor_last_name,mo1_0.requestor_name,mo1_0.service_date,mo1_0.service_description,mo1_0.service_solution,mo1_0.service_time,mo1_0.stopped_machine,mo1_0.usedparts from mantenimiento_orden mo1_0 [42104-232]
+2025-05-08 18:53:51.638713-06:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MANTENIMIENTO_ORDEN" not found (this database is empty); SQL statement:
+select mo1_0.id,mo1_0.area,mo1_0.attention_required,mo1_0.close_date,mo1_0.comments,mo1_0.covers_installed,mo1_0.description_part,mo1_0.electricity_connected,mo1_0.equipment_disposal,mo1_0.gards_installed,mo1_0.id_machine,mo1_0.interlocks_tested,mo1_0.notificate_calibration,mo1_0.observations,mo1_0.part_number,mo1_0.part_origin,mo1_0.personnel_asigned,mo1_0.programmed_date,mo1_0.reception_date,mo1_0.reception_time,mo1_0.requestor_last_name,mo1_0.requestor_name,mo1_0.service_date,mo1_0.service_description,mo1_0.service_solution,mo1_0.service_time,mo1_0.stopped_machine,mo1_0.usedparts from mantenimiento_orden mo1_0 [42104-232]
+2025-05-08 18:56:12.347111-06:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MANTENIMIENTO_ORDEN" not found (this database is empty); SQL statement:
+select mo1_0.id,mo1_0.area,mo1_0.attention_required,mo1_0.close_date,mo1_0.comments,mo1_0.covers_installed,mo1_0.description_part,mo1_0.electricity_connected,mo1_0.equipment_disposal,mo1_0.gards_installed,mo1_0.id_machine,mo1_0.interlocks_tested,mo1_0.notificate_calibration,mo1_0.observations,mo1_0.part_number,mo1_0.part_origin,mo1_0.personnel_asigned,mo1_0.programmed_date,mo1_0.reception_date,mo1_0.reception_time,mo1_0.requestor_last_name,mo1_0.requestor_name,mo1_0.service_date,mo1_0.service_description,mo1_0.service_solution,mo1_0.service_time,mo1_0.stopped_machine,mo1_0.usedparts from mantenimiento_orden mo1_0 [42104-232]
