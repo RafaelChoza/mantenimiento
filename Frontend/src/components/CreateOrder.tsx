@@ -1,39 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { Tech } from "./Techs";
-
-interface MantenimientoOrden {
-  id: number;
-  requestorName: string;
-  requestorLastName: string;
-  area: string;
-  idMachine: string;
-  stoppedMachine: boolean;
-  attentionRequired: boolean;
-  serviceDescription: string;
-  receptionDate: string;
-  receptionTime: string;
-  personnelAsigned: string;
-  programmedDate: string;
-  observations: string;
-  serviceSolution: string;
-  equipmentDisposal: boolean;
-  notificateCalibration: boolean;
-  usedParts: number;
-  partNumber: string;
-  descriptionPart: string;
-  partOrigin: string;
-  coversInstalled: boolean;
-  interlocksTested: boolean;
-  guardsInstalled: boolean;
-  electricityConnected: boolean;
-  comments: string;
-  closeDate: string;
-}
-
-export interface Area {
-  id: number,
-  areaName: string,
-}
+import type { Tech, Area, MantenimientoOrden } from "../types";
 
 const MantenimientoOrdenForm: React.FC = () => {
   const [formData, setFormData] = useState<MantenimientoOrden>({
@@ -111,9 +77,25 @@ const MantenimientoOrdenForm: React.FC = () => {
   };
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Formulario enviado:", formData);
+    try {
+      const response = await fetch("http://localhost:8080/mantenimiento", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      })
+      if (response.ok){
+        console.log("Datos de orden de mantenimiento enviados a la base de datos con éxito")
+      } else {
+        console.log("Error al enviar los datos de la orden de mantenimiento")
+      }
+    } catch (error) {
+      console.error("Error de red al enviar la orden de mantenimiento", error)
+    }
   };
 
   return (

@@ -23,3 +23,37 @@ export type Order = {
   serviceSolution: string;
   closeDate: string;
 }
+
+export type Area = {
+  id: number,
+  areaName: string,
+}
+
+export type MantenimientoOrden = {
+  id: number;
+  requestorName: string;
+  requestorLastName: string;
+  area: string;
+  idMachine: string;
+  stoppedMachine: boolean;
+  attentionRequired: boolean;
+  serviceDescription: string;
+  receptionDate: string;
+  receptionTime: string;
+  personnelAsigned: string;
+  programmedDate: string;
+  observations: string;
+  serviceSolution: string;
+  equipmentDisposal: boolean;
+  notificateCalibration: boolean;
+  usedParts: number;
+  partNumber: string;
+  descriptionPart: string;
+  partOrigin: string;
+  coversInstalled: boolean;
+  interlocksTested: boolean;
+  guardsInstalled: boolean;
+  electricityConnected: boolean;
+  comments: string;
+  closeDate: string;
+}
