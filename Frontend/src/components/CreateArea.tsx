@@ -44,7 +44,7 @@ export default function CreateArea() {
                         <input
                             className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
                             type="text"
-                            name="area"
+                            name="areaName"
                             placeholder="Nombre del área"
                             onChange={handleChange}
                         />
