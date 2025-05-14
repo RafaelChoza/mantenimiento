@@ -30,10 +30,24 @@ export default function Principal() {
           <div className="absolute top-2 right-4 text-white text-lg">👨‍🔧</div>
         </Link>
         <Link
+          to="/tech-list"
+          className="relative flex items-center justify-center bg-gradient-to-r from-sky-500 to-sky-700 hover:from-sky-700 hover:to-sky-900 text-white font-bold text-2xl p-8 rounded-xl shadow-2xl transition duration-300 transform hover:scale-105 text-center"
+        >
+          Lista de Técnicos
+          <div className="absolute top-2 right-4 text-white text-lg">👨‍🔧</div>
+        </Link>
+        <Link
           to="/create-area"
           className="relative flex items-center justify-center bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-700 hover:to-purple-900 text-white font-bold text-2xl p-8 rounded-xl shadow-2xl transition duration-300 transform hover:scale-105 text-center"
         >
           Agregar Área
+          <div className="absolute top-2 right-4 text-white text-lg">📍</div>
+        </Link>
+        <Link
+          to="/area-list"
+          className="relative flex items-center justify-center bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-700 hover:to-teal-900 text-white font-bold text-2xl p-8 rounded-xl shadow-2xl transition duration-300 transform hover:scale-105 text-center"
+        >
+          Lista de Áreas
           <div className="absolute top-2 right-4 text-white text-lg">📍</div>
         </Link>
       </div>

@@ -41,6 +41,7 @@ public class TecnicoControl {
 
     @PostMapping("/tecnicos")
     public ResponseWrapper<Tecnico> crearTecnico(@RequestBody Tecnico tecnico) {
+        System.out.println("Datos del técnico recibidos" + tecnico);
         try {
             Tecnico tecnicoCreado = tecnicoServicio.crearTecnico(tecnico);
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.ok(tecnicoCreado);
