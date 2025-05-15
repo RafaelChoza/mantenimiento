@@ -1,5 +1,5 @@
 export type Tech = {
-    id: number;
+    idTecnico: number;
     nombreTecnico: string;
     apellidoTecnico: string;
     correo: string;

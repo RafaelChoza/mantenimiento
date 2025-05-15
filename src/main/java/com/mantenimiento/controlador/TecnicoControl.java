@@ -73,6 +73,7 @@ public class TecnicoControl {
     public ResponseWrapper<Void> eliminarTecnico(@PathVariable Long id) {
          try {
             tecnicoServicio.eliminarTecnico(id);
+            System.out.println("Tecnico Eliminado correctamente");
             ResponseEntity<Void> response = ResponseEntity.noContent().build();
             return new ResponseWrapper<>(true, "Tecnico eliminado con éxito", response);
         } catch (Exception e) {

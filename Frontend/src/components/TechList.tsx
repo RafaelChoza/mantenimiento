@@ -14,7 +14,7 @@ export default function TechList() {
     try {
       const response = await fetch("http://localhost:8080/tecnicos");
       const data = await response.json();
-      console.log(data);
+      console.log("Datos recibidos:", data);
       setTechs(data.responseEntity.body);
     } catch (error) {
       console.error("Error al obtener los datos de los técnicos", error);
@@ -23,9 +23,27 @@ export default function TechList() {
     }
   };
 
+  const onDelete = async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tecnicos/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setTechs(prev => prev.filter(tech => tech.idTecnico !== id));
+        console.log("Se eliminó con éxito el técnico");
+      } else {
+        console.log("Error al querer eliminar el técnico");
+      }
+    } catch (error) {
+      console.error("Hubo un error de red al querer eliminar al técnico", error);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">👨‍🔧 Lista de Técnicos</h1>
+      <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">
+        👨‍🔧 Lista de Técnicos
+      </h1>
 
       {cargando ? (
         <div className="flex justify-center items-center h-12">
@@ -34,30 +52,47 @@ export default function TechList() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {techs.map(tech => (
-            <div key={tech.id} className="bg-white p-3 rounded-md shadow-sm border-l-2 border-blue-500 hover:shadow-md transition-all">
-              <h2 className="text-sm font-bold text-blue-700 mb-2 flex items-center">
-                🆔 Técnico #{tech.id}
-              </h2>
-              <hr className="mb-2 border-blue-300" />
+          {techs.map(tech => {
+            console.log("Técnico actual:", tech); // 👈 Aquí puedes ver si tech.id existe
 
-              <div className="grid grid-cols-2 gap-1 text-xs text-gray-800">
-                {Object.entries(tech).map(([key, value]) => (
-                  <p key={key} className="bg-gray-100 p-1 rounded-md shadow-xs">
-                    <strong className="text-blue-600">{key.replace(/([A-Z])/g, " $1").toUpperCase()}:</strong> {value?.toString() || "N/A"}
-                  </p>
-                ))}
-              </div>
+            return (
+              <div
+                key={tech.idTecnico}
+                className="bg-white p-3 rounded-md shadow-sm border-l-2 border-blue-500 hover:shadow-md transition-all"
+              >
+                <h2 className="text-sm font-bold text-blue-700 mb-2 flex items-center">
+                  🆔 Técnico {tech.idTecnico}
+                </h2>
 
-              <div className="mt-2 flex justify-between">
-                <button className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition">Editar</button>
-                <button className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Eliminar</button>
+                <hr className="mb-2 border-blue-300" />
+
+                <div className="grid grid-cols-2 gap-1 text-xs text-gray-800">
+                  {Object.entries(tech).map(([key, value]) => (
+                    <p key={key} className="bg-gray-100 p-1 rounded-md shadow-xs">
+                      <strong className="text-blue-600">
+                        {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
+                      </strong>{" "}
+                      {value?.toString() || "N/A"}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="mt-2 flex justify-between">
+                  <button className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition">
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => onDelete(tech.idTecnico)}
+                    className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
   );
 }
-
