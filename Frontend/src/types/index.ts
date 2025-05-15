@@ -38,7 +38,7 @@ export type MantenimientoOrden = {
   stoppedMachine: boolean;
   attentionRequired: boolean;
   serviceDescription: string;
-  receptionDate: string;
+  receptionDate: Date;
   receptionTime: string;
   personnelAsigned: string;
   programmedDate: string;
@@ -55,5 +55,5 @@ export type MantenimientoOrden = {
   guardsInstalled: boolean;
   electricityConnected: boolean;
   comments: string;
-  closeDate: string;
+  closeDate: Date;
 }

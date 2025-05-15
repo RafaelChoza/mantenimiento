@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Tech } from "../types";
+import Menu from "../components/Menu"
 
 export default function Techs() {
     const [techs, setTechs] = useState<Tech[]>([]);
@@ -25,6 +26,7 @@ export default function Techs() {
 
     return (
         <div>
+            <Menu/>
             <h1>Listado de técnicos</h1>
 
             {cargando ? (
@@ -35,7 +37,7 @@ export default function Techs() {
             ) : (
                 <ul>
                     {techs.map((tech) => (
-                        <li key={tech.id}>
+                        <li key={tech.idTecnico}>
                             {tech.nombreTecnico} {tech.apellidoTecnico} - {tech.correo} - {tech.numNomina} - {tech.fechaAlta}
                         </li>
                     ))}

@@ -33,7 +33,7 @@ public class MantenimientoOrden {
 
     private Date receptionDate;
     private TimeZone receptionTime;
-    private String personnelAsigned;
+    private String personnelAssigned;
     private String programmedDate;
     private String observations;
 
@@ -41,14 +41,14 @@ public class MantenimientoOrden {
     private boolean equipmentDisposal;
     private boolean notificateCalibration;
 
-    private Long usedPArts;
+    private Long usedParts;
     private String partNumber;
     private String descriptionPart;
     private String partOrigin;
 
     private boolean coversInstalled;
     private boolean interlocksTested;
-    private boolean gardsInstalled;
+    private boolean guardsInstalled;
     private boolean electricityConnected;
     private String comments;
     private Date closeDate;
@@ -156,11 +156,11 @@ public class MantenimientoOrden {
     }
 
     public String getPersonnelAsigned() {
-        return personnelAsigned;
+        return personnelAssigned;
     }
 
     public void setPersonnelAsigned(String personnelAsigned) {
-        this.personnelAsigned = personnelAsigned;
+        this.personnelAssigned = personnelAsigned;
     }
 
     public String getProgrammedDate() {
@@ -204,11 +204,11 @@ public class MantenimientoOrden {
     }
 
     public Long getUsedPArts() {
-        return usedPArts;
+        return usedParts;
     }
 
     public void setUsedPArts(Long usedPArts) {
-        this.usedPArts = usedPArts;
+        this.usedParts = usedPArts;
     }
 
     public String getPartNumber() {
@@ -252,11 +252,11 @@ public class MantenimientoOrden {
     }
 
     public boolean isGardsInstalled() {
-        return gardsInstalled;
+        return guardsInstalled;
     }
 
     public void setGardsInstalled(boolean gardsInstalled) {
-        this.gardsInstalled = gardsInstalled;
+        this.guardsInstalled = gardsInstalled;
     }
 
     public boolean isElectricityConnected() {

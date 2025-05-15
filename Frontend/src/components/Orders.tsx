@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Order } from "../types";
+import Menu from "../components/Menu"
 
 export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -24,6 +25,7 @@ export default function Orders() {
 
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
+      <Menu/>
       <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">📌 Órdenes de Mantenimiento</h1>
 
       {cargando ? (

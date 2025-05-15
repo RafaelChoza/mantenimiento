@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Menu from "../components/Menu"
 
 export default function CreateArea() {
     const [formData, setFormData] = useState({ area: "" });
@@ -34,6 +35,7 @@ export default function CreateArea() {
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
+            <Menu/>
             <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">
                 Formulario para Agregar Área
             </h1>
