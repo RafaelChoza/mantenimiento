@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import type { Area } from "../types";
 import Menu from "../components/Menu";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AreaList() {
   const [areas, setAreas] = useState<Area[]>([]);
@@ -55,6 +57,7 @@ export default function AreaList() {
       if (response.ok) {
         setAreas((prevAreas) => prevAreas.map((area) => (area.id === editingArea.id ? editingArea : area)));
         console.log("Área actualizada");
+        toast.success("Area actualziada con exito")
         setEditingArea(null);
       } else {
         console.log("Error al actualizar el área");
@@ -65,6 +68,19 @@ export default function AreaList() {
   };
 
   const handleDelete = async (id: number) => {
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!confirmDelete.isConfirmed) return;
+
     try {
       const response = await fetch(`http://localhost:8080/areas/${id}`, {
         method: "DELETE",
@@ -72,21 +88,23 @@ export default function AreaList() {
 
       if (response.ok) {
         setAreas((prevAreas) => prevAreas.filter((area) => area.id !== id));
-        console.log(`Área ${id} eliminada con éxito`);
+        Swal.fire("Eliminado", `El área ${id} ha sido eliminada`, "success");
+        toast.success("Area eliminada con exito")
       } else {
-        console.log(`Error al eliminar el área ${id}`);
+        Swal.fire("Error", `No se pudo eliminar el área ${id}`, "error");
       }
     } catch (error) {
       console.error("Error de la red al eliminar el área", error);
+      Swal.fire("Error", "Hubo un problema de red al intentar eliminar el área", "error");
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
-      <Menu/>
+      <ToastContainer />
+      <Menu />
       <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">🏢 Lista de Áreas</h1>
 
-      {/* Modal de edición con estilos actualizados */}
       {editingArea && (
         <div className="fixed inset-0 bg-blue-50 bg-opacity-90 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full border-l-4 border-blue-500">
@@ -94,7 +112,7 @@ export default function AreaList() {
             <form onSubmit={handleUpdateArea} className="space-y-4">
               <input
                 type="text"
-                name="nameProcess"
+                name="areaName"
                 value={editingArea.areaName}
                 onChange={handleInputChange}
                 placeholder="Nombre de la Operación"
@@ -133,13 +151,11 @@ export default function AreaList() {
                 📌 Área #{area.id}
               </h2>
               <hr className="mb-2 border-blue-300" />
-
               <div className="grid grid-cols-1 gap-1 text-xs text-gray-800">
                 <p className="bg-gray-100 p-1 rounded-md shadow-xs">
                   <strong className="text-blue-600">Nombre:</strong> {area.areaName}
                 </p>
               </div>
-
               <div className="mt-2 flex justify-between">
                 <button
                   onClick={() => handleEdit(area)}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { Tech, Area, MantenimientoOrden } from "../types";
 import Menu from "../components/Menu"
+import { toast, ToastContainer } from "react-toastify";
 
 const MantenimientoOrdenForm: React.FC = () => {
   const [formData, setFormData] = useState<MantenimientoOrden>({
@@ -91,6 +92,7 @@ const MantenimientoOrdenForm: React.FC = () => {
       })
       if (response.ok){
         console.log("Datos de orden de mantenimiento enviados a la base de datos con éxito")
+        toast.success("Orden creada con exito")
       } else {
         console.log("Error al enviar los datos de la orden de mantenimiento")
       }
@@ -101,6 +103,7 @@ const MantenimientoOrdenForm: React.FC = () => {
 
   return (
   <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
+    <ToastContainer />
     <Menu/>
     <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">Orden de Mantenimiento Correctivo</h1>
     <form onSubmit={handleSubmit} className="space-y-10">

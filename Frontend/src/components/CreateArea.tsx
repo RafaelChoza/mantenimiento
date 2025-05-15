@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Menu from "../components/Menu"
+import { toast, ToastContainer } from "react-toastify";
 
 export default function CreateArea() {
     const [formData, setFormData] = useState({ area: "" });
@@ -25,6 +26,7 @@ export default function CreateArea() {
             });
             if (response.ok) {
                 console.log("Área creada con éxito");
+                toast.success("Area creada con exito")
             } else {
                 console.log("Error al crear el área");
             }
@@ -35,6 +37,7 @@ export default function CreateArea() {
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
+            <ToastContainer />
             <Menu/>
             <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">
                 Formulario para Agregar Área

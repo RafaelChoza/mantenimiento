@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type { Tech } from "../types"
 import Menu from "../components/Menu"
+import { toast, ToastContainer } from "react-toastify";
 
 
 
 export default function CreateTech() {
-    const [formData, setFormData] = useState<Omit<Tech, "id">>({
+    const [formData, setFormData] = useState<Omit<Tech, "idTecnico">>({
         nombreTecnico: "",
         apellidoTecnico: "",
         correo: "",
@@ -34,6 +35,7 @@ export default function CreateTech() {
             })
             if (response.ok) {
                 console.log("Datos del técnico enviados con éxito")
+                toast.success("Tecnico creaod con exito")
             } else {
                 console.log("Error al enviar los datos del técnico")
             }
@@ -44,6 +46,7 @@ export default function CreateTech() {
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
+            <ToastContainer />
             <Menu/>
             <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">
                 Formulario para crear Técnico

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Tech } from "../types";
 import Menu from "../components/Menu";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function TechList() {
   const [techs, setTechs] = useState<Tech[]>([]);
@@ -31,10 +33,10 @@ export default function TechList() {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(editingTech) {
+    if (editingTech) {
       setEditingTech({
         ...editingTech,
-        [e.target.name] : e.target.value
+        [e.target.name]: e.target.value
       })
     }
   }
@@ -50,8 +52,9 @@ export default function TechList() {
         body: JSON.stringify(editingTech),
       })
       if (response.ok) {
-        setTechs((prevTech) => prevTech.map( (tech) => tech.idTecnico === editingTech?.idTecnico ? editingTech : tech))
+        setTechs((prevTech) => prevTech.map((tech) => tech.idTecnico === editingTech?.idTecnico ? editingTech : tech))
         console.log("Tecnico actualizado")
+        toast.success(`El técnico ha sido editado correctamente`)
       } else {
         console.log("Error al aditar el tenico")
       }
@@ -61,24 +64,45 @@ export default function TechList() {
   }
 
   const onDelete = async (id: number) => {
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+      showClass: {
+        popup: 'swal2-show',
+        backdrop: 'swal2-backdrop-show',
+        icon: 'swal2-icon-show'
+      }
+    })
+    if (!confirmDelete.isConfirmed) return;
     try {
       const response = await fetch(`http://localhost:8080/tecnicos/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {
         setTechs(prev => prev.filter(tech => tech.idTecnico !== id));
-        console.log("Se eliminó con éxito el técnico");
+
+        Swal.fire("Eliminado", `El técnico ${id} ha sido eliminada`, "success")
+
+        toast.success(`El técnico ${id} ha sido eliminado correctamente`);
       } else {
-        console.log("Error al querer eliminar el técnico");
+        Swal.fire("Error", `No se pudo eliminar el técnico ${id}`, "error");
       }
     } catch (error) {
       console.error("Hubo un error de red al querer eliminar al técnico", error);
+      Swal.fire("Error", "Hubo un problema de red al intentar eliminar el técnico", "error");
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
-      <Menu/>
+      <ToastContainer/>
+      <Menu />
       <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">
         👨‍🔧 Lista de Técnicos
       </h1>
@@ -182,9 +206,9 @@ export default function TechList() {
                 </div>
 
                 <div className="mt-2 flex justify-between">
-                  <button 
+                  <button
                     className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition"
-                    onClick={()=>handleEdit(tech)}
+                    onClick={() => handleEdit(tech)}
                   >
                     Editar
                   </button>
