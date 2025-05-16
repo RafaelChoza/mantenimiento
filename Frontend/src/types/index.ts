@@ -38,11 +38,12 @@ export type MantenimientoOrden = {
   stoppedMachine: boolean;
   attentionRequired: boolean;
   serviceDescription: string;
-  receptionDate: Date;
+  receptionDate: string;
   receptionTime: string;
   personnelAsigned: string;
   programmedDate: string;
   observations: string;
+  problemaCausaSolucion: string;
   serviceSolution: string;
   equipmentDisposal: boolean;
   notificateCalibration: boolean;
@@ -53,7 +54,11 @@ export type MantenimientoOrden = {
   coversInstalled: boolean;
   interlocksTested: boolean;
   guardsInstalled: boolean;
+  revisionCompleta: boolean;
+  limpiezaArea: boolean;
   electricityConnected: boolean;
+  aireGasAguaConectada: boolean;
+  etiquetadoAdecuado: boolean;
   comments: string;
-  closeDate: Date;
+  closeDate: string;
 }

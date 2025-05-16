@@ -35,7 +35,7 @@ export default function CreateTech() {
             })
             if (response.ok) {
                 console.log("Datos del técnico enviados con éxito")
-                toast.success("Tecnico creaod con exito")
+                toast.success("Tecnico creado con exito")
             } else {
                 console.log("Error al enviar los datos del técnico")
             }

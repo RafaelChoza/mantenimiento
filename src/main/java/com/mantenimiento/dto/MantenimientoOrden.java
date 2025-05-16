@@ -50,8 +50,68 @@ public class MantenimientoOrden {
     private boolean interlocksTested;
     private boolean guardsInstalled;
     private boolean electricityConnected;
+    private boolean completeRevision;
+    private boolean cleanArea;
+    private boolean waterAirGasConnected;
+    private boolean taggedProperly;
     private String comments;
     private Date closeDate;
+
+     public boolean isWaterAirGasConnected() {
+        return waterAirGasConnected;
+    }
+
+    public void setWaterAirGasConnected(boolean waterAirGasConnected) {
+        this.waterAirGasConnected = waterAirGasConnected;
+    }
+
+    public boolean isTaggedProperly() {
+        return taggedProperly;
+    }
+
+    public void setTaggedProperly(boolean taggedProperly) {
+        this.taggedProperly = taggedProperly;
+    }
+
+     public String getPersonnelAssigned() {
+        return personnelAssigned;
+    }
+
+    public void setPersonnelAssigned(String personnelAssigned) {
+        this.personnelAssigned = personnelAssigned;
+    }
+
+    public Long getUsedParts() {
+        return usedParts;
+    }
+
+    public void setUsedParts(Long usedParts) {
+        this.usedParts = usedParts;
+    }
+
+    public boolean isGuardsInstalled() {
+        return guardsInstalled;
+    }
+
+    public void setGuardsInstalled(boolean guardsInstalled) {
+        this.guardsInstalled = guardsInstalled;
+    }
+
+    public boolean isCompleteRevision() {
+        return completeRevision;
+    }
+
+    public void setCompleteRevision(boolean completeRevision) {
+        this.completeRevision = completeRevision;
+    }
+
+    public boolean isCleanArea() {
+        return cleanArea;
+    }
+
+    public void setCleanArea(boolean cleanArea) {
+        this.cleanArea = cleanArea;
+    }
 
      @PrePersist
     protected void onCreate() {
