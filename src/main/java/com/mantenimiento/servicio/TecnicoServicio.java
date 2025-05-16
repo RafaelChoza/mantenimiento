@@ -27,7 +27,7 @@ public class TecnicoServicio {
     System.out.println("¿El número de nómina ya existe? " + existe);
 
     if (existe) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina ya existe");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina ya existe, no pueden duplicarse, verifique que sea el correcto");
     }
 
     if (existe2) {

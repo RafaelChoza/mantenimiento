@@ -67,6 +67,7 @@ export default function CreateTech() {
                             name="nombreTecnico"
                             placeholder="Nombre del técnico"
                             onChange={handleChange}
+                            required
                         />
                         <input
                             className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
@@ -74,6 +75,7 @@ export default function CreateTech() {
                             name="apellidoTecnico"
                             placeholder="Apellido del técnico"
                             onChange={handleChange}
+                            required
                         />
                         <input
                             className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
@@ -81,6 +83,7 @@ export default function CreateTech() {
                             name="correo"
                             placeholder="Correo electrónico"
                             onChange={handleChange}
+                            required
                         />
                         <input
                             className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
@@ -88,6 +91,7 @@ export default function CreateTech() {
                             name="numNomina"
                             placeholder="Número de nómina"
                             onChange={handleChange}
+                            required
                         />
                         <input
                             className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
@@ -95,6 +99,7 @@ export default function CreateTech() {
                             name="fechaAlta"
                             placeholder="Fecha de alta"
                             onChange={handleChange}
+                            required
                         />
                     </div>
                 </section>
