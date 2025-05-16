@@ -42,6 +42,7 @@ public class MantenimientoControl {
 
     @PostMapping("/mantenimiento")
     public ResponseWrapper<MantenimientoOrden> crearMantenimiento(@RequestBody MantenimientoOrden mantenimiento) {
+        System.out.println("Orden de mantenimiento recibida: " + mantenimiento);
         try {
             MantenimientoOrden mantneimientoCreado = mantenimientoServicio.crearOrdenMantenimiento(mantenimiento);
             ResponseEntity<MantenimientoOrden> response = ResponseEntity.ok(mantneimientoCreado);

@@ -2,10 +2,11 @@ package com.mantenimiento.dto;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.TimeZone;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,9 @@ public class MantenimientoOrden {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime serviceDateTime = LocalDateTime.now();
-    private TimeZone serviceTime = TimeZone.getDefault();
+    @Column(name = "service_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    private LocalTime serviceTime = LocalTime.now();
     private String requestorName;
     private String requestorLastName;
     private String area;
@@ -32,7 +35,9 @@ public class MantenimientoOrden {
     private String serviceDescription;
 
     private Date receptionDate;
-    private TimeZone receptionTime;
+    @Column(name = "reception_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    private LocalTime receptionTime;
     private String personnelAssigned;
     private String programmedDate;
     private String observations;
@@ -57,7 +62,7 @@ public class MantenimientoOrden {
     private String comments;
     private Date closeDate;
 
-     public boolean isWaterAirGasConnected() {
+    public boolean isWaterAirGasConnected() {
         return waterAirGasConnected;
     }
 
@@ -73,7 +78,7 @@ public class MantenimientoOrden {
         this.taggedProperly = taggedProperly;
     }
 
-     public String getPersonnelAssigned() {
+    public String getPersonnelAssigned() {
         return personnelAssigned;
     }
 
@@ -113,7 +118,7 @@ public class MantenimientoOrden {
         this.cleanArea = cleanArea;
     }
 
-     @PrePersist
+    @PrePersist
     protected void onCreate() {
         serviceDateTime = LocalDateTime.now();
     }
@@ -126,7 +131,6 @@ public class MantenimientoOrden {
         this.serviceDateTime = serviceDateTime;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -135,11 +139,11 @@ public class MantenimientoOrden {
         this.id = id;
     }
 
-    public TimeZone getServiceTime() {
+    public LocalTime getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(TimeZone serviceTime) {
+    public void setServiceTime(LocalTime serviceTime) {
         this.serviceTime = serviceTime;
     }
 
@@ -207,11 +211,11 @@ public class MantenimientoOrden {
         this.receptionDate = receptionDate;
     }
 
-    public TimeZone getReceptionTime() {
+    public LocalTime getReceptionTime() {
         return receptionTime;
     }
 
-    public void setReceptionTime(TimeZone receptionTime) {
+    public void setReceptionTime(LocalTime receptionTime) {
         this.receptionTime = receptionTime;
     }
 
@@ -343,4 +347,41 @@ public class MantenimientoOrden {
         this.closeDate = closeDate;
     }
 
+    @Override
+    public String toString() {
+        return "MantenimientoOrden [id=" + id + ", serviceDateTime=" + serviceDateTime + ", serviceTime=" + serviceTime
+                + ", requestorName=" + requestorName + ", requestorLastName=" + requestorLastName + ", area=" + area
+                + ", idMachine=" + idMachine + ", stoppedMachine=" + stoppedMachine + ", attentionRequired="
+                + attentionRequired + ", serviceDescription=" + serviceDescription + ", receptionDate=" + receptionDate
+                + ", receptionTime=" + receptionTime + ", personnelAssigned=" + personnelAssigned + ", programmedDate="
+                + programmedDate + ", observations=" + observations + ", serviceSolution=" + serviceSolution
+                + ", equipmentDisposal=" + equipmentDisposal + ", notificateCalibration=" + notificateCalibration
+                + ", usedParts=" + usedParts + ", partNumber=" + partNumber + ", descriptionPart=" + descriptionPart
+                + ", partOrigin=" + partOrigin + ", coversInstalled=" + coversInstalled + ", interlocksTested="
+                + interlocksTested + ", guardsInstalled=" + guardsInstalled + ", electricityConnected="
+                + electricityConnected + ", completeRevision=" + completeRevision + ", cleanArea=" + cleanArea
+                + ", waterAirGasConnected=" + waterAirGasConnected + ", taggedProperly=" + taggedProperly
+                + ", comments=" + comments + ", closeDate=" + closeDate + ", isWaterAirGasConnected()="
+                + isWaterAirGasConnected() + ", isTaggedProperly()=" + isTaggedProperly() + ", getPersonnelAssigned()="
+                + getPersonnelAssigned() + ", getUsedParts()=" + getUsedParts() + ", isGuardsInstalled()="
+                + isGuardsInstalled() + ", isCompleteRevision()=" + isCompleteRevision() + ", isCleanArea()="
+                + isCleanArea() + ", getServiceDateTime()=" + getServiceDateTime() + ", getId()=" + getId()
+                + ", getServiceTime()=" + getServiceTime() + ", getRequestorName()=" + getRequestorName()
+                + ", getRequestorLastName()=" + getRequestorLastName() + ", getArea()=" + getArea()
+                + ", getIdMachine()=" + getIdMachine() + ", isStoppedMachine()=" + isStoppedMachine()
+                + ", isAttentionRequired()=" + isAttentionRequired() + ", getServiceDescription()="
+                + getServiceDescription() + ", getReceptionDate()=" + getReceptionDate() + ", getReceptionTime()="
+                + getReceptionTime() + ", getPersonnelAsigned()=" + getPersonnelAsigned() + ", getProgrammedDate()="
+                + getProgrammedDate() + ", getObservations()=" + getObservations() + ", getServiceSolution()="
+                + getServiceSolution() + ", isEquipmentDisposal()=" + isEquipmentDisposal()
+                + ", isNotificateCalibration()=" + isNotificateCalibration() + ", getUsedPArts()=" + getUsedPArts()
+                + ", getPartNumber()=" + getPartNumber() + ", getDescriptionPart()=" + getDescriptionPart()
+                + ", getPartOrigin()=" + getPartOrigin() + ", isCoversInstalled()=" + isCoversInstalled()
+                + ", isInterlocksTested()=" + isInterlocksTested() + ", isGardsInstalled()=" + isGardsInstalled()
+                + ", isElectricityConnected()=" + isElectricityConnected() + ", getComments()=" + getComments()
+                + ", getCloseDate()=" + getCloseDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+                + ", toString()=" + super.toString() + "]";
+    }
+
+    
 }

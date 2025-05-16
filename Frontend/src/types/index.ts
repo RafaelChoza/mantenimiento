@@ -30,7 +30,6 @@ export type Area = {
 }
 
 export type MantenimientoOrden = {
-  id: number;
   requestorName: string;
   requestorLastName: string;
   area: string;

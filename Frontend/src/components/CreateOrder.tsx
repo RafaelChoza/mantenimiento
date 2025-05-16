@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 const MantenimientoOrdenForm: React.FC = () => {
   const [formData, setFormData] = useState<MantenimientoOrden>({
-    id: 0,
     requestorName: "",
     requestorLastName: "",
     area: "",
