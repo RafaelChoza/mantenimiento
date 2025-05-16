@@ -33,24 +33,25 @@ public class TecnicoControl {
     }
 
     @GetMapping("tecnicos/{id}")
-    public ResponseWrapper<Tecnico> obtenerTecnicoPotId (@PathVariable Long id) {
+    public ResponseWrapper<Tecnico> obtenerTecnicoPotId(@PathVariable Long id) {
         System.out.println("Obteniendo técnico por ID: " + id);
         Optional<Tecnico> tecnico = tecnicoServicio.obtenerTecnicoPorId(id);
-        ResponseEntity<Tecnico> responseEntity = tecnico.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        ResponseEntity<Tecnico> responseEntity = tecnico.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
         return new ResponseWrapper<>(false, "Tecnico con ID: " + id, responseEntity);
     }
 
     @PostMapping("/tecnicos")
     public ResponseWrapper<Tecnico> crearTecnico(@RequestBody Tecnico tecnico) {
-        System.out.println("Datos del técnico recibidos" + tecnico);
+        System.out.println("Datos del técnico recibidos: " + tecnico);
         try {
             Tecnico tecnicoCreado = tecnicoServicio.crearTecnico(tecnico);
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.ok(tecnicoCreado);
-            return new ResponseWrapper<>(true, "Tecnico creado con éxito", responseEntity);
+            return new ResponseWrapper<>(true, "Técnico creado con éxito", responseEntity);
         } catch (ResponseStatusException e) {
             System.out.println("Excepción capturada en el controlador: " + e.getReason());
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.badRequest().build();
-            return new ResponseWrapper<>(false, "Error al crear el técnico: " + e.getMessage(), responseEntity);
+            return new ResponseWrapper<>(false, e.getReason(), responseEntity);
         }
     }
 
@@ -73,7 +74,7 @@ public class TecnicoControl {
 
     @DeleteMapping("/tecnicos/{id}")
     public ResponseWrapper<Void> eliminarTecnico(@PathVariable Long id) {
-         try {
+        try {
             tecnicoServicio.eliminarTecnico(id);
             System.out.println("Tecnico Eliminado correctamente");
             ResponseEntity<Void> response = ResponseEntity.noContent().build();

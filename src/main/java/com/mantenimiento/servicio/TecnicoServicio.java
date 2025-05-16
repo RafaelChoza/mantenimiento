@@ -23,10 +23,15 @@ public class TecnicoServicio {
 
     public Tecnico crearTecnico(Tecnico tecnico) {
     boolean existe = tecnicoRepositorio.existsByNumNomina(tecnico.getNumNomina());
+    boolean existe2 = tecnicoRepositorio.existsByCorreo(tecnico.getCorreo());
     System.out.println("¿El número de nómina ya existe? " + existe);
 
     if (existe) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina ya existe");
+    }
+
+    if (existe2) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo ya existe en la base de datos");
     }
 
     return tecnicoRepositorio.save(tecnico);

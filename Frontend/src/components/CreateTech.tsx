@@ -32,27 +32,28 @@ export default function CreateTech() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData)
-            })
+            });
 
-            const data = await response.json()
-            console.log(data)
+            const data = await response.json();
+            console.log(data);
 
             if (data.success) {
-                console.log("Datos del técnico enviados con éxito")
-                toast.success("Tecnico creado con exito")
+                console.log("Datos del técnico enviados con éxito");
+                toast.success("Técnico creado con éxito");
             } else {
-                console.log("Error al enviar los datos del técnico", data.mensaje)
-                toast.error(data.mensaje || "Error al enviar los datos del técnico")
+                console.log("Error al enviar los datos del técnico", data.message); // Aquí debe ser `message`
+                toast.error(data.message || "Error al enviar los datos del técnico");
             }
         } catch (error) {
-            console.error("Error de red al enviar los datos del técnico", error)
+            console.error("Error de red al enviar los datos del técnico", error);
         }
     };
+
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
             <ToastContainer />
-            <Menu/>
+            <Menu />
             <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">
                 Formulario para crear Técnico
             </h1>

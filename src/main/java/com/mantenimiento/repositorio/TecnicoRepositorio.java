@@ -6,4 +6,5 @@ import com.mantenimiento.dto.Tecnico;
 
 public interface TecnicoRepositorio extends JpaRepository<Tecnico, Long> {
     boolean existsByNumNomina(Long numNomina);
+    boolean existsByCorreo(String correo);
 }
