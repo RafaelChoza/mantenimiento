@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mantenimiento.dto.ResponseWrapper;
 import com.mantenimiento.dto.Tecnico;
@@ -45,8 +46,9 @@ public class TecnicoControl {
         try {
             Tecnico tecnicoCreado = tecnicoServicio.crearTecnico(tecnico);
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.ok(tecnicoCreado);
-            return new ResponseWrapper<>(false, "Tecnico creado con éxito", responseEntity);
-        } catch (Exception e) {
+            return new ResponseWrapper<>(true, "Tecnico creado con éxito", responseEntity);
+        } catch (ResponseStatusException e) {
+            System.out.println("Excepción capturada en el controlador: " + e.getReason());
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.badRequest().build();
             return new ResponseWrapper<>(false, "Error al crear el técnico: " + e.getMessage(), responseEntity);
         }

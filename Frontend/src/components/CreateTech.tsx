@@ -33,11 +33,16 @@ export default function CreateTech() {
                 },
                 body: JSON.stringify(formData)
             })
-            if (response.ok) {
+
+            const data = await response.json()
+            console.log(data)
+
+            if (data.success) {
                 console.log("Datos del técnico enviados con éxito")
                 toast.success("Tecnico creado con exito")
             } else {
-                console.log("Error al enviar los datos del técnico")
+                console.log("Error al enviar los datos del técnico", data.mensaje)
+                toast.error(data.mensaje || "Error al enviar los datos del técnico")
             }
         } catch (error) {
             console.error("Error de red al enviar los datos del técnico", error)
