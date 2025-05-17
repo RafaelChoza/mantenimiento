@@ -22,16 +22,16 @@ public class TecnicoServicio {
     }
 
     public Tecnico crearTecnico(Tecnico tecnico) {
-    boolean existe = tecnicoRepositorio.existsByNumNomina(tecnico.getNumNomina());
-    boolean existe2 = tecnicoRepositorio.existsByCorreo(tecnico.getCorreo());
-    System.out.println("¿El número de nómina ya existe? " + existe);
+    boolean existNumNomina = tecnicoRepositorio.existsByNumNomina(tecnico.getNumNomina());
+    boolean existCorreo = tecnicoRepositorio.existsByCorreo(tecnico.getCorreo());
+    System.out.println("¿El número de nómina ya existe? " + existNumNomina);
 
-    if (existe) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina ya existe, no pueden duplicarse, verifique que sea el correcto");
+    if (existNumNomina) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina " + tecnico.getNumNomina() + " ya existe, no pueden duplicarse, verifique que sea el correcto");
     }
 
-    if (existe2) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo ya existe en la base de datos");
+    if (existCorreo) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo " + tecnico.getCorreo() + " ya existe en la base de datos");
     }
 
     return tecnicoRepositorio.save(tecnico);
@@ -43,6 +43,16 @@ public class TecnicoServicio {
     }
 
     public Tecnico actualizarTecnico(Tecnico tecnicoActualizado) {
+        boolean existNumNomina = tecnicoRepositorio.existsByNumNomina(tecnicoActualizado.getNumNomina());
+        boolean existCorreo = tecnicoRepositorio.existsByCorreo(tecnicoActualizado.getCorreo());
+
+        if(existNumNomina) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nomina " + tecnicoActualizado.getNumNomina() + " ya existe en la base de datos");
+        }
+
+        if(existCorreo) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo " + tecnicoActualizado.getCorreo() + " ya existe en la base de datos");
+        }
         return tecnicoRepositorio.save(tecnicoActualizado);
     }
 

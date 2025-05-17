@@ -56,9 +56,11 @@ public class TecnicoControl {
     }
 
     @PutMapping("/tecnicos/{id}")
-    public ResponseWrapper<Tecnico> actualizarTecnico(@PathVariable Long id, @RequestBody Tecnico tecnico) {
+public ResponseWrapper<Tecnico> actualizarTecnico(@PathVariable Long id, @RequestBody Tecnico tecnico) {
+    try {
         System.out.println("Id recibido: " + id);
         System.out.println("Técnico recibido: " + tecnico);
+
         Optional<Tecnico> tecnicoOptional = tecnicoServicio.obtenerTecnicoPorId(id);
 
         if (tecnicoOptional.isPresent()) {
@@ -70,7 +72,14 @@ public class TecnicoControl {
             ResponseEntity<Tecnico> responseEntity = ResponseEntity.notFound().build();
             return new ResponseWrapper<>(false, "Técnico no encontrado", responseEntity);
         }
+
+    } catch (ResponseStatusException e) {
+        e.printStackTrace(); // Opcional: útil durante desarrollo
+        ResponseEntity<Tecnico> responseEntity = ResponseEntity.badRequest().build();
+        return new ResponseWrapper<>(false,  e.getReason(), responseEntity);
     }
+}
+
 
     @DeleteMapping("/tecnicos/{id}")
     public ResponseWrapper<Void> eliminarTecnico(@PathVariable Long id) {

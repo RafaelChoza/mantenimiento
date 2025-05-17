@@ -51,12 +51,17 @@ export default function TechList() {
         },
         body: JSON.stringify(editingTech),
       })
-      if (response.ok) {
+
+      const data = await response.json()
+      console.log(data)
+
+      if (data.success) {
         setTechs((prevTech) => prevTech.map((tech) => tech.idTecnico === editingTech?.idTecnico ? editingTech : tech))
         console.log("Tecnico actualizado")
         toast.success(`El técnico ha sido editado correctamente`)
       } else {
-        console.log("Error al aditar el tenico")
+        console.log("Error al aditar el tenico ", data.message)
+        toast.error(data.message || "Error al enviar los datos actualzidos del técnico")
       }
     } catch (error) {
       console.error("Error de red al editar el tecnico")
