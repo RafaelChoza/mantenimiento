@@ -189,16 +189,17 @@ const MantenimientoOrdenForm: React.FC = () => {
               { name: "etiquetadoAdecuado", label: "Etiquetado y señalización de Equipo" },
             ].map((item) => (
               <label key={item.name} className="flex items-center space-x-2">
-                <input type="checkbox" name={item.name} onChange={handleChange} />
+                <input type="checkbox" name={item.name} onChange={handleChange} checked={formData[item.name as keyof MantenimientoOrden] as boolean} />
+                
                 <span>{item.label}</span>
               </label>
             ))}
-            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="number" name="usedParts" placeholder="Partes usadas" onChange={handleChange} />
-            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partNumber" placeholder="Número de parte" onChange={handleChange} />
-            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="descriptionPart" placeholder="Descripción de la parte" onChange={handleChange} />
-            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partOrigin" placeholder="Origen de la parte" onChange={handleChange} />
-            <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" placeholder="Comentarios" onChange={handleChange} />
-            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="date" name="closeDate" onChange={handleChange} />
+            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="number" name="usedParts" value={formData.usedParts} placeholder="Partes usadas" onChange={handleChange} />
+            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partNumber" value={formData.partNumber} placeholder="Número de parte" onChange={handleChange} />
+            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="descriptionPart" value={formData.descriptionPart} placeholder="Descripción de la parte" onChange={handleChange} />
+            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partOrigin" value={formData.partOrigin} placeholder="Origen de la parte" onChange={handleChange} />
+            <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" value={formData.comments} placeholder="Comentarios" onChange={handleChange} />
+            <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
           </div>
         </section>
 
