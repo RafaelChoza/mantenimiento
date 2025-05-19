@@ -2110,3 +2110,6 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+2025-05-19 15:53:43.561670-06:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TU_TABLA" not found; SQL statement:
+ALTER TABLE tu_tabla ALTER COLUMN ATTENTION_REQUIRED DROP NOT NULL [42102-232]

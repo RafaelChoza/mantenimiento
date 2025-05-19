@@ -28,11 +28,11 @@ const MantenimientoOrdenForm: React.FC = () => {
     coversInstalled: false,
     interlocksTested: false,
     guardsInstalled: false,
-    revisionCompleta: false,
-    limpiezaArea: false,
+    completeRevision: false,
+    cleanArea: false,
     electricityConnected: false,
-    aireGasAguaConectada: false,
-    etiquetadoAdecuado: false,
+    waterAirGasConnected: false,
+    taggedProperly: false,
     comments: "",
     closeDate: "",
   });
@@ -156,7 +156,7 @@ const MantenimientoOrdenForm: React.FC = () => {
             <textarea className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" name="observations" placeholder="Escribe las obeservaciones encontradas" onChange={handleChange} />
 
             Problema-Causa-Solución
-            <textarea name="problemaCausaSolucion" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Escribir el problema, la causa y la solución" onChange={handleChange} />
+            <textarea name="problemCauseSolution" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Escribir el problema, la causa y la solución" onChange={handleChange} />
 
 
             <label className="flex items-center space-x-2">
@@ -183,10 +183,10 @@ const MantenimientoOrdenForm: React.FC = () => {
               { name: "interlocksTested", label: "Interlocks probados" },
               { name: "guardsInstalled", label: "Guardas instaladas" },
               { name: "electricityConnected", label: "Electricidad conectada" },
-              { name: "revisionCompleta", label: "Revisión completa del equipo" },
-              { name: "limpiezaArea", label: "Limpieza del área" },
-              { name: "aireGasAguaConectada", label: "Aire, Agua y/o gas conectados" },
-              { name: "etiquetadoAdecuado", label: "Etiquetado y señalización de Equipo" },
+              { name: "completeRevision", label: "Revisión completa del equipo" },
+              { name: "cleanArea", label: "Limpieza del área" },
+              { name: "waterAirGasConnected", label: "Aire, Agua y/o gas conectados" },
+              { name: "taggedProperly", label: "Etiquetado y señalización de Equipo" },
             ].map((item) => (
               <label key={item.name} className="flex items-center space-x-2">
                 <input type="checkbox" name={item.name} onChange={handleChange} checked={formData[item.name as keyof MantenimientoOrden] as boolean} />

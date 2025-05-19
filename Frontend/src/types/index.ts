@@ -30,6 +30,7 @@ export type Area = {
 }
 
 export type MantenimientoOrden = {
+  id?: number;
   requestorName: string;
   requestorLastName: string;
   area: string;
@@ -42,7 +43,7 @@ export type MantenimientoOrden = {
   personnelAsigned: string;
   programmedDate: string;
   observations: string;
-  problemaCausaSolucion: string;
+  problemCauseSolution: string;
   serviceSolution: string;
   equipmentDisposal: boolean;
   notificateCalibration: boolean;
@@ -53,11 +54,11 @@ export type MantenimientoOrden = {
   coversInstalled: boolean;
   interlocksTested: boolean;
   guardsInstalled: boolean;
-  revisionCompleta: boolean;
-  limpiezaArea: boolean;
+  completeRevision: boolean;
+  cleanArea: boolean;
   electricityConnected: boolean;
-  aireGasAguaConectada: boolean;
-  etiquetadoAdecuado: boolean;
+  waterAirGasConnected: boolean;
+  taggedProperly: boolean;
   comments: string;
   closeDate: string;
 }

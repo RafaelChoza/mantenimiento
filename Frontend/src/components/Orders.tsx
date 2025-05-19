@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import type { Area, Order, Tech } from "../types";
+import type { Area, MantenimientoOrden, Tech } from "../types";
 import Menu from "../components/Menu"
 import { toast } from "react-toastify";
 
 export default function Orders() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<MantenimientoOrden[]>([]);
   const [cargando, setCargando] = useState(true);
-  const [editingOrder, setEditingOrder] = useState<Order | null>(null)
+  const [editingOrder, setEditingOrder] = useState<MantenimientoOrden | null>(null)
   const [areas, setAreas] = useState<Area[]>([])
   const [techs, setTechs] = useState<Tech[]>([])
- 
+
   useEffect(() => {
     getOrders();
     getAreas();
     getTechs();
   }, []);
 
-  const handleEdit = (order: Order) => {
+  const handleEdit = (order: MantenimientoOrden) => {
     console.log("Editar Orden de mantenimiento")
     setEditingOrder(order)
   }
@@ -55,14 +55,19 @@ export default function Orders() {
       const data = await response.json()
       console.log(data)
 
-      if (data.success) {
-        setOrders((prevOrders) => prevOrders.map((order) => order.id === editingOrder?.id ? editingOrder : order))
-        console.log("Orden actualizada")
-        toast.success("La orden fue actualziada correctamente")
+      if (data.success && editingOrder) {
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order.id === editingOrder.id ? editingOrder : order
+          )
+        );
+        console.log("Orden actualizada");
+        toast.success("La orden fue actualizada correctamente");
       } else {
-        console.log("Error al querer editar al técnico")
-        toast.error("Error al querer editar al técnico")
+        console.log("Error al querer editar al técnico");
+        toast.error("Error al querer editar al técnico");
       }
+
 
     } catch (error) {
       console.error("Error de red al querer editar al técnico")
@@ -116,115 +121,115 @@ export default function Orders() {
             <h2 className="text-xl font-bold mb-4 text-blue-700">Editar Orden #{editingOrder.id}</h2>
             <form onSubmit={handleUpdateOrder} className="space-y-10">
 
-  {/* Sección Solicitante */}
-  <section className="border-l-4 border-blue-400 bg-white p-6 rounded shadow-sm">
-    <h2 className="text-xl font-semibold uppercase mb-4 text-blue-700">Exclusivo Solicitante</h2>
-    <div className="grid grid-cols-2 gap-4">
-      <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="requestorName" value={editingOrder.requestorName} placeholder="Nombre del solicitante" onChange={handleInputChange} />
-      <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="requestorLastName" value={editingOrder.requestorLastName} placeholder="Apellido del solicitante" onChange={handleInputChange} />
-      <select
-  className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
-  name="area"
-  value={editingOrder.area}
-  onChange={handleInputChange}
->
-  <option value="" disabled>Seleccionar Área</option>
-  {areas.map((area) => (
-    <option key={area.id} value={area.id}>{area.areaName}</option>
-  ))}
-</select>
+              {/* Sección Solicitante */}
+              <section className="border-l-4 border-blue-400 bg-white p-6 rounded shadow-sm">
+                <h2 className="text-xl font-semibold uppercase mb-4 text-blue-700">Exclusivo Solicitante</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="requestorName" value={editingOrder.requestorName} placeholder="Nombre del solicitante" onChange={handleInputChange} />
+                  <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="requestorLastName" value={editingOrder.requestorLastName} placeholder="Apellido del solicitante" onChange={handleInputChange} />
+                  <select
+                    className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
+                    name="area"
+                    value={editingOrder.area}
+                    onChange={handleInputChange}
+                  >
+                    <option value="" disabled>Seleccionar Área</option>
+                    {areas.map((area) => (
+                      <option key={area.id} value={area.id}>{area.areaName}</option>
+                    ))}
+                  </select>
 
-      <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="idMachine" value={editingOrder.idMachine} placeholder="ID Máquina" onChange={handleInputChange} />
-      <label className="flex items-center space-x-2 col-span-2">
-        <input type="checkbox" name="stoppedMachine" checked={!!editingOrder?.stoppedMachine} onChange={handleInputChange} />
-        <span>Máquina detenida</span>
-      </label>
-      <label className="flex items-center space-x-2 col-span-2">
-        <input type="checkbox" name="attentionRequired" checked={!!editingOrder?.attentionRequired} onChange={handleInputChange} />
-        <span>Requiere atención inmediata</span>
-      </label>
-      <textarea className="border border-blue-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-blue-400" name="serviceDescription" value={editingOrder.serviceDescription} placeholder="Descripción del servicio" onChange={handleInputChange} />
-    </div>
-  </section>
+                  <input className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400" type="text" name="idMachine" value={editingOrder.idMachine} placeholder="ID Máquina" onChange={handleInputChange} />
+                  <label className="flex items-center space-x-2 col-span-2">
+                    <input type="checkbox" name="stoppedMachine" checked={!!editingOrder?.stoppedMachine} onChange={handleInputChange} />
+                    <span>Máquina detenida</span>
+                  </label>
+                  <label className="flex items-center space-x-2 col-span-2">
+                    <input type="checkbox" name="attentionRequired" checked={!!editingOrder?.attentionRequired} onChange={handleInputChange} />
+                    <span>Requiere atención inmediata</span>
+                  </label>
+                  <textarea className="border border-blue-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-blue-400" name="serviceDescription" value={editingOrder.serviceDescription} placeholder="Descripción del servicio" onChange={handleInputChange} />
+                </div>
+              </section>
 
-  {/* Sección Supervisor */}
-  <section className="border-l-4 border-green-400 bg-white p-6 rounded shadow-sm">
-    <h2 className="text-xl font-semibold uppercase mb-4 text-green-700">Exclusivo Supervisor de Mantenimiento</h2>
-    <div className="grid grid-cols-2 gap-4">
-      <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="date" name="receptionDate" value={editingOrder.receptionDate} onChange={handleInputChange} />
-      <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleInputChange} />
-      <select className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" name="personnelAsigned" value={editingOrder.personnelAsigned} onChange={handleInputChange}>
-        <option value={editingOrder.personnelAsigned} disabled>Seleccionar Técnico</option>
-        {techs.map((tech) => (
-          <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
-            {tech.nombreTecnico} - {tech.apellidoTecnico}
-          </option>
-        ))}
-      </select>
-      <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="date" name="programmedDate" onChange={handleInputChange} />
-      <textarea className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" name="observations" value={editingOrder.observations} placeholder="Observaciones encontradas" onChange={handleInputChange} />
-      <textarea name="problemaCausaSolucion" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Problema, causa y solución" onChange={handleInputChange} />
-      <textarea name="serviceSolution" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Solución del servicio" onChange={handleInputChange} />
-      <label className="flex items-center space-x-2">
-        <span>¿Equipo para desecho?</span>
-        <input type="checkbox" name="equipmentDisposal" onChange={handleInputChange} />
-      </label>
-      <label className="flex items-center space-x-2">
-        <span>¿Requiere aviso a calibración y MP?</span>
-        <input type="checkbox" name="notificateCalibration" onChange={handleInputChange} />
-      </label>
-    </div>
-  </section>
+              {/* Sección Supervisor */}
+              <section className="border-l-4 border-green-400 bg-white p-6 rounded shadow-sm">
+                <h2 className="text-xl font-semibold uppercase mb-4 text-green-700">Exclusivo Supervisor de Mantenimiento</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="date" name="receptionDate" value={editingOrder.receptionDate} onChange={handleInputChange} />
+                  <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="time" name="receptionTime" value={editingOrder.receptionTime} placeholder="Hora de recepción" onChange={handleInputChange} />
+                  <select className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" name="personnelAsigned" value={editingOrder.personnelAsigned} onChange={handleInputChange}>
+                    <option value={editingOrder.personnelAsigned} disabled>Seleccionar Técnico</option>
+                    {techs.map((tech) => (
+                      <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
+                        {tech.nombreTecnico} - {tech.apellidoTecnico}
+                      </option>
+                    ))}
+                  </select>
+                  <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="date" name="programmedDate" value={editingOrder.programmedDate} onChange={handleInputChange} />
+                  <textarea className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" name="observations" value={editingOrder.observations} placeholder="Observaciones encontradas" onChange={handleInputChange} />
+                  <textarea name="problemaCausaSolucion" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" value={editingOrder.problemCauseSolution} placeholder="Problema, causa y solución" onChange={handleInputChange} />
+                  <textarea name="serviceSolution" value={editingOrder.serviceSolution} className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Solución del servicio" onChange={handleInputChange} />
+                  <label className="flex items-center space-x-2">
+                    <span>¿Equipo para desecho?</span>
+                    <input type="checkbox" checked={editingOrder?.equipmentDisposal} name="equipmentDisposal" onChange={handleInputChange} />
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <span>¿Requiere aviso a calibración y MP?</span>
+                    <input type="checkbox" name="notificateCalibration" checked={editingOrder?.notificateCalibration} onChange={handleInputChange} />
+                  </label>
+                </div>
+              </section>
 
-  {/* Sección Técnico */}
-  <section className="border-l-4 border-purple-400 bg-white p-6 rounded shadow-sm">
-    <h2 className="text-xl font-semibold uppercase mb-4 text-purple-700">Técnico Asignado</h2>
-    <div className="grid grid-cols-2 gap-4">
-      <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="number" name="usedParts" placeholder="Partes usadas" onChange={handleInputChange} />
-      <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partNumber" placeholder="Número de parte" onChange={handleInputChange} />
-      <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="descriptionPart" placeholder="Descripción de la parte" onChange={handleInputChange} />
-      <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partOrigin" placeholder="Origen de la parte" onChange={handleInputChange} />
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="coversInstalled" onChange={handleInputChange} />
-        <span>Cubiertas instaladas</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="interlocksTested"  onChange={handleInputChange} />
-        <span>Interlocks probados</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="guardsInstalled" onChange={handleInputChange} />
-        <span>Guardas instaladas</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="revisionCompleta" onChange={handleInputChange} />
-        <span>Revisión completa del equipo</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="limpiezaArea" onChange={handleInputChange} />
-        <span>Limpieza del área</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="electricityConnected" onChange={handleInputChange} />
-        <span>Electricidad conectada</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="aireGasAguaConectada" onChange={handleInputChange} />
-        <span>Aire, agua y/o gas conectados</span>
-      </label>
-      <label className="flex items-center space-x-2">
-        <input type="checkbox" name="etiquetadoAdecuado" onChange={handleInputChange} />
-        <span>Etiquetado y señalización de equipo</span>
-      </label>
-      <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" placeholder="Comentarios" onChange={handleInputChange} />
-      <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="date" name="closeDate" onChange={handleInputChange} />
-    </div>
-  </section>
+              {/* Sección Técnico */}
+              <section className="border-l-4 border-purple-400 bg-white p-6 rounded shadow-sm">
+                <h2 className="text-xl font-semibold uppercase mb-4 text-purple-700">Técnico Asignado</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="number" name="usedParts" value={editingOrder.usedParts} placeholder="Partes usadas" onChange={handleInputChange} />
+                  <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partNumber" value={editingOrder.partNumber} placeholder="Número de parte" onChange={handleInputChange} />
+                  <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="descriptionPart" value={editingOrder.descriptionPart} placeholder="Descripción de la parte" onChange={handleInputChange} />
+                  <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="text" name="partOrigin" value={editingOrder.partOrigin} placeholder="Origen de la parte" onChange={handleInputChange} />
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="coversInstalled" checked={editingOrder?.coversInstalled} onChange={handleInputChange} />
+                    <span>Cubiertas instaladas</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="interlocksTested" checked={editingOrder?.interlocksTested} onChange={handleInputChange} />
+                    <span>Interlocks probados</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="guardsInstalled" checked={editingOrder?.guardsInstalled} onChange={handleInputChange} />
+                    <span>Guardas instaladas</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="completeRevision" checked={editingOrder?.completeRevision} onChange={handleInputChange} />
+                    <span>Revisión completa del equipo</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="cleanArea" checked={editingOrder?.cleanArea} onChange={handleInputChange} />
+                    <span>Limpieza del área</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="electricityConnected" checked={editingOrder?.electricityConnected} onChange={handleInputChange} />
+                    <span>Electricidad conectada</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="waterAirGasConnected" checked={editingOrder?.waterAirGasConnected} onChange={handleInputChange} />
+                    <span>Aire, agua y/o gas conectados</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" name="taggedProperly" checked={editingOrder?.taggedProperly} onChange={handleInputChange} />
+                    <span>Etiquetado y señalización de equipo</span>
+                  </label>
+                  <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" placeholder="Comentarios" onChange={handleInputChange} />
+                  <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="date" name="closeDate" onChange={handleInputChange} />
+                </div>
+              </section>
 
-  <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded hover:from-blue-600 hover:to-purple-700 font-bold uppercase transition duration-300">
-    Enviar Orden
-  </button>
-</form>
+              <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded hover:from-blue-600 hover:to-purple-700 font-bold uppercase transition duration-300">
+                Enviar Orden
+              </button>
+            </form>
 
           </div>
         </div>

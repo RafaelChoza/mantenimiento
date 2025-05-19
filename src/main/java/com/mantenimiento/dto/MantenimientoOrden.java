@@ -42,6 +42,7 @@ public class MantenimientoOrden {
     private String programmedDate;
     private String observations;
 
+    private String problemCauseSolution;
     private String serviceSolution;
     private boolean equipmentDisposal;
     private boolean notificateCalibration;
@@ -61,6 +62,14 @@ public class MantenimientoOrden {
     private boolean taggedProperly;
     private String comments;
     private Date closeDate;
+
+    public String getProblemCauseSolution() {
+        return problemCauseSolution;
+    }
+
+    public void setProblemCauseSolution(String problemCauseSolution) {
+        this.problemCauseSolution = problemCauseSolution;
+    }
 
     public boolean isWaterAirGasConnected() {
         return waterAirGasConnected;
@@ -382,6 +391,4 @@ public class MantenimientoOrden {
                 + ", getCloseDate()=" + getCloseDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
                 + ", toString()=" + super.toString() + "]";
     }
-
-    
 }
