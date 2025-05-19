@@ -1,7 +1,6 @@
 package com.mantenimiento.dto;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +19,8 @@ public class MantenimientoOrden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime serviceDateTime = LocalDateTime.now();
-    @Column(name = "service_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    private LocalTime serviceTime = LocalTime.now();
+    private String serviceDateTime;
+    private String serviceTime;
     private String requestorName;
     private String requestorLastName;
     private String area;
@@ -127,16 +122,11 @@ public class MantenimientoOrden {
         this.cleanArea = cleanArea;
     }
 
-    @PrePersist
-    protected void onCreate() {
-        serviceDateTime = LocalDateTime.now();
-    }
-
-    public LocalDateTime getServiceDateTime() {
+    public String getServiceDateTime() {
         return serviceDateTime;
     }
 
-    public void setServiceDateTime(LocalDateTime serviceDateTime) {
+    public void setServiceDateTime(String serviceDateTime) {
         this.serviceDateTime = serviceDateTime;
     }
 
@@ -148,11 +138,11 @@ public class MantenimientoOrden {
         this.id = id;
     }
 
-    public LocalTime getServiceTime() {
+    public String getServiceTime() {
         return serviceTime;
     }
 
-    public void setServiceTime(LocalTime serviceTime) {
+    public void setServiceTime(String serviceTime) {
         this.serviceTime = serviceTime;
     }
 

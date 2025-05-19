@@ -221,7 +221,7 @@ export default function Orders() {
                     <input type="checkbox" name="taggedProperly" checked={editingOrder?.taggedProperly} onChange={handleInputChange} />
                     <span>Etiquetado y señalización de equipo</span>
                   </label>
-                  <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" placeholder="Comentarios" onChange={handleInputChange} />
+                  <textarea className="border border-purple-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-purple-400" name="comments" value={editingOrder.comments} placeholder="Comentarios" onChange={handleInputChange} />
                   <input className="border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400" type="date" name="closeDate" onChange={handleInputChange} />
                 </div>
               </section>

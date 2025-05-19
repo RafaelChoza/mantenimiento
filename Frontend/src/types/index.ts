@@ -37,6 +37,7 @@ export type MantenimientoOrden = {
   idMachine: string;
   stoppedMachine: boolean;
   attentionRequired: boolean;
+  serviceDateTime: string;
   serviceDescription: string;
   receptionDate: string;
   receptionTime: string;
