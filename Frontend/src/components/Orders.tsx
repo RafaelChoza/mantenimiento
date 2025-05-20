@@ -135,7 +135,7 @@ export default function Orders() {
                   >
                     <option value="" disabled>Seleccionar Área</option>
                     {areas.map((area) => (
-                      <option key={area.id} value={area.id}>{area.areaName}</option>
+                      <option key={area.id} value={area.areaName}>{area.areaName}</option>
                     ))}
                   </select>
 
@@ -168,8 +168,7 @@ export default function Orders() {
                   </select>
                   <input className="border border-green-300 p-2 rounded focus:ring-2 focus:ring-green-400" type="date" name="programmedDate" value={editingOrder.programmedDate} onChange={handleInputChange} />
                   <textarea className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" name="observations" value={editingOrder.observations} placeholder="Observaciones encontradas" onChange={handleInputChange} />
-                  <textarea name="problemaCausaSolucion" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" value={editingOrder.problemCauseSolution} placeholder="Problema, causa y solución" onChange={handleInputChange} />
-                  <textarea name="serviceSolution" value={editingOrder.serviceSolution} className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" placeholder="Solución del servicio" onChange={handleInputChange} />
+                  <textarea name="problemCauseSolution" className="border border-green-300 p-2 rounded col-span-2 focus:ring-2 focus:ring-green-400" value={editingOrder.problemCauseSolution} placeholder="Problema, causa y solución" onChange={handleInputChange} />
                   <label className="flex items-center space-x-2">
                     <span>¿Equipo para desecho?</span>
                     <input type="checkbox" checked={editingOrder?.equipmentDisposal} name="equipmentDisposal" onChange={handleInputChange} />

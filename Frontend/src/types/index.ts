@@ -45,7 +45,6 @@ export type MantenimientoOrden = {
   programmedDate: string;
   observations: string;
   problemCauseSolution: string;
-  serviceSolution: string;
   equipmentDisposal: boolean;
   notificateCalibration: boolean;
   usedParts: number;

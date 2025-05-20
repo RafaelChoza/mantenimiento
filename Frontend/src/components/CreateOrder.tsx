@@ -19,7 +19,6 @@ const MantenimientoOrdenForm: React.FC = () => {
     programmedDate: "",
     observations: "",
     problemCauseSolution: "",
-    serviceSolution: "",
     equipmentDisposal: false,
     notificateCalibration: false,
     usedParts: 0,

@@ -38,7 +38,6 @@ public class MantenimientoOrden {
     private String observations;
 
     private String problemCauseSolution;
-    private String serviceSolution;
     private boolean equipmentDisposal;
     private boolean notificateCalibration;
 
@@ -242,14 +241,6 @@ public class MantenimientoOrden {
         this.observations = observations;
     }
 
-    public String getServiceSolution() {
-        return serviceSolution;
-    }
-
-    public void setServiceSolution(String serviceSolution) {
-        this.serviceSolution = serviceSolution;
-    }
-
     public boolean isEquipmentDisposal() {
         return equipmentDisposal;
     }
@@ -353,8 +344,7 @@ public class MantenimientoOrden {
                 + ", idMachine=" + idMachine + ", stoppedMachine=" + stoppedMachine + ", attentionRequired="
                 + attentionRequired + ", serviceDescription=" + serviceDescription + ", receptionDate=" + receptionDate
                 + ", receptionTime=" + receptionTime + ", personnelAssigned=" + personnelAssigned + ", programmedDate="
-                + programmedDate + ", observations=" + observations + ", serviceSolution=" + serviceSolution
-                + ", equipmentDisposal=" + equipmentDisposal + ", notificateCalibration=" + notificateCalibration
+                + programmedDate + ", observations=" + observations + ", equipmentDisposal=" + equipmentDisposal + ", notificateCalibration=" + notificateCalibration
                 + ", usedParts=" + usedParts + ", partNumber=" + partNumber + ", descriptionPart=" + descriptionPart
                 + ", partOrigin=" + partOrigin + ", coversInstalled=" + coversInstalled + ", interlocksTested="
                 + interlocksTested + ", guardsInstalled=" + guardsInstalled + ", electricityConnected="
@@ -371,8 +361,7 @@ public class MantenimientoOrden {
                 + ", isAttentionRequired()=" + isAttentionRequired() + ", getServiceDescription()="
                 + getServiceDescription() + ", getReceptionDate()=" + getReceptionDate() + ", getReceptionTime()="
                 + getReceptionTime() + ", getPersonnelAsigned()=" + getPersonnelAsigned() + ", getProgrammedDate()="
-                + getProgrammedDate() + ", getObservations()=" + getObservations() + ", getServiceSolution()="
-                + getServiceSolution() + ", isEquipmentDisposal()=" + isEquipmentDisposal()
+                + getProgrammedDate() + ", getObservations()=" + getObservations() + ", isEquipmentDisposal()=" + isEquipmentDisposal()
                 + ", isNotificateCalibration()=" + isNotificateCalibration() + ", getUsedPArts()=" + getUsedPArts()
                 + ", getPartNumber()=" + getPartNumber() + ", getDescriptionPart()=" + getDescriptionPart()
                 + ", getPartOrigin()=" + getPartOrigin() + ", isCoversInstalled()=" + isCoversInstalled()
