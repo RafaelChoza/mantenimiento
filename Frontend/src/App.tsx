@@ -14,14 +14,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Principal />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/create-order" element={<CreateOrder />} />
-        <Route path="/create-area" element={<CreateArea />} />
-        <Route path="/techs" element={<Techs />} />
-        <Route path="/create-tech" element={<CreateTech />} />
-        <Route path="/tech-list" element={<TechList />} />
-        <Route path="/area-list" element={<AreaList />} />
+        <Route path="/mantenimiento" element={<Principal />} />
+        <Route path="/mantenimiento/orders" element={<Orders />} />
+        <Route path="/mantenimiento/create-order" element={<CreateOrder />} />
+        <Route path="/mantenimiento/create-area" element={<CreateArea />} />
+        <Route path="/mantenimiento/techs" element={<Techs />} />
+        <Route path="/mantenimiento/create-tech" element={<CreateTech />} />
+        <Route path="/mantenimiento/tech-list" element={<TechList />} />
+        <Route path="/mantenimiento/area-list" element={<AreaList />} />
         
       </Routes>
     </BrowserRouter>

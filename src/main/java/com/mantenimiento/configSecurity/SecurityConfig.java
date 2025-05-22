@@ -33,7 +33,7 @@ public class SecurityConfig {
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
         http.authorizeHttpRequests(authRequest -> authRequest
                 .requestMatchers("/auth/**", "/h2-console/").permitAll()
-                .requestMatchers("/matenimiento/**").authenticated()
+                .requestMatchers("/matenimiento/**", "/areas/**", "/tecnicos/**").authenticated()
                 .anyRequest().authenticated());
         http.sessionManagement(sessionManager -> sessionManager
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

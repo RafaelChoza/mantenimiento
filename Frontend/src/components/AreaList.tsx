@@ -15,8 +15,13 @@ export default function AreaList() {
 
   const getAreas = async () => {
     setCargando(true);
+    const token = localStorage.getItem("token")
     try {
-      const response = await fetch("http://localhost:8080/areas");
+      const response = await fetch("http://localhost:8080/areas", {
+      headers: {
+        "Authorization": `Bearer ${token}`, // 👈 añade el token al header
+      },
+    });
       const data = await response.json();
       console.log(data);
       setAreas(data.responseEntity?.body || []);
@@ -50,6 +55,7 @@ export default function AreaList() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Barer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(editingArea),
       });
@@ -84,6 +90,9 @@ export default function AreaList() {
     try {
       const response = await fetch(`http://localhost:8080/areas/${id}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Barer ${localStorage.getItem("token")}`
+        }
       });
 
       if (response.ok) {

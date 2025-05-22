@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import { useState } from "react";
 
 export default function Login() {
@@ -14,19 +13,23 @@ export default function Login() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/login", {
+      const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Credenciales inválidas");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Credenciales inválidas");
+      }
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      window.location.href = "/dashboard";
+      console.log(data.token)
+      window.location.href = "/mantenimiento";
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Error al iniciar sesión");
     }
   };
 

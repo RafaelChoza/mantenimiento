@@ -15,8 +15,13 @@ export default function TechList() {
 
   const getTechs = async () => {
     setCargando(true);
+    const token = localStorage.getItem("token")
     try {
-      const response = await fetch("http://localhost:8080/tecnicos");
+      const response = await fetch("http://localhost:8080/tecnicos", {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
       const data = await response.json();
       console.log("Datos recibidos:", data);
       setTechs(data.responseEntity.body);
