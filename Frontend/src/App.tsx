@@ -8,6 +8,7 @@ import CreateTech from "./components/CreateTech";
 import TechList from "./components/TechList";
 import AreaList from "./components/AreaList";
 import CreateArea from "./components/CreateArea";
+import UserRegister from "./components/UserRegister";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path="/mantenimiento/create-tech" element={<CreateTech />} />
         <Route path="/mantenimiento/tech-list" element={<TechList />} />
         <Route path="/mantenimiento/area-list" element={<AreaList />} />
-        
+        <Route path="/mantenimiento/user-register" element={<UserRegister />} />
       </Routes>
     </BrowserRouter>
   );

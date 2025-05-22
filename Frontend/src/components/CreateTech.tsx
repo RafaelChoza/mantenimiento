@@ -2,10 +2,14 @@ import { useState } from "react";
 import type { Tech } from "../types"
 import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function CreateTech() {
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState<Omit<Tech, "idTecnico">>({
         nombreTecnico: "",
         apellidoTecnico: "",
@@ -30,6 +34,7 @@ export default function CreateTech() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify(formData)
             });
@@ -40,6 +45,9 @@ export default function CreateTech() {
             if (data.success) {
                 console.log("Datos del técnico enviados con éxito");
                 toast.success("Técnico creado con éxito");
+                setTimeout(() => {
+                    navigate("/mantenimiento/tech-list");
+                }, 5000);
             } else {
                 console.log("Error al enviar los datos del técnico", data.message); // Aquí debe ser `message`
                 toast.error(data.message || "Error al enviar los datos del técnico");

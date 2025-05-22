@@ -91,7 +91,7 @@ export default function AreaList() {
       const response = await fetch(`http://localhost:8080/areas/${id}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Barer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
       });
 

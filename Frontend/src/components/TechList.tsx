@@ -53,6 +53,7 @@ export default function TechList() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(editingTech),
       })
@@ -93,6 +94,9 @@ export default function TechList() {
     try {
       const response = await fetch(`http://localhost:8080/tecnicos/${id}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
       });
       if (response.ok) {
         setTechs(prev => prev.filter(tech => tech.idTecnico !== id));

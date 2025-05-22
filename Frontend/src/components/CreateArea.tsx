@@ -1,8 +1,12 @@
 import { useState } from "react";
 import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateArea() {
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({ area: "" });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +25,17 @@ export default function CreateArea() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify(formData),
             });
             if (response.ok) {
                 console.log("Área creada con éxito");
                 toast.success("Area creada con exito")
+
+                setTimeout(() => {
+                    navigate("/mantenimiento/area-list");
+                }, 5000);
             } else {
                 console.log("Error al crear el área");
             }

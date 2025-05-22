@@ -48,6 +48,7 @@ export default function Orders() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(editingOrder)
       })
@@ -77,7 +78,11 @@ export default function Orders() {
   const getOrders = async () => {
     setCargando(true);
     try {
-      const response = await fetch("http://localhost:8080/mantenimiento");
+      const response = await fetch("http://localhost:8080/mantenimiento", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const data = await response.json();
       setOrders(data.responseEntity.body);
     } catch (error) {
@@ -90,7 +95,11 @@ export default function Orders() {
   const getAreas = async () => {
     setCargando(true)
     try {
-      const response = await fetch("http://localhost:8080/areas");
+      const response = await fetch("http://localhost:8080/areas", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const data = await response.json()
       setAreas(data.responseEntity.body)
     } catch (error) {
@@ -103,7 +112,11 @@ export default function Orders() {
   const getTechs = async () => {
     setCargando(true)
     try {
-      const response = await fetch("http://localhost:8080/tecnicos")
+      const response = await fetch("http://localhost:8080/tecnicos", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const data = await response.json()
       setTechs(data.responseEntity.body)
     } catch (error) {

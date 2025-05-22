@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { Tech, Area, MantenimientoOrden } from "../types";
 import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const MantenimientoOrdenForm: React.FC = () => {
   const [formData, setFormData] = useState<MantenimientoOrden>({
@@ -39,6 +40,8 @@ const MantenimientoOrdenForm: React.FC = () => {
 
   const [techs, setTechs] = useState<Tech[]>([]);
   const [areas, setAreas] = useState<Area[]>([])
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTechs();
@@ -97,6 +100,10 @@ const MantenimientoOrdenForm: React.FC = () => {
       if (response.ok) {
         console.log("Datos de orden de mantenimiento enviados a la base de datos con éxito")
         toast.success("Orden creada con exito")
+
+        setTimeout(() => {
+          navigate("/mantenimiento/orden-list");
+        }, 5000);
       } else {
         console.log("Error al enviar los datos de la orden de mantenimiento")
       }
