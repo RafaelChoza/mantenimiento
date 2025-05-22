@@ -62,3 +62,12 @@ export type MantenimientoOrden = {
   comments: string;
   closeDate: string;
 }
+
+export type RegisterUser = {
+  username: string;
+  password: string;
+  password_verification: string;
+  firstname: string;
+  lastname: string;
+  country: string;
+}

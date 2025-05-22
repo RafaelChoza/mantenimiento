@@ -9,6 +9,8 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.mantenimiento.auth.RevokedTokenRepository;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,6 +21,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 
     private static final String SECRET_KEY="586E3272357538782F413F4428472B4B6250655368566B597033733676397924";
+    private RevokedTokenRepository revokedTokenRepository;
 
     public String getToken(UserDetails user) {
         return getToken(new HashMap<>(), user);
@@ -30,7 +33,7 @@ public class JwtService {
             .setClaims(extraClaims)
             .setSubject(user.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+            .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24))
             .signWith(getKey(), SignatureAlgorithm.HS256)
             .compact();
     }
@@ -47,6 +50,10 @@ public class JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username=getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
+    }
+
+    public boolean isTokenReboked(String token) {
+        return revokedTokenRepository.existsByToken(token);
     }
 
     private Claims getAllClaims(String token)

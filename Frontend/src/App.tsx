@@ -23,7 +23,7 @@ function App() {
         <Route path="/mantenimiento/create-tech" element={<CreateTech />} />
         <Route path="/mantenimiento/tech-list" element={<TechList />} />
         <Route path="/mantenimiento/area-list" element={<AreaList />} />
-        <Route path="/mantenimiento/user-register" element={<UserRegister />} />
+        <Route path="/user-register" element={<UserRegister />} />
       </Routes>
     </BrowserRouter>
   );

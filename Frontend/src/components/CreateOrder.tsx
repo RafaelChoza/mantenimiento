@@ -50,7 +50,11 @@ const MantenimientoOrdenForm: React.FC = () => {
 
   const getTechs = async () => {
     try {
-      const response = await fetch("http://localhost:8080/tecnicos");
+      const response = await fetch("http://localhost:8080/tecnicos", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      });
       const data = await response.json();
       setTechs(data.responseEntity.body);
     } catch (error) {
@@ -60,7 +64,11 @@ const MantenimientoOrdenForm: React.FC = () => {
 
   const getAreas = async () => {
     try {
-      const response = await fetch("http://localhost:8080/areas");
+      const response = await fetch("http://localhost:8080/areas", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}` 
+        }
+      });
       const data = await response.json();
       console.log(data);
       setAreas(data.responseEntity.body)
@@ -94,6 +102,7 @@ const MantenimientoOrdenForm: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(formData)
       })

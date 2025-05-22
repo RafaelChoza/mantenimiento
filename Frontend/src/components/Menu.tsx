@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 export default function Menu() {
   return (
@@ -45,6 +46,7 @@ export default function Menu() {
       >
         👨‍🔧 Lista de Técnicos
       </Link>
+      <Logout />
     </nav>
   );
 }

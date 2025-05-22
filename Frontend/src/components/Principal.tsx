@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 export default function Principal() {
   return (
+    
     <div className="container mx-auto p-6">
+      <Logout />
       <h1 className="text-5xl font-extrabold mb-10 text-center text-blue-700 drop-shadow-lg">
         Menú Principal
       </h1>
