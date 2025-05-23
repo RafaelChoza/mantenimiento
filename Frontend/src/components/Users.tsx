@@ -57,6 +57,7 @@ export default function Users() {
               <p><strong>👤 Usuario:</strong> {user.username}</p>
               <p><strong>📛 Nombre:</strong> {user.firstname} {user.lastname}</p>
               <p><strong>🌍 País:</strong> {user.country}</p>
+              <p><strong>🛡️ Rol:</strong> {user.role}</p>
             </div>
           ))}
         </div>

@@ -71,6 +71,7 @@ export type RegisterUser = {
   firstname: string;
   lastname: string;
   country: string;
+  role: number;
 }
 
 export type MyToken = {
