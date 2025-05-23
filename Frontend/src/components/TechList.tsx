@@ -114,130 +114,145 @@ export default function TechList() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
-      <ToastContainer/>
-      <Menu />
-      <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">
-        👨‍🔧 Lista de Técnicos
-      </h1>
+  <div className="max-w-6xl mx-auto p-6 bg-blue-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
+    <ToastContainer />
+    <Menu />
+    <h1
+      className="text-center text-blue-700 text-sm mb-6"
+      style={{ fontFamily: '"Press Start 2P", cursive' }}
+    >
+      👨‍🔧 Lista de Técnicos
+    </h1>
 
-      {/* Modal de edición con estilos actualizados */}
-      {editingTech && (
-        <div className="fixed inset-0 bg-blue-50 bg-opacity-90 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full border-l-4 border-blue-500">
-            <h2 className="text-xl font-bold text-blue-700 mb-4 text-center">Editar Área</h2>
-            <form onSubmit={handleUpdateTech} className="space-y-4">
-              <input
-                type="text"
-                name="nombreTecnico"
-                value={editingTech.nombreTecnico}
-                onChange={handleInputChange}
-                placeholder="Nombre del tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <input
-                type="text"
-                name="apellidoTecnico"
-                value={editingTech.apellidoTecnico}
-                onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <input
-                type="email"
-                name="correo"
-                value={editingTech.correo}
-                onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <input
-                type="number"
-                name="numNomina"
-                value={editingTech.numNomina}
-                onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <input
-                type="date"
-                name="fechaAlta"
-                value={editingTech.fechaAlta}
-                onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <div className="flex justify-end gap-4 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setEditingTech(null)}
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
-                >
-                  Guardar Cambios
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {cargando ? (
-        <div className="flex justify-center items-center h-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500"></div>
-          <p className="ml-2 text-blue-600 text-sm font-semibold">Cargando...</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {techs.map(tech => {
-            console.log("Técnico actual:", tech); // 👈 Aquí puedes ver si tech.id existe
-
-            return (
-              <div
-                key={tech.idTecnico}
-                className="bg-white p-3 rounded-md shadow-sm border-l-2 border-blue-500 hover:shadow-md transition-all"
+    {editingTech && (
+      <div className="fixed inset-0 bg-blue-100 bg-opacity-90 flex justify-center items-center z-50">
+        <div className="bg-white p-6 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] max-w-md w-full">
+          <h2
+            className="text-xs text-blue-700 mb-4 text-center"
+            style={{ fontFamily: '"Press Start 2P", cursive' }}
+          >
+            ✏️ Editar Técnico
+          </h2>
+          <form onSubmit={handleUpdateTech} className="space-y-4">
+            <input
+              type="text"
+              name="nombreTecnico"
+              value={editingTech.nombreTecnico}
+              onChange={handleInputChange}
+              placeholder="Nombre del técnico"
+              className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <input
+              type="text"
+              name="apellidoTecnico"
+              value={editingTech.apellidoTecnico}
+              onChange={handleInputChange}
+              placeholder="Apellido del técnico"
+              className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <input
+              type="email"
+              name="correo"
+              value={editingTech.correo}
+              onChange={handleInputChange}
+              placeholder="Correo"
+              className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <input
+              type="number"
+              name="numNomina"
+              value={editingTech.numNomina}
+              onChange={handleInputChange}
+              placeholder="Número de nómina"
+              className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <input
+              type="date"
+              name="fechaAlta"
+              value={editingTech.fechaAlta}
+              onChange={handleInputChange}
+              className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <div className="flex justify-end gap-4 pt-4">
+              <button
+                type="button"
+                onClick={() => setEditingTech(null)}
+                className="bg-red-400 border-4 border-black text-black px-4 py-2 text-xs hover:bg-red-500 transition-all shadow-[4px_4px_0_#333]"
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
               >
-                <h2 className="text-sm font-bold text-blue-700 mb-2 flex items-center">
-                  🆔 Técnico {tech.idTecnico}
-                </h2>
-
-                <hr className="mb-2 border-blue-300" />
-
-                <div className="grid grid-cols-2 gap-1 text-xs text-gray-800">
-                  {Object.entries(tech).map(([key, value]) => (
-                    <p key={key} className="bg-gray-100 p-1 rounded-md shadow-xs">
-                      <strong className="text-blue-600">
-                        {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
-                      </strong>{" "}
-                      {value?.toString() || "N/A"}
-                    </p>
-                  ))}
-                </div>
-
-                <div className="mt-2 flex justify-between">
-                  <button
-                    className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition"
-                    onClick={() => handleEdit(tech)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => onDelete(tech.idTecnico)}
-                    className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="bg-green-400 border-4 border-black text-black px-4 py-2 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
+              >
+                Guardar
+              </button>
+            </div>
+          </form>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+
+    {cargando ? (
+      <div className="flex justify-center items-center h-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-black"></div>
+        <p className="ml-2 text-blue-700 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+          Cargando...
+        </p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {techs.map((tech) => (
+          <div
+            key={tech.idTecnico}
+            className="bg-white p-4 border-4 border-black rounded shadow-[4px_4px_0_#333] hover:shadow-[6px_6px_0_#333] transition-all"
+          >
+            <h2
+              className="text-xs text-blue-700 mb-2"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            >
+              🆔 Técnico {tech.idTecnico}
+            </h2>
+            <hr className="mb-2 border-black" />
+            <div className="grid grid-cols-1 gap-1 text-xs text-black">
+              {Object.entries(tech).map(([key, value]) => (
+                <p
+                  key={key}
+                  className="bg-blue-50 border border-black p-1 rounded shadow-sm"
+                  style={{ fontFamily: '"Press Start 2P", cursive' }}
+                >
+                  <strong>{key.replace(/([A-Z])/g, " $1").toUpperCase()}:</strong> {value?.toString() || "N/A"}
+                </p>
+              ))}
+            </div>
+            <div className="mt-3 flex justify-between">
+              <button
+                className="bg-yellow-300 border-4 border-black text-black px-3 py-1 text-xs hover:bg-yellow-400 transition-all shadow-[3px_3px_0_#333]"
+                onClick={() => handleEdit(tech)}
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
+              >
+                Editar
+              </button>
+              <button
+                onClick={() => onDelete(tech.idTecnico)}
+                className="bg-red-400 border-4 border-black text-black px-3 py-1 text-xs hover:bg-red-500 transition-all shadow-[3px_3px_0_#333]"
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+
 }

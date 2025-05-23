@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -27,61 +28,82 @@ export default function Login() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      console.log(data.token)
-      window.location.href = "/mantenimiento";
+      toast.success("Inicio de sesión exitoso");
+      setTimeout(() => {
+        window.location.href = "/mantenimiento";
+      }, 3000);
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 px-4">
-      <h1 className="text-4xl font-extrabold text-center mb-10 text-purple-800 uppercase tracking-wide">
-        Administración de Mantenimientos Correctivos
+    <div className="max-w-xl mx-auto p-6 bg-blue-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg mt-10">
+      <ToastContainer />
+      <h1
+        className="text-center text-blue-700 text-sm mb-6"
+        style={{ fontFamily: '"Press Start 2P", cursive' }}
+      >
+        🔐 Iniciar Sesión
       </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md space-y-6"
-      >
-        <h2 className="text-2xl font-bold text-center text-purple-700">
-          Iniciar Sesión
-        </h2>
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+          <h2
+            className="text-xs text-purple-700 mb-4"
+            style={{ fontFamily: '"Press Start 2P", cursive' }}
+          >
+            Credenciales de Usuario
+          </h2>
 
-        {error && (
-          <p className="text-red-500 text-sm text-center font-medium">
-            {error}
-          </p>
-        )}
+          {error && (
+            <p className="text-red-600 text-xs mb-4 text-center font-bold">
+              {error}
+            </p>
+          )}
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Usuario"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          onChange={handleChange}
-          required
-        />
+          <div className="grid grid-cols-1 gap-4">
+            <input
+              className="border-2 border-black p-2 bg-blue-50 text-black text-xs"
+              type="text"
+              name="username"
+              placeholder="Usuario"
+              onChange={handleChange}
+              required
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+            <input
+              className="border-2 border-black p-2 bg-blue-50 text-black text-xs"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              onChange={handleChange}
+              required
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            />
+          </div>
+        </section>
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded hover:from-blue-700 hover:to-purple-700 font-semibold transition duration-300"
+          className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
+          style={{ fontFamily: '"Press Start 2P", cursive' }}
         >
           Entrar
         </button>
       </form>
-      <div className="p-3 bg-white m-5 rounded-xl flex flex-col">
-        <p className="font-bold">¿No estas registrado?</p>
-        <Link className="text-center bg-blue-600 rounded-2xl hover:scale-105 m-2 text-white font-bold" to="/user-register">Registrate</Link>
+
+      <div className="mt-6 text-center text-xs text-black">
+        <p className="mb-2" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+          ¿No estás registrado?
+        </p>
+        <Link
+          to="/user-register"
+          className="inline-block bg-blue-600 text-white px-4 py-2 border-4 border-black rounded hover:bg-blue-700 transition-all shadow-[4px_4px_0_#333]"
+          style={{ fontFamily: '"Press Start 2P", cursive' }}
+        >
+          Regístrate
+        </Link>
       </div>
     </div>
   );

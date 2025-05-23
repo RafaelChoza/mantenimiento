@@ -3,49 +3,25 @@ import Logout from "./Logout";
 
 export default function Menu() {
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-purple-600 shadow-md p-4 rounded-lg mb-6 flex flex-wrap justify-center gap-4">
-      <Link
-        to="/mantenimiento"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition block sm:inline-block"
-      >
-        🏠 Menú Principal
-      </Link>
-      <Link
-        to="/mantenimiento/orders"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition block sm:inline-block"
-      >
-        📜 Órdenes Abiertas
-      </Link>
-      <Link
-        to="/mantenimiento/create-area"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition block sm:inline-block"
-      >
-        🏢 Crear Área
-      </Link>
-      <Link
-        to="/mantenimiento/create-order"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition block sm:inline-block"
-      >
-        🏢 Crear Orden
-      </Link>
-      <Link
-        to="/mantenimiento/area-list"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition block sm:inline-block"
-      >
-        📋 Lista de Áreas
-      </Link>
-      <Link
-        to="/mantenimiento/create-tech"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition block sm:inline-block"
-      >
-        🔧 Crear Técnico
-      </Link>
-      <Link
-        to="/mantenimiento/tech-list"
-        className="text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition block sm:inline-block"
-      >
-        👨‍🔧 Lista de Técnicos
-      </Link>
+    <nav className="bg-yellow-300 border-4 border-black shadow-[6px_6px_0_#333] p-4 rounded-lg mb-6 flex flex-wrap justify-center gap-4">
+      {[
+        { to: "/mantenimiento", label: "🏠 Menú Principal" },
+        { to: "/mantenimiento/orders", label: "📜 Órdenes Abiertas" },
+        { to: "/mantenimiento/create-area", label: "🏢 Crear Área" },
+        { to: "/mantenimiento/create-order", label: "🛠️ Crear Orden" },
+        { to: "/mantenimiento/area-list", label: "📋 Lista de Áreas" },
+        { to: "/mantenimiento/create-tech", label: "🔧 Crear Técnico" },
+        { to: "/mantenimiento/tech-list", label: "👨‍🔧 Lista de Técnicos" },
+      ].map((link) => (
+        <Link
+          key={link.to}
+          to={link.to}
+          className="bg-white border-2 border-black text-black px-4 py-2 text-xs hover:bg-yellow-400 transition-all shadow-[3px_3px_0_#333]"
+          style={{ fontFamily: '"Press Start 2P", cursive' }}
+        >
+          {link.label}
+        </Link>
+      ))}
       <Logout />
     </nav>
   );
