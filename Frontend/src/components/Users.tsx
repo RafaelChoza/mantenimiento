@@ -58,8 +58,13 @@ export default function Users() {
               <p><strong>📛 Nombre:</strong> {user.firstname} {user.lastname}</p>
               <p><strong>🌍 País:</strong> {user.country}</p>
               <p><strong>🛡️ Rol:</strong> {user.role}</p>
+              <div>
+                <button className="m-2 border-2 border-black p-2 bg-pink-800 text-white hover:bg-pink-600">Cambiar Rol</button>
+              </div>
+              
             </div>
           ))}
+          
         </div>
       )}
     </div>
