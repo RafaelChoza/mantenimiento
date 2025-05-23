@@ -64,10 +64,18 @@ export type MantenimientoOrden = {
 }
 
 export type RegisterUser = {
+  id: number;
   username: string;
   password: string;
   password_verification: string;
   firstname: string;
   lastname: string;
   country: string;
+}
+
+export type MyToken = {
+  sub: string;
+  role: string;
+  iat: number;
+  exp: number;
 }

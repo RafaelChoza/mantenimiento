@@ -12,6 +12,8 @@ export default function Menu() {
         { to: "/mantenimiento/area-list", label: "📋 Lista de Áreas" },
         { to: "/mantenimiento/create-tech", label: "🔧 Crear Técnico" },
         { to: "/mantenimiento/tech-list", label: "👨‍🔧 Lista de Técnicos" },
+        { to: "/mantenimiento/users", label: "👨 Lista de Usuarios" },
+        
       ].map((link) => (
         <Link
           key={link.to}

@@ -16,6 +16,7 @@ public class UserController {
     @GetMapping("/mantenimiento/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
+        System.out.println("Obteniendo la lista de todos los usuarios");
         return ResponseEntity.ok(users);
     }
 }
