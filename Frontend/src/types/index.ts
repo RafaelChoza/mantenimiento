@@ -1,10 +1,10 @@
 export type Tech = {
-    idTecnico: number;
-    nombreTecnico: string;
-    apellidoTecnico: string;
-    correo: string;
-    numNomina: number;
-    fechaAlta: string;
+  idTecnico: number;
+  nombreTecnico: string;
+  apellidoTecnico: string;
+  correo: string;
+  numNomina: number;
+  fechaAlta: string;
 }
 
 export type Order = {
@@ -79,4 +79,40 @@ export type MyToken = {
   role: string;
   iat: number;
   exp: number;
+}
+
+export type OrderCompleted = {
+  id: number,
+  serviceDateTime: string,
+  serviceTime: string,
+  requestorName: string,
+  requestorLastName: string,
+  area: string,
+  idMachine: string,
+  stoppedMachine: boolean,
+  attentionRequired: boolean,
+  serviceDescription: string,
+  receptionDate: string,
+  receptionTime: string,
+  personnelAssigned: string,
+  programmedDate: string,
+  observations: string,
+  problemCauseSolution: string,
+  equipmentDisposal: boolean,
+  notificateCalibration: boolean,
+  usedParts: number,
+  partNumber: string,
+  descriptionPart: string
+  partOrigin: string
+  coversInstalled: boolean
+  interlocksTested: boolean
+  guardsInstalled: boolean,
+  electricityConnected: boolean,
+  completeRevision: boolean,
+  cleanArea: boolean,
+  waterAirGasConnected: boolean,
+  taggedProperly: boolean,
+  comments: string,
+  closeDate: string,
+  fechaTransferencia: string
 }

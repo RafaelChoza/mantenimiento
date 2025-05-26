@@ -13,6 +13,7 @@ export default function Menu() {
         { to: "/mantenimiento/create-tech", label: "🔧 Crear Técnico" },
         { to: "/mantenimiento/tech-list", label: "👨‍🔧 Lista de Técnicos" },
         { to: "/mantenimiento/users", label: "👨 Lista de Usuarios" },
+        { to: "/mantenimiento-completado", label: "✅ Manttos Completados" },
         
       ].map((link) => (
         <Link

@@ -111,6 +111,14 @@ export default function Principal() {
           Lista de Usuarios
           <div className="absolute top-2 right-4 text-black text-lg">📍</div>
         </Link>
+        <Link
+          to="/mantenimiento-completado"
+          className="relative flex items-center justify-center bg-fuchsia-700 text-black text-xs p-6 border-4 border-black shadow-[4px_4px_0_#333] hover:shadow-[2px_2px_0_#333] transition-transform duration-200 transform hover:scale-105 text-center"
+          style={{ fontFamily: '"Press Start 2P", cursive' }}
+        >
+          Mantenimientos Cerrados
+          <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+        </Link>
       </div>
     </div>
   );

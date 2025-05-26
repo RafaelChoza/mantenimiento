@@ -126,6 +126,28 @@ export default function Orders() {
     }
   }
 
+ const manttoCompletar = async (id: MantenimientoOrden['id']) => {
+  if (id === undefined) {
+    console.error("ID no definido");
+    return;
+  }
+
+  if (!window.confirm('¿Marcar este servicio como completado?')) return;
+  try {
+    const response = await fetch(`http://localhost:8080/mantenimiento/${id}/completado`, {
+      method: "POST",
+      headers:{
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      }
+    });
+    if(!response.ok){throw new Error("Error al enviar los datos")};
+    setOrders((prev) => prev.filter((mantto) => mantto.id != id))
+  } catch (error) {
+    console.error("Error", error)
+  }
+}
+
+
   return (
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
       {editingOrder && (
@@ -449,6 +471,7 @@ export default function Orders() {
                 </button>
                 <button
                   className="bg-green-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-green-500 transition-all shadow-[3px_3px_0_#333]"
+                  onClick={() => manttoCompletar(order.id)}
                 >
                   Completado
                 </button>

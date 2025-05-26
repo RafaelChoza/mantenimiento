@@ -9,6 +9,8 @@ import AreaList from "./components/AreaList";
 import CreateArea from "./components/CreateArea";
 import UserRegister from "./components/UserRegister";
 import Users from "./components/Users";
+import OrdersCompleted from "./components/OrdersCompleted";
+import OrderCompletedDetail from "./components/OrderCompletedDetail";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/mantenimiento/tech-list" element={<TechList />} />
         <Route path="/mantenimiento/area-list" element={<AreaList />} />
         <Route path="/user-register" element={<UserRegister />} />
+        <Route path="/mantenimiento-completado" element={<OrdersCompleted />} />
+        <Route path="/detalle/:id" element={<OrderCompletedDetail />} />
       </Routes>
     </BrowserRouter>
   );
