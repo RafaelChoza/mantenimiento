@@ -3,6 +3,7 @@ import type { Tech, Area, MantenimientoOrden } from "../types";
 import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const MantenimientoOrdenForm: React.FC = () => {
   const [formData, setFormData] = useState<MantenimientoOrden>({
@@ -38,6 +39,8 @@ const MantenimientoOrdenForm: React.FC = () => {
     closeDate: "",
   });
 
+  const { role} = useAuth();
+
   const [techs, setTechs] = useState<Tech[]>([]);
   const [areas, setAreas] = useState<Area[]>([])
 
@@ -66,7 +69,7 @@ const MantenimientoOrdenForm: React.FC = () => {
     try {
       const response = await fetch("http://localhost:8080/areas", {
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}` 
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
       });
       const data = await response.json();
@@ -122,122 +125,129 @@ const MantenimientoOrdenForm: React.FC = () => {
   };
 
   return (
-  <div className="max-w-5xl mx-auto p-6 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
-    <ToastContainer />
-    <Menu />
-    <h1
-      className="text-center text-yellow-700 text-sm mb-6"
-      style={{ fontFamily: '"Press Start 2P", cursive' }}
-    >
-      🛠️ Orden de Mantenimiento Correctivo
-    </h1>
-
-    <form onSubmit={handleSubmit} className="space-y-10">
-      {/* Sección Solicitante */}
-      <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-        <h2
-          className="text-xs text-blue-700 mb-4"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          Exclusivo Solicitante
-        </h2>
-        <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorName" placeholder="Nombre del solicitante" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorLastName" placeholder="Apellido del solicitante" onChange={handleChange} />
-          <select className="border-2 border-black p-2 bg-yellow-50" name="area" value={formData.area} onChange={handleChange}>
-            <option value="" disabled>Seleccionar Área</option>
-            {areas.map((area) => (
-              <option key={area.id} value={area.areaName}>{area.areaName}</option>
-            ))}
-          </select>
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="idMachine" placeholder="ID Máquina" onChange={handleChange} />
-          <label className="flex items-center space-x-2 col-span-2">
-            <input type="checkbox" name="stoppedMachine" onChange={handleChange} />
-            <span>Máquina detenida</span>
-          </label>
-          <label className="flex items-center space-x-2 col-span-2">
-            <input type="checkbox" name="attentionRequired" onChange={handleChange} />
-            <span>Requiere atención inmediata</span>
-          </label>
-          <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="serviceDescription" placeholder="Descripción del servicio" onChange={handleChange} />
-        </div>
-      </section>
-
-      {/* Sección Supervisor */}
-      <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-        <h2
-          className="text-xs text-green-700 mb-4"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          Exclusivo Supervisor de Mantenimiento
-        </h2>
-        <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-          <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="receptionDate" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleChange} />
-          <select className="border-2 border-black p-2 bg-yellow-50" name="personnelAsigned" value={formData.personnelAsigned} onChange={handleChange}>
-            <option value="" disabled>Seleccionar Técnico</option>
-            {techs.map((tech) => (
-              <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
-                {tech.nombreTecnico} - {tech.apellidoTecnico}
-              </option>
-            ))}
-          </select>
-          <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="programmedDate" onChange={handleChange} />
-          <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="observations" placeholder="Observaciones encontradas" onChange={handleChange} />
-          <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="problemCauseSolution" placeholder="Problema, causa y solución" onChange={handleChange} />
-          <label className="flex items-center space-x-2">
-            <span>¿Equipo para desecho?</span>
-            <input type="checkbox" name="equipmentDisposal" onChange={handleChange} />
-          </label>
-          <label className="flex items-center space-x-2">
-            <span>¿Requiere aviso a calibración y MP?</span>
-            <input type="checkbox" name="notificateCalibration" onChange={handleChange} />
-          </label>
-        </div>
-      </section>
-
-      {/* Sección Técnico */}
-      <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-        <h2
-          className="text-xs text-purple-700 mb-4"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          Técnico Asignado
-        </h2>
-        <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-          {[
-            { name: "coversInstalled", label: "Cubiertas instaladas" },
-            { name: "interlocksTested", label: "Interlocks probados" },
-            { name: "guardsInstalled", label: "Guardas instaladas" },
-            { name: "electricityConnected", label: "Electricidad conectada" },
-            { name: "completeRevision", label: "Revisión completa del equipo" },
-            { name: "cleanArea", label: "Limpieza del área" },
-            { name: "waterAirGasConnected", label: "Aire, Agua y/o gas conectados" },
-            { name: "taggedProperly", label: "Etiquetado y señalización de Equipo" },
-          ].map((item) => (
-            <label key={item.name} className="flex items-center space-x-2">
-              <input type="checkbox" name={item.name} onChange={handleChange} checked={formData[item.name as keyof MantenimientoOrden] as boolean} />
-              <span>{item.label}</span>
-            </label>
-          ))}
-          <input className="border-2 border-black p-2 bg-yellow-50" type="number" name="usedParts" value={formData.usedParts} placeholder="Partes usadas" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partNumber" value={formData.partNumber} placeholder="Número de parte" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="descriptionPart" value={formData.descriptionPart} placeholder="Descripción de la parte" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partOrigin" value={formData.partOrigin} placeholder="Origen de la parte" onChange={handleChange} />
-          <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="comments" value={formData.comments} placeholder="Comentarios" onChange={handleChange} />
-          <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
-        </div>
-      </section>
-
-      <button
-        className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
+    <div className="max-w-5xl mx-auto p-6 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
+      <ToastContainer />
+      <Menu />
+      <h1
+        className="text-center text-yellow-700 text-sm mb-6"
         style={{ fontFamily: '"Press Start 2P", cursive' }}
       >
-        Enviar Orden
-      </button>
-    </form>
-  </div>
-);
+        🛠️ Orden de Mantenimiento Correctivo
+      </h1>
+
+      <form onSubmit={handleSubmit} className="space-y-10">
+        {/* Sección Solicitante */}
+        <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+          <h2
+            className="text-xs text-blue-700 mb-4"
+            style={{ fontFamily: '"Press Start 2P", cursive' }}
+          >
+            Exclusivo Solicitante
+          </h2>
+          <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorName" placeholder="Nombre del solicitante" onChange={handleChange} />
+            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorLastName" placeholder="Apellido del solicitante" onChange={handleChange} />
+            <select className="border-2 border-black p-2 bg-yellow-50" name="area" value={formData.area} onChange={handleChange}>
+              <option value="" disabled>Seleccionar Área</option>
+              {areas.map((area) => (
+                <option key={area.id} value={area.areaName}>{area.areaName}</option>
+              ))}
+            </select>
+            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="idMachine" placeholder="ID Máquina" onChange={handleChange} />
+            <label className="flex items-center space-x-2 col-span-2">
+              <input type="checkbox" name="stoppedMachine" onChange={handleChange} />
+              <span>Máquina detenida</span>
+            </label>
+            <label className="flex items-center space-x-2 col-span-2">
+              <input type="checkbox" name="attentionRequired" onChange={handleChange} />
+              <span>Requiere atención inmediata</span>
+            </label>
+            <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="serviceDescription" placeholder="Descripción del servicio" onChange={handleChange} />
+          </div>
+        </section>
+
+        {role != "USER" && (
+
+          <div>
+            {/* Sección Supervisor */}
+            <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+              <h2
+                className="text-xs text-green-700 mb-4"
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
+              >
+                Exclusivo Supervisor de Mantenimiento
+              </h2>
+              <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="receptionDate" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleChange} />
+                <select className="border-2 border-black p-2 bg-yellow-50" name="personnelAsigned" value={formData.personnelAsigned} onChange={handleChange}>
+                  <option value="" disabled>Seleccionar Técnico</option>
+                  {techs.map((tech) => (
+                    <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
+                      {tech.nombreTecnico} - {tech.apellidoTecnico}
+                    </option>
+                  ))}
+                </select>
+                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="programmedDate" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="observations" placeholder="Observaciones encontradas" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="problemCauseSolution" placeholder="Problema, causa y solución" onChange={handleChange} />
+                <label className="flex items-center space-x-2">
+                  <span>¿Equipo para desecho?</span>
+                  <input type="checkbox" name="equipmentDisposal" onChange={handleChange} />
+                </label>
+                <label className="flex items-center space-x-2">
+                  <span>¿Requiere aviso a calibración y MP?</span>
+                  <input type="checkbox" name="notificateCalibration" onChange={handleChange} />
+                </label>
+              </div>
+            </section>
+            <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+              <h2
+                className="text-xs text-purple-700 mb-4"
+                style={{ fontFamily: '"Press Start 2P", cursive' }}
+              >
+                Técnico Asignado
+              </h2>
+              <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                {[
+                  { name: "coversInstalled", label: "Cubiertas instaladas" },
+                  { name: "interlocksTested", label: "Interlocks probados" },
+                  { name: "guardsInstalled", label: "Guardas instaladas" },
+                  { name: "electricityConnected", label: "Electricidad conectada" },
+                  { name: "completeRevision", label: "Revisión completa del equipo" },
+                  { name: "cleanArea", label: "Limpieza del área" },
+                  { name: "waterAirGasConnected", label: "Aire, Agua y/o gas conectados" },
+                  { name: "taggedProperly", label: "Etiquetado y señalización de Equipo" },
+                ].map((item) => (
+                  <label key={item.name} className="flex items-center space-x-2">
+                    <input type="checkbox" name={item.name} onChange={handleChange} checked={formData[item.name as keyof MantenimientoOrden] as boolean} />
+                    <span>{item.label}</span>
+                  </label>
+                ))}
+                <input className="border-2 border-black p-2 bg-yellow-50" type="number" name="usedParts" value={formData.usedParts} placeholder="Partes usadas" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partNumber" value={formData.partNumber} placeholder="Número de parte" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="descriptionPart" value={formData.descriptionPart} placeholder="Descripción de la parte" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partOrigin" value={formData.partOrigin} placeholder="Origen de la parte" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="comments" value={formData.comments} placeholder="Comentarios" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
+              </div>
+            </section>
+          </div>
+        )}
+
+
+        {/* Sección Técnico */}
+
+
+        <button
+          className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
+          style={{ fontFamily: '"Press Start 2P", cursive' }}
+        >
+          Enviar Orden
+        </button>
+      </form>
+    </div>
+  );
 
 
 

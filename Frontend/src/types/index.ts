@@ -121,3 +121,8 @@ export type Role = {
   id: number;
   name: string;
 }
+
+export type AuthContextType = {
+  role: string | null;
+  username: string | null;
+}

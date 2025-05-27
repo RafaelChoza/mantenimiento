@@ -11,23 +11,24 @@ import UserRegister from "./components/UserRegister";
 import Users from "./components/Users";
 import OrdersCompleted from "./components/OrdersCompleted";
 import OrderCompletedDetail from "./components/OrderCompletedDetail";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/mantenimiento" element={<Principal />} />
-        <Route path="/mantenimiento/orders" element={<Orders />} />
-        <Route path="/mantenimiento/create-order" element={<CreateOrder />} />
-        <Route path="/mantenimiento/create-area" element={<CreateArea />} />
-        <Route path="/mantenimiento/users" element={<Users />} />
-        <Route path="/mantenimiento/create-tech" element={<CreateTech />} />
-        <Route path="/mantenimiento/tech-list" element={<TechList />} />
-        <Route path="/mantenimiento/area-list" element={<AreaList />} />
-        <Route path="/user-register" element={<UserRegister />} />
-        <Route path="/mantenimiento-completado" element={<OrdersCompleted />} />
-        <Route path="/detalle/:id" element={<OrderCompletedDetail />} />
+        <Route path="/mantenimiento" element={<ProtectedRoute><Principal /></ProtectedRoute>} />
+        <Route path="/mantenimiento/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+        <Route path="/mantenimiento/create-order" element={<ProtectedRoute><CreateOrder /></ProtectedRoute>} />
+        <Route path="/mantenimiento/create-area" element={<ProtectedRoute><CreateArea /></ProtectedRoute>} />
+        <Route path="/mantenimiento/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/mantenimiento/create-tech" element={<ProtectedRoute><CreateTech /></ProtectedRoute>} />
+        <Route path="/mantenimiento/tech-list" element={<ProtectedRoute><TechList /></ProtectedRoute>} />
+        <Route path="/mantenimiento/area-list" element={<ProtectedRoute><AreaList /></ProtectedRoute>} />
+        <Route path="/user-register" element={<ProtectedRoute><UserRegister /></ProtectedRoute>} />
+        <Route path="/mantenimiento-completado" element={<ProtectedRoute><OrdersCompleted /></ProtectedRoute>} />
+        <Route path="/detalle/:id" element={<ProtectedRoute><OrderCompletedDetail /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
