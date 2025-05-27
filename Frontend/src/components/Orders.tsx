@@ -64,6 +64,7 @@ export default function Orders() {
         );
         console.log("Orden actualizada");
         toast.success("La orden fue actualizada correctamente");
+        setEditingOrder(null)
       } else {
         console.log("Error al querer editar al técnico");
         toast.error("Error al querer editar al técnico");
@@ -404,7 +405,7 @@ export default function Orders() {
                 className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
                 style={{ fontFamily: '"Press Start 2P", cursive' }}
               >
-                Enviar Orden
+                Enviar Cambios
               </button>
             </form>
 

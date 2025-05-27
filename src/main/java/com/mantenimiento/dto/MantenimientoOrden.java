@@ -31,7 +31,7 @@ public class MantenimientoOrden {
 
     private Date receptionDate;
     @Column(name = "reception_time")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime receptionTime;
     private String personnelAssigned;
     private String programmedDate;

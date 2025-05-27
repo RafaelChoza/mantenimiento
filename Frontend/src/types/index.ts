@@ -116,3 +116,8 @@ export type OrderCompleted = {
   closeDate: string,
   fechaTransferencia: string
 }
+
+export type Role = {
+  id: number;
+  name: string;
+}
