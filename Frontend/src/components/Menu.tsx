@@ -1,21 +1,27 @@
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
+import { useAuth } from "./AuthContext";
 
 export default function Menu() {
+  const { role } = useAuth();
+
+  const allLinks = [
+    { to: "/mantenimiento", label: "🏠 Menú Principal" },
+    { to: "/mantenimiento/orders", label: "📜 Órdenes Abiertas" },
+    { to: "/mantenimiento/create-order", label: "🛠️ Crear Orden" },
+    { to: "/mantenimiento-completado", label: "✅ Manttos Completados" },
+    { to: "/mantenimiento/create-area", label: "🏢 Crear Área" },
+    { to: "/mantenimiento/area-list", label: "📋 Lista de Áreas" },
+    { to: "/mantenimiento/create-tech", label: "🔧 Crear Técnico" },
+    { to: "/mantenimiento/tech-list", label: "👨‍🔧 Lista de Técnicos" },
+    { to: "/mantenimiento/users", label: "👨 Lista de Usuarios" },
+  ];
+
+  const visibleLinks = role === "USER" ? allLinks.slice(0, 4) : allLinks;
+
   return (
     <nav className="bg-yellow-300 border-4 border-black shadow-[6px_6px_0_#333] p-4 rounded-lg mb-6 flex flex-wrap justify-center gap-4">
-      {[
-        { to: "/mantenimiento", label: "🏠 Menú Principal" },
-        { to: "/mantenimiento/orders", label: "📜 Órdenes Abiertas" },
-        { to: "/mantenimiento/create-area", label: "🏢 Crear Área" },
-        { to: "/mantenimiento/create-order", label: "🛠️ Crear Orden" },
-        { to: "/mantenimiento/area-list", label: "📋 Lista de Áreas" },
-        { to: "/mantenimiento/create-tech", label: "🔧 Crear Técnico" },
-        { to: "/mantenimiento/tech-list", label: "👨‍🔧 Lista de Técnicos" },
-        { to: "/mantenimiento/users", label: "👨 Lista de Usuarios" },
-        { to: "/mantenimiento-completado", label: "✅ Manttos Completados" },
-        
-      ].map((link) => (
+      {visibleLinks.map((link) => (
         <Link
           key={link.to}
           to={link.to}
