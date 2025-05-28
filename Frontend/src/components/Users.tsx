@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import type { RegisterUser, Role } from "../types";
+import type { RegisterUser, RegisterUserUpdate, Role } from "../types";
 import Menu from "./Menu";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Users() {
   const [users, setUsers] = useState<RegisterUser[]>([]);
@@ -9,6 +10,14 @@ export default function Users() {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<RegisterUser | null>(null);
   const [showModalEdit, setShowModalEdit] = useState(false)
+  const [formData, setFormData] = useState<RegisterUserUpdate>({
+    firstname: selectedUser?.firstname ?? "",
+    lastname: selectedUser?.lastname ?? "",
+    country: selectedUser?.country ?? "",
+    oldPassword: "",
+    newPassword: "",
+    newPassword_confirmation: ""
+  })
 
   useEffect(() => {
     getUsers();
@@ -96,10 +105,87 @@ export default function Users() {
     }
   };
 
+  const handleOnChangeUpdate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  }
+
+  useEffect(() => {
+    if (selectedUser) {
+      setFormData({
+        firstname: selectedUser.firstname,
+        lastname: selectedUser.lastname,
+        country: selectedUser.country,
+        oldPassword: "",
+        newPassword: "",
+        newPassword_confirmation: ""
+      });
+    }
+  }, [selectedUser]);
+
+  const handleSubmitUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  // Validaciones previas
+  if (!formData.newPassword || !formData.newPassword_confirmation || !formData.oldPassword) {
+    toast.error("Todos los campos son obligatorios.");
+    return;
+  }
+
+  if (formData.newPassword !== formData.newPassword_confirmation) {
+    toast.error("Fallo en la confirmación de Password");
+    return;
+  }
+
+  if (formData.oldPassword === formData.newPassword) {
+    toast.error("El nuevo password no puede ser igual al actual");
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("No se encontró el token de autenticación");
+      return;
+    }
+
+    const response = await fetch("http://localhost:8080/auth/update-password", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    // Validar la respuesta del servidor
+    if (!response.ok) {
+      try {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Error al enviar los datos al servidor");
+      } catch {
+        toast.error("Error desconocido en el servidor");
+      }
+      return;
+    }
+
+    // Mostrar mensaje de éxito
+    toast.success("El password fue actualizado con éxito");
+  } catch (error) {
+    console.error("Error en la solicitud:", error);
+    toast.error("Error inesperado");
+  }
+};
+
 
   return (
     <div className="container mx-auto p-6 relative">
       <Menu />
+      <ToastContainer />
       <h1
         className="text-2xl mb-6 text-center text-blue-900 drop-shadow-lg"
         style={{ fontFamily: '"Press Start 2P", cursive' }}
@@ -180,16 +266,17 @@ export default function Users() {
                 <div className="fixed inset-0 bg-cyan-500 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
                   <div className="bg-indigo-300 p-6 border-4 border-black shadow-lg text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
                     <h2 className="text-lg mb-4">Editar Usuario <strong className="text-red-800">{selectedUser.username}</strong> </h2>
-                    <ul className="mb-4 flex flex-col">
-                      <input type="text" value={user.firstname} className="bg-white p-2 m-2 border-2"/>
-                      <input type="text" value={user.lastname} className="bg-white p-2 m-2 border-2"/>
-                      <input type="text" value={user.country} className="bg-white p-2 m-2 border-2"/>
-                      <input type="text" placeholder="password nuevo" className="bg-white p-2 m-2 border-2"/>
-                      <input type="text" placeholder="repetir password" className="bg-white p-2 m-2 border-2"/>
+                    <form onSubmit={handleSubmitUpdate} className="mb-4 flex flex-col">
+                      <input onChange={handleOnChangeUpdate} name="firstname" type="text" value={formData.firstname} className="bg-white p-2 m-2 border-2" />
+                      <input onChange={handleOnChangeUpdate} name="lastname" type="text" value={formData.lastname} className="bg-white p-2 m-2 border-2" />
+                      <input onChange={handleOnChangeUpdate} name="country" type="text" value={formData.country} className="bg-white p-2 m-2 border-2" />
+                      <input onChange={handleOnChangeUpdate} name="oldPassword" type="password" placeholder="contraseña actual" className="bg-white p-2 m-2 border-2" />
+                      <input onChange={handleOnChangeUpdate} name="newPassword" type="password" placeholder="contraseña nueva" className="bg-white p-2 m-2 border-2" />
+                      <input onChange={handleOnChangeUpdate} name="newPassword_confirmation" type="password" placeholder="repetir contraseña" className="bg-white p-2 m-2 border-2" />
                       <button className="border-2 p-2 bg-orange-500 text-white m-3 hover:bg-orange-700">
                         Enviar Cambios
                       </button>
-                    </ul>
+                    </form>
                     <button
                       className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700"
                       onClick={closeModalEdit}

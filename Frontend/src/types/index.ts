@@ -126,3 +126,12 @@ export type AuthContextType = {
   role: string | null;
   username: string | null;
 }
+
+export type RegisterUserUpdate = {
+  firstname: string;
+  lastname: string;
+  country: string;
+  oldPassword: string;
+  newPassword: string;
+  newPassword_confirmation: string;
+}

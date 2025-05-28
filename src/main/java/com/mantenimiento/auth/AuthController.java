@@ -1,6 +1,5 @@
 package com.mantenimiento.auth;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,4 +32,12 @@ public class AuthController {
         authService.invalidateToken(token.replace("Bearer ", ""));
         return ResponseEntity.ok("Logout exitoso");
     }
+
+    @PostMapping(value = "update-password")
+    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String token,
+            @RequestBody UpdatePasswordRequest request) {
+        authService.updatePassword(token.replace("Bearer ", ""), request.getOldPassword(), request.getNewPassword());
+        return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    }
+
 }
