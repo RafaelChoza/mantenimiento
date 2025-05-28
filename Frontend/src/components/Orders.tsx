@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import type { Area, MantenimientoOrden, Tech } from "../types";
 import Menu from "../components/Menu"
 import { toast } from "react-toastify";
+import { useAuth } from "./AuthContext";
 
 export default function Orders() {
+  const { role } = useAuth();
   const [orders, setOrders] = useState<MantenimientoOrden[]>([]);
   const [cargando, setCargando] = useState(true);
   const [editingOrder, setEditingOrder] = useState<MantenimientoOrden | null>(null)
@@ -127,26 +129,26 @@ export default function Orders() {
     }
   }
 
- const manttoCompletar = async (id: MantenimientoOrden['id']) => {
-  if (id === undefined) {
-    console.error("ID no definido");
-    return;
-  }
+  const manttoCompletar = async (id: MantenimientoOrden['id']) => {
+    if (id === undefined) {
+      console.error("ID no definido");
+      return;
+    }
 
-  if (!window.confirm('¿Marcar este servicio como completado?')) return;
-  try {
-    const response = await fetch(`http://localhost:8080/mantenimiento/${id}/completado`, {
-      method: "POST",
-      headers:{
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      }
-    });
-    if(!response.ok){throw new Error("Error al enviar los datos")};
-    setOrders((prev) => prev.filter((mantto) => mantto.id != id))
-  } catch (error) {
-    console.error("Error", error)
+    if (!window.confirm('¿Marcar este servicio como completado?')) return;
+    try {
+      const response = await fetch(`http://localhost:8080/mantenimiento/${id}/completado`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      if (!response.ok) { throw new Error("Error al enviar los datos") };
+      setOrders((prev) => prev.filter((mantto) => mantto.id != id))
+    } catch (error) {
+      console.error("Error", error)
+    }
   }
-}
 
 
   return (
@@ -161,243 +163,249 @@ export default function Orders() {
               Editar Orden #{editingOrder.id}
             </h2>
             <form onSubmit={handleUpdateOrder} className="space-y-10" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-
-              {/* Sección Solicitante */}
-              <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-                <h2
-                  className="text-xs text-blue-700 mb-4"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Exclusivo Solicitante
-                </h2>
-                <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="requestorName"
-                    value={editingOrder.requestorName}
-                    placeholder="Nombre del solicitante"
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="requestorLastName"
-                    value={editingOrder.requestorLastName}
-                    placeholder="Apellido del solicitante"
-                    onChange={handleInputChange}
-                  />
-                  <select
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    name="area"
-                    value={editingOrder.area}
-                    onChange={handleInputChange}
-                  >
-                    <option value="" disabled>Seleccionar Área</option>
-                    {areas.map((area) => (
-                      <option key={area.id} value={area.areaName}>
-                        {area.areaName}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="idMachine"
-                    value={editingOrder.idMachine}
-                    placeholder="ID Máquina"
-                    onChange={handleInputChange}
-                  />
-                  <label className="flex items-center space-x-2 col-span-2">
-                    <input
-                      type="checkbox"
-                      name="stoppedMachine"
-                      checked={!!editingOrder?.stoppedMachine}
-                      onChange={handleInputChange}
-                    />
-                    <span>Máquina detenida</span>
-                  </label>
-                  <label className="flex items-center space-x-2 col-span-2">
-                    <input
-                      type="checkbox"
-                      name="attentionRequired"
-                      checked={!!editingOrder?.attentionRequired}
-                      onChange={handleInputChange}
-                    />
-                    <span>Requiere atención inmediata</span>
-                  </label>
-                  <textarea
-                    className="border-2 border-black p-2 bg-yellow-50 col-span-2"
-                    name="serviceDescription"
-                    value={editingOrder.serviceDescription}
-                    placeholder="Descripción del servicio"
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </section>
-
-
-              {/* Sección Supervisor */}
-              <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-                <h2
-                  className="text-xs text-green-700 mb-4"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Exclusivo Supervisor de Mantenimiento
-                </h2>
-                <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="date"
-                    name="receptionDate"
-                    value={editingOrder.receptionDate}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="time"
-                    name="receptionTime"
-                    value={editingOrder.receptionTime}
-                    placeholder="Hora de recepción"
-                    onChange={handleInputChange}
-                  />
-                  <select
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    name="personnelAsigned"
-                    value={editingOrder.personnelAsigned}
-                    onChange={handleInputChange}
-                  >
-                    <option value={editingOrder.personnelAsigned} disabled>
-                      Seleccionar Técnico
-                    </option>
-                    {techs.map((tech) => (
-                      <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
-                        {tech.nombreTecnico} - {tech.apellidoTecnico}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="date"
-                    name="programmedDate"
-                    value={editingOrder.programmedDate}
-                    onChange={handleInputChange}
-                  />
-                  <textarea
-                    className="border-2 border-black p-2 bg-yellow-50 col-span-2"
-                    name="observations"
-                    value={editingOrder.observations}
-                    placeholder="Observaciones encontradas"
-                    onChange={handleInputChange}
-                  />
-                  <textarea
-                    className="border-2 border-black p-2 bg-yellow-50 col-span-2"
-                    name="problemCauseSolution"
-                    value={editingOrder.problemCauseSolution}
-                    placeholder="Problema, causa y solución"
-                    onChange={handleInputChange}
-                  />
-                  <label className="flex items-center space-x-2">
-                    <span>¿Equipo para desecho?</span>
-                    <input
-                      type="checkbox"
-                      checked={editingOrder?.equipmentDisposal}
-                      name="equipmentDisposal"
-                      onChange={handleInputChange}
-                    />
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <span>¿Requiere aviso a calibración y MP?</span>
-                    <input
-                      type="checkbox"
-                      name="notificateCalibration"
-                      checked={editingOrder?.notificateCalibration}
-                      onChange={handleInputChange}
-                    />
-                  </label>
-                </div>
-              </section>
-
-
-              {/* Sección Técnico */}
-              <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-                <h2
-                  className="text-xs text-purple-700 mb-4"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Técnico Asignado
-                </h2>
-                <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="number"
-                    name="usedParts"
-                    value={editingOrder.usedParts}
-                    placeholder="Partes usadas"
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="partNumber"
-                    value={editingOrder.partNumber}
-                    placeholder="Número de parte"
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="descriptionPart"
-                    value={editingOrder.descriptionPart}
-                    placeholder="Descripción de la parte"
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="text"
-                    name="partOrigin"
-                    value={editingOrder.partOrigin}
-                    placeholder="Origen de la parte"
-                    onChange={handleInputChange}
-                  />
-
-                  {[
-                    { name: "coversInstalled", label: "Cubiertas instaladas" },
-                    { name: "interlocksTested", label: "Interlocks probados" },
-                    { name: "guardsInstalled", label: "Guardas instaladas" },
-                    { name: "completeRevision", label: "Revisión completa del equipo" },
-                    { name: "cleanArea", label: "Limpieza del área" },
-                    { name: "electricityConnected", label: "Electricidad conectada" },
-                    { name: "waterAirGasConnected", label: "Aire, agua y/o gas conectados" },
-                    { name: "taggedProperly", label: "Etiquetado y señalización de equipo" },
-                  ].map((item) => (
-                    <label key={item.name} className="flex items-center space-x-2">
+              {role !== "ADMIN" && (
+                <div>
+                  {/* Sección Solicitante */}
+                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                    <h2
+                      className="text-xs text-blue-700 mb-4"
+                      style={{ fontFamily: '"Press Start 2P", cursive' }}
+                    >
+                      Exclusivo Solicitante
+                    </h2>
+                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
                       <input
-                        type="checkbox"
-                        name={item.name}
-                        checked={editingOrder[item.name as keyof typeof editingOrder] as boolean}
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="requestorName"
+                        value={editingOrder.requestorName}
+                        placeholder="Nombre del solicitante"
                         onChange={handleInputChange}
                       />
-                      <span>{item.label}</span>
-                    </label>
-                  ))}
-
-                  <textarea
-                    className="border-2 border-black p-2 bg-yellow-50 col-span-2"
-                    name="comments"
-                    value={editingOrder.comments}
-                    placeholder="Comentarios"
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    className="border-2 border-black p-2 bg-yellow-50"
-                    type="date"
-                    name="closeDate"
-                    value={editingOrder.closeDate}
-                    onChange={handleInputChange}
-                  />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="requestorLastName"
+                        value={editingOrder.requestorLastName}
+                        placeholder="Apellido del solicitante"
+                        onChange={handleInputChange}
+                      />
+                      <select
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        name="area"
+                        value={editingOrder.area}
+                        onChange={handleInputChange}
+                      >
+                        <option value="" disabled>Seleccionar Área</option>
+                        {areas.map((area) => (
+                          <option key={area.id} value={area.areaName}>
+                            {area.areaName}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="idMachine"
+                        value={editingOrder.idMachine}
+                        placeholder="ID Máquina"
+                        onChange={handleInputChange}
+                      />
+                      <label className="flex items-center space-x-2 col-span-2">
+                        <input
+                          type="checkbox"
+                          name="stoppedMachine"
+                          checked={!!editingOrder?.stoppedMachine}
+                          onChange={handleInputChange}
+                        />
+                        <span>Máquina detenida</span>
+                      </label>
+                      <label className="flex items-center space-x-2 col-span-2">
+                        <input
+                          type="checkbox"
+                          name="attentionRequired"
+                          checked={!!editingOrder?.attentionRequired}
+                          onChange={handleInputChange}
+                        />
+                        <span>Requiere atención inmediata</span>
+                      </label>
+                      <textarea
+                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        name="serviceDescription"
+                        value={editingOrder.serviceDescription}
+                        placeholder="Descripción del servicio"
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </section>
                 </div>
-              </section>
+              )}
+
+
+              {role !== "USER" && (
+                <div>
+                  {/* Sección Supervisor */}
+                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                    <h2
+                      className="text-xs text-green-700 mb-4"
+                      style={{ fontFamily: '"Press Start 2P", cursive' }}
+                    >
+                      Exclusivo Supervisor de Mantenimiento
+                    </h2>
+                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="date"
+                        name="receptionDate"
+                        value={editingOrder.receptionDate}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="time"
+                        name="receptionTime"
+                        value={editingOrder.receptionTime}
+                        placeholder="Hora de recepción"
+                        onChange={handleInputChange}
+                      />
+                      <select
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        name="personnelAsigned"
+                        value={editingOrder.personnelAsigned}
+                        onChange={handleInputChange}
+                      >
+                        <option value={editingOrder.personnelAsigned} disabled>
+                          Seleccionar Técnico
+                        </option>
+                        {techs.map((tech) => (
+                          <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
+                            {tech.nombreTecnico} - {tech.apellidoTecnico}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="date"
+                        name="programmedDate"
+                        value={editingOrder.programmedDate}
+                        onChange={handleInputChange}
+                      />
+                      <textarea
+                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        name="observations"
+                        value={editingOrder.observations}
+                        placeholder="Observaciones encontradas"
+                        onChange={handleInputChange}
+                      />
+                      <textarea
+                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        name="problemCauseSolution"
+                        value={editingOrder.problemCauseSolution}
+                        placeholder="Problema, causa y solución"
+                        onChange={handleInputChange}
+                      />
+                      <label className="flex items-center space-x-2">
+                        <span>¿Equipo para desecho?</span>
+                        <input
+                          type="checkbox"
+                          checked={editingOrder?.equipmentDisposal}
+                          name="equipmentDisposal"
+                          onChange={handleInputChange}
+                        />
+                      </label>
+                      <label className="flex items-center space-x-2">
+                        <span>¿Requiere aviso a calibración y MP?</span>
+                        <input
+                          type="checkbox"
+                          name="notificateCalibration"
+                          checked={editingOrder?.notificateCalibration}
+                          onChange={handleInputChange}
+                        />
+                      </label>
+                    </div>
+                  </section>
+                  {/* Sección Técnico */}
+                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                    <h2
+                      className="text-xs text-purple-700 mb-4"
+                      style={{ fontFamily: '"Press Start 2P", cursive' }}
+                    >
+                      Técnico Asignado
+                    </h2>
+                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="number"
+                        name="usedParts"
+                        value={editingOrder.usedParts}
+                        placeholder="Partes usadas"
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="partNumber"
+                        value={editingOrder.partNumber}
+                        placeholder="Número de parte"
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="descriptionPart"
+                        value={editingOrder.descriptionPart}
+                        placeholder="Descripción de la parte"
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="text"
+                        name="partOrigin"
+                        value={editingOrder.partOrigin}
+                        placeholder="Origen de la parte"
+                        onChange={handleInputChange}
+                      />
+
+                      {[
+                        { name: "coversInstalled", label: "Cubiertas instaladas" },
+                        { name: "interlocksTested", label: "Interlocks probados" },
+                        { name: "guardsInstalled", label: "Guardas instaladas" },
+                        { name: "completeRevision", label: "Revisión completa del equipo" },
+                        { name: "cleanArea", label: "Limpieza del área" },
+                        { name: "electricityConnected", label: "Electricidad conectada" },
+                        { name: "waterAirGasConnected", label: "Aire, agua y/o gas conectados" },
+                        { name: "taggedProperly", label: "Etiquetado y señalización de equipo" },
+                      ].map((item) => (
+                        <label key={item.name} className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            name={item.name}
+                            checked={editingOrder[item.name as keyof typeof editingOrder] as boolean}
+                            onChange={handleInputChange}
+                          />
+                          <span>{item.label}</span>
+                        </label>
+                      ))}
+
+                      <textarea
+                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        name="comments"
+                        value={editingOrder.comments}
+                        placeholder="Comentarios"
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        className="border-2 border-black p-2 bg-yellow-50"
+                        type="date"
+                        name="closeDate"
+                        value={editingOrder.closeDate}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </section>
+                </div>
+              )}
+
 
 
               <button
@@ -471,11 +479,13 @@ export default function Orders() {
                   Editar
                 </button>
                 <button
-                  className="bg-green-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-green-500 transition-all shadow-[3px_3px_0_#333]"
+                  className={`bg-green-400 border-4 border-black text-black px-3 py-2 text-xs transition-all shadow-[3px_3px_0_#333] ${role === "USER" ? "cursor-not-allowed bg-green-300" : "hover:bg-green-500"}`}
                   onClick={() => manttoCompletar(order.id)}
+                  disabled={role === "USER"}
                 >
                   Completado
                 </button>
+
               </div>
             </div>
           ))}

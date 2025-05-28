@@ -28,6 +28,9 @@ export default function Login() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      if(localStorage) {
+        localStorage.setItem("isAuthenticated", "true")
+      }
       toast.success("Inicio de sesión exitoso");
       setTimeout(() => {
         window.location.href = "/mantenimiento";

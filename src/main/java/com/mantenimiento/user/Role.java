@@ -2,7 +2,8 @@ package com.mantenimiento.user;
 
 public enum Role {
     ADMIN(1),
-    USER(2);
+    USER(2),
+    SUPERUSER(3); // ← Corregido aquí
 
     private final int id;
 
@@ -14,3 +15,4 @@ public enum Role {
         return id;
     }
 }
+
