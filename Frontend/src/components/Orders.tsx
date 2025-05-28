@@ -155,7 +155,12 @@ export default function Orders() {
     <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
       {editingOrder && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          
           <div className="bg-yellow-100 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] p-6 w-full max-w-xl overflow-y-auto max-h-[90vh]">
+            <button 
+              className="text-red-700 my-2 font-bold hover:scale-110"
+              onClick={() => setEditingOrder(null)}
+            >X <span className="text-black">Cerrar</span></button>
             <h2
               className="text-xs text-blue-700 mb-4"
               style={{ fontFamily: '"Press Start 2P", cursive' }}

@@ -8,6 +8,7 @@ export default function Users() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<RegisterUser | null>(null);
+  const [showModalEdit, setShowModalEdit] = useState(false)
 
   useEffect(() => {
     getUsers();
@@ -60,30 +61,40 @@ export default function Users() {
     setShowModal(false);
   };
 
- const handleRoleChange = async (newRoleId: string) => {
+  const openModalEdit = (user: RegisterUser) => {
+    setSelectedUser(user);
+    setShowModalEdit(true);
+  };
+
+  const closeModalEdit = () => {
+    setSelectedUser(null);
+    setShowModalEdit(false);
+  };
+
+  const handleRoleChange = async (newRoleId: string) => {
     if (selectedUser) {
-        try {
-            const newRole = roles.find(role => role.id.toString() === newRoleId);
-            if (!newRole) throw new Error("Rol no encontrado");
-            const response = await fetch(`http://localhost:8080/mantenimiento/users/${selectedUser.id}/role`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify({ role: newRole.name })
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Error al actualizar el rol: ${errorText}`);
-            }
-            setUsers(prev => prev.map(user => user.id === selectedUser.id ? { ...user, role: newRole.name } as unknown as RegisterUser : user ) );
-            closeModal();
-        } catch (error) {
-            console.error("Error al cambiar el rol:", error);
+      try {
+        const newRole = roles.find(role => role.id.toString() === newRoleId);
+        if (!newRole) throw new Error("Rol no encontrado");
+        const response = await fetch(`http://localhost:8080/mantenimiento/users/${selectedUser.id}/role`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+          body: JSON.stringify({ role: newRole.name })
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error al actualizar el rol: ${errorText}`);
         }
+        setUsers(prev => prev.map(user => user.id === selectedUser.id ? { ...user, role: newRole.name } as unknown as RegisterUser : user));
+        closeModal();
+      } catch (error) {
+        console.error("Error al cambiar el rol:", error);
+      }
     }
-};
+  };
 
 
   return (
@@ -122,6 +133,12 @@ export default function Users() {
                 >
                   Cambiar Rol
                 </button>
+                <button
+                  className="m-2 border-2 border-black p-2 bg-blue-600 text-white hover:bg-blue-900"
+                  onClick={() => openModalEdit(user)}
+                >
+                  Editar Usuario
+                </button>
               </div>
             </div>
           ))}
@@ -138,6 +155,7 @@ export default function Users() {
                   <button className="m-1 p-2 border-2 border-black bg-blue-500 text-white hover:bg-blue-700 text-base" onClick={() => handleRoleChange(role.id.toString())} >
                     {role.name}
                   </button>
+
                 </li>
               ))}
             </ul>
@@ -149,6 +167,44 @@ export default function Users() {
             </button>
           </div>
         </div>
+      )}
+      {showModalEdit && selectedUser && (
+        <section>
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="bg-green-200 border-4 border-black shadow-[4px_4px_0_#333] p-4 text-xs text-black"
+              style={{ fontFamily: '"Press Start 2P", cursive' }}
+            >
+              <div>
+                <div className="fixed inset-0 bg-cyan-500 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+                  <div className="bg-indigo-300 p-6 border-4 border-black shadow-lg text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                    <h2 className="text-lg mb-4">Editar Usuario <strong className="text-red-800">{selectedUser.username}</strong> </h2>
+                    <ul className="mb-4 flex flex-col">
+                      <input type="text" value={user.firstname} className="bg-white p-2 m-2 border-2"/>
+                      <input type="text" value={user.lastname} className="bg-white p-2 m-2 border-2"/>
+                      <input type="text" value={user.country} className="bg-white p-2 m-2 border-2"/>
+                      <input type="text" placeholder="password nuevo" className="bg-white p-2 m-2 border-2"/>
+                      <input type="text" placeholder="repetir password" className="bg-white p-2 m-2 border-2"/>
+                      <button className="border-2 p-2 bg-orange-500 text-white m-3 hover:bg-orange-700">
+                        Enviar Cambios
+                      </button>
+                    </ul>
+                    <button
+                      className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700"
+                      onClick={closeModalEdit}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          ))}
+
+        </section>
+
       )}
     </div>
   );

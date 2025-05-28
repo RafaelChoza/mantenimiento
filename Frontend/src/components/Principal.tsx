@@ -57,24 +57,24 @@ export default function Principal() {
               <div className="absolute top-2 right-4 text-black text-lg">👨‍🔧</div>
             </Link>
 
-            <Link to="/mantenimiento/create-area" className={buttonClass.replace("bg-yellow-400", "bg-purple-400")} style={fontStyle}>
-              Agregar Área
-              <div className="absolute top-2 right-4 text-black text-lg">📍</div>
-            </Link>
-
-            <Link to="/mantenimiento/area-list" className={buttonClass.replace("bg-yellow-400", "bg-teal-400")} style={fontStyle}>
-              Lista de Áreas
-              <div className="absolute top-2 right-4 text-black text-lg">📍</div>
-            </Link>
             {role === "SUPERUSER" && (
               <div>
+                <Link to="/mantenimiento/create-area" className={buttonClass.replace("bg-yellow-400", "bg-purple-400")} style={fontStyle}>
+                  Agregar Área
+                  <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+                </Link>
+
+                <Link to="/mantenimiento/area-list" className={buttonClass.replace("bg-yellow-400", "bg-teal-400")} style={fontStyle}>
+                  Lista de Áreas
+                  <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+                </Link>
                 <Link to="/mantenimiento/users" className={buttonClass.replace("bg-yellow-400", "bg-orange-600")} style={fontStyle}>
-              Lista de Usuarios
-              <div className="absolute top-2 right-4 text-black text-lg">📍</div>
-            </Link>
+                  Lista de Usuarios
+                  <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+                </Link>
               </div>
             )}
-            
+
           </>
         )}
       </div>
