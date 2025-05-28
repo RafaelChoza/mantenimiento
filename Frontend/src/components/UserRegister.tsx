@@ -7,12 +7,14 @@ export default function UserRegister() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<RegisterUser>({
+    id: 0,
     username: "",
     password: "",
     password_verification: "",
     firstname: "",
     lastname: "",
     country: "",
+    role:0,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
