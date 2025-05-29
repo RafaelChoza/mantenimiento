@@ -28,67 +28,63 @@ export default function OrderCompletedDetail() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1
-        className="text-2xl mb-6 text-center text-blue-900 drop-shadow-lg"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
-        Detalle del Mantenimiento
-      </h1>
+  <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+    <h1 className="text-center text-sm mb-6 font-bold text-white">
+      🛠️ DETALLE DEL MANTENIMIENTO
+    </h1>
 
-      {detail ? (
-        <div
-          className="bg-yellow-200 border-4 border-black shadow-[4px_4px_0_#333] p-6 text-xs text-black max-w-xl mx-auto"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          <p className="mb-2"><strong>🆔 ID:</strong> {detail.id}</p>
-          <p className="mb-2"><strong>📅 Fecha de servicio:</strong> {detail.serviceDateTime}</p>
-          <p className="mb-2"><strong>🕒 Hora de servicio:</strong> {detail.serviceTime}</p>
-          <p className="mb-2"><strong>👤 Nombre del solicitante:</strong> {detail.requestorName} {detail.requestorLastName}</p>
-          <p className="mb-2"><strong>🏢 Área:</strong> {detail.area}</p>
-          <p className="mb-2"><strong>📦 ID de máquina:</strong> {detail.idMachine}</p>
-          <p className="mb-2"><strong>⚠️ Máquina detenida:</strong> {detail.stoppedMachine ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📝 Descripción:</strong> {detail.serviceDescription}</p>
-          <p className="mb-2"><strong>Atención requerida:</strong> {detail.attentionRequired ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📆 Fecha de recepción:</strong> {detail.receptionDate}</p>
-          <p className="mb-2"><strong>🕒 Hora de recepción:</strong> {detail.receptionTime}</p>
-          <p className="mb-2"><strong>👥 Personal asignado:</strong> {detail.personnelAssigned}</p>
-          <p className="mb-2"><strong>📅 Fecha programada:</strong> {detail.programmedDate}</p>
-          <p className="mb-2"><strong>💬 Observaciones:</strong> {detail.observations}</p>
-          <p className="mb-2"><strong>📝 Causa y solución del problema:</strong> {detail.problemCauseSolution}</p>
-          <p className="mb-2"><strong>📦 Equipo dispuesto:</strong> {detail.equipmentDisposal ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📝 Notificación de calibración:</strong> {detail.notificateCalibration ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📦 Partes utilizadas:</strong> {detail.usedParts}</p>
-          <p className="mb-2"><strong>📝 Número de parte:</strong> {detail.partNumber}</p>
-          <p className="mb-2"><strong>📝 Descripción de la parte:</strong> {detail.descriptionPart}</p>
-          <p className="mb-2"><strong>📦 Origen de la parte:</strong> {detail.partOrigin}</p>
-          <p className="mb-2"><strong>🛠️ Cubiertas instaladas:</strong> {detail.coversInstalled ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>🔒 Interlocks probados:</strong> {detail.interlocksTested ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>🛠️ Guardas instaladas:</strong> {detail.guardsInstalled ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>💡 Electricidad conectada:</strong> {detail.electricityConnected ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📝 Revisión completa:</strong> {detail.completeRevision ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>🧹 Área limpia:</strong> {detail.cleanArea ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>💧 Agua/Aire/Gas conectado:</strong> {detail.waterAirGasConnected ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>📝 Etiquetado adecuado:</strong> {detail.taggedProperly ? "Sí" : "No"}</p>
-          <p className="mb-2"><strong>💬 Comentarios:</strong> {detail.comments}</p>
-          <p className="mb-2"><strong>📆 Fecha de cierre:</strong> {detail.closeDate}</p>
-          <p className="mb-2"><strong>📆 Fecha de transferencia:</strong> {detail.fechaTransferencia}</p>
+    {detail ? (
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 text-xs max-w-3xl mx-auto rounded-lg">
+        {[
+          { label: "🆔 ID", value: detail.id },
+          { label: "📅 Fecha de servicio", value: detail.serviceDateTime },
+          { label: "🕒 Hora de servicio", value: detail.serviceTime },
+          { label: "👤 Nombre del solicitante", value: `${detail.requestorName} ${detail.requestorLastName}` },
+          { label: "🏢 Área", value: detail.area },
+          { label: "📦 ID de máquina", value: detail.idMachine },
+          { label: "⚠️ Máquina detenida", value: detail.stoppedMachine ? "Sí" : "No" },
+          { label: "📝 Descripción", value: detail.serviceDescription },
+          { label: "Atención requerida", value: detail.attentionRequired ? "Sí" : "No" },
+          { label: "📆 Fecha de recepción", value: detail.receptionDate },
+          { label: "🕒 Hora de recepción", value: detail.receptionTime },
+          { label: "👥 Personal asignado", value: detail.personnelAssigned },
+          { label: "📅 Fecha programada", value: detail.programmedDate },
+          { label: "💬 Observaciones", value: detail.observations },
+          { label: "📝 Causa y solución del problema", value: detail.problemCauseSolution },
+          { label: "📦 Equipo dispuesto", value: detail.equipmentDisposal ? "Sí" : "No" },
+          { label: "📝 Notificación de calibración", value: detail.notificateCalibration ? "Sí" : "No" },
+          { label: "📦 Partes utilizadas", value: detail.usedParts },
+          { label: "📝 Número de parte", value: detail.partNumber },
+          { label: "📝 Descripción de la parte", value: detail.descriptionPart },
+          { label: "📦 Origen de la parte", value: detail.partOrigin },
+          { label: "🛠️ Cubiertas instaladas", value: detail.coversInstalled ? "Sí" : "No" },
+          { label: "🔒 Interlocks probados", value: detail.interlocksTested ? "Sí" : "No" },
+          { label: "🛠️ Guardas instaladas", value: detail.guardsInstalled ? "Sí" : "No" },
+          { label: "💡 Electricidad conectada", value: detail.electricityConnected ? "Sí" : "No" },
+          { label: "📝 Revisión completa", value: detail.completeRevision ? "Sí" : "No" },
+          { label: "🧹 Área limpia", value: detail.cleanArea ? "Sí" : "No" },
+          { label: "💧 Agua/Aire/Gas conectado", value: detail.waterAirGasConnected ? "Sí" : "No" },
+          { label: "📝 Etiquetado adecuado", value: detail.taggedProperly ? "Sí" : "No" },
+          { label: "💬 Comentarios", value: detail.comments },
+          { label: "📆 Fecha de cierre", value: detail.closeDate },
+          { label: "📆 Fecha de transferencia", value: detail.fechaTransferencia },
+        ].map((item, index) => (
+          <p key={index} className="mb-2">
+            <strong>{item.label}:</strong> {item.value}
+          </p>
+        ))}
 
-          <button
-            onClick={() => navigate(-1)}
-            className="mt-4 px-4 py-2 bg-cyan-600 hover:bg-cyan-400 text-white border-2 border-black"
-          >
-            🔙 Volver
-          </button>
-        </div>
-      ) : (
-        <p
-          className="text-center text-black text-sm"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
+        <button
+          onClick={() => navigate(-1)}
+          className="mt-4 px-4 py-2 bg-cyan-400 hover:bg-cyan-300 text-black border-2 border-black shadow-[2px_2px_0_#000]"
         >
-          Cargando detalle...
-        </p>
-      )}
-    </div>
-  );
+          🔙 VOLVER
+        </button>
+      </div>
+    ) : (
+      <p className="text-center text-xs font-bold text-white">CARGANDO DETALLE...</p>
+    )}
+  </div>
+);
+
 }

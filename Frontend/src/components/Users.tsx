@@ -188,116 +188,109 @@ export default function Users() {
 
 
   return (
-    <div className="container mx-auto p-6 relative">
-      <Menu />
-      <ToastContainer />
-      <h1
-        className="text-2xl mb-6 text-center text-blue-900 drop-shadow-lg"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
-        Lista de Usuarios
-      </h1>
+  <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+    <Menu />
+    <ToastContainer />
+    <h1 className="text-center text-white text-sm mb-6 font-bold">
+      🧑‍💼 LISTA DE USUARIOS
+    </h1>
 
-      {cargando ? (
-        <p
-          className="text-center text-black text-sm"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          Cargando...
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {users.map((user) => (
-            <div
-              key={user.id}
-              className="bg-green-200 border-4 border-black shadow-[4px_4px_0_#333] p-4 text-xs text-black"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
-            >
-              <p><strong>👤 Usuario:</strong> {user.username}</p>
-              <p><strong>📛 Nombre:</strong> {user.firstname} {user.lastname}</p>
-              <p><strong>🌍 País:</strong> {user.country}</p>
-              <p><strong>🛡️ Rol:</strong> {user.role}</p>
-              <div>
-                <button
-                  className="m-2 border-2 border-black p-2 bg-pink-800 text-white hover:bg-pink-600"
-                  onClick={() => openModal(user)}
-                >
-                  Cambiar Rol
-                </button>
-                <button
-                  className="m-2 border-2 border-black p-2 bg-blue-600 text-white hover:bg-blue-900"
-                  onClick={() => openModalEdit(user)}
-                >
-                  Editar Usuario
-                </button>
-              </div>
+    {cargando ? (
+      <p className="text-center text-white text-xs font-bold">CARGANDO...</p>
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="bg-gray-300 border-4 border-black shadow-[4px_4px_0_#000] p-4 text-xs text-black font-mono"
+          >
+            <p><strong>👤 Usuario:</strong> {user.username}</p>
+            <p><strong>📛 Nombre:</strong> {user.firstname} {user.lastname}</p>
+            <p><strong>🌍 País:</strong> {user.country}</p>
+            <p><strong>🛡️ Rol:</strong> {user.role}</p>
+            <div>
+              <button
+                className="m-2 border-2 border-black p-2 bg-pink-600 text-white hover:bg-pink-400 shadow-[2px_2px_0_#000]"
+                onClick={() => openModal(user)}
+              >
+                CAMBIAR ROL
+              </button>
+              <button
+                className="m-2 border-2 border-black p-2 bg-blue-600 text-white hover:bg-blue-400 shadow-[2px_2px_0_#000]"
+                onClick={() => openModalEdit(user)}
+              >
+                EDITAR USUARIO
+              </button>
             </div>
-          ))}
-        </div>
-      )}
-
-      {showModal && selectedUser && (
-        <div className="fixed inset-0 bg-cyan-500 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-yellow-300 p-6 border-4 border-black shadow-lg text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-            <h2 className="text-lg mb-4">Cambiar Rol para {selectedUser.username}</h2>
-            <ul className="mb-4">
-              {roles.map((role) => (
-                <li key={role.id}>
-                  <button className="m-1 p-2 border-2 border-black bg-blue-500 text-white hover:bg-blue-700 text-base" onClick={() => handleRoleChange(role.id.toString())} >
-                    {role.name}
-                  </button>
-
-                </li>
-              ))}
-            </ul>
-            <button
-              className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700"
-              onClick={closeModal}
-            >
-              Cancelar
-            </button>
           </div>
+        ))}
+      </div>
+    )}
+
+    {showModal && selectedUser && (
+      <div className="fixed inset-0 bg-blue-900 bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="bg-yellow-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] text-xs font-mono">
+          <h2 className="text-sm mb-4 font-bold text-black">
+            CAMBIAR ROL PARA {selectedUser.username}
+          </h2>
+          <ul className="mb-4">
+            {roles.map((role) => (
+              <li key={role.id}>
+                <button
+                  className="m-1 p-2 border-2 border-black bg-blue-500 text-white hover:bg-blue-700 shadow-[2px_2px_0_#000]"
+                  onClick={() => handleRoleChange(role.id.toString())}
+                >
+                  {role.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700 shadow-[2px_2px_0_#000]"
+            onClick={closeModal}
+          >
+            CANCELAR
+          </button>
         </div>
-      )}
-      {showModalEdit && selectedUser && (
-        <section>
-          {users.map((user) => (
-            <div
-              key={user.id}
-              className="bg-green-200 border-4 border-black shadow-[4px_4px_0_#333] p-4 text-xs text-black"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
-            >
-              <div>
-                <div className="fixed inset-0 bg-cyan-500 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
-                  <div className="bg-indigo-300 p-6 border-4 border-black shadow-lg text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-                    <h2 className="text-lg mb-4">Editar Usuario <strong className="text-red-800">{selectedUser.username}</strong> </h2>
-                    <form onSubmit={handleSubmitUpdate} className="mb-4 flex flex-col">
-                      <input onChange={handleOnChangeUpdate} name="firstname" type="text" value={formData.firstname} className="bg-white p-2 m-2 border-2" />
-                      <input onChange={handleOnChangeUpdate} name="lastname" type="text" value={formData.lastname} className="bg-white p-2 m-2 border-2" />
-                      <input onChange={handleOnChangeUpdate} name="country" type="text" value={formData.country} className="bg-white p-2 m-2 border-2" />
-                      <input onChange={handleOnChangeUpdate} name="oldPassword" type="password" placeholder="contraseña actual" className="bg-white p-2 m-2 border-2" />
-                      <input onChange={handleOnChangeUpdate} name="newPassword" type="password" placeholder="contraseña nueva" className="bg-white p-2 m-2 border-2" />
-                      <input onChange={handleOnChangeUpdate} name="newPassword_confirmation" type="password" placeholder="repetir contraseña" className="bg-white p-2 m-2 border-2" />
-                      <button className="border-2 p-2 bg-orange-500 text-white m-3 hover:bg-orange-700">
-                        Enviar Cambios
-                      </button>
-                    </form>
-                    <button
-                      className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700"
-                      onClick={closeModalEdit}
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </div>
+      </div>
+    )}
+
+    {showModalEdit && selectedUser && (
+      <section>
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="bg-gray-300 border-4 border-black shadow-[4px_4px_0_#000] p-4 text-xs text-black font-mono"
+          >
+            <div className="fixed inset-0 bg-blue-900 bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50">
+              <div className="bg-indigo-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] text-xs font-mono">
+                <h2 className="text-sm mb-4 font-bold text-black">
+                  EDITAR USUARIO <span className="text-red-800">{selectedUser.username}</span>
+                </h2>
+                <form onSubmit={handleSubmitUpdate} className="mb-4 flex flex-col">
+                  <input onChange={handleOnChangeUpdate} name="firstname" type="text" value={formData.firstname} className="bg-white p-2 m-2 border-2 border-black" />
+                  <input onChange={handleOnChangeUpdate} name="lastname" type="text" value={formData.lastname} className="bg-white p-2 m-2 border-2 border-black" />
+                  <input onChange={handleOnChangeUpdate} name="country" type="text" value={formData.country} className="bg-white p-2 m-2 border-2 border-black" />
+                  <input onChange={handleOnChangeUpdate} name="oldPassword" type="password" placeholder="Contraseña actual" className="bg-white p-2 m-2 border-2 border-black" />
+                  <input onChange={handleOnChangeUpdate} name="newPassword" type="password" placeholder="Contraseña nueva" className="bg-white p-2 m-2 border-2 border-black" />
+                  <input onChange={handleOnChangeUpdate} name="newPassword_confirmation" type="password" placeholder="Repetir contraseña" className="bg-white p-2 m-2 border-2 border-black" />
+                  <button className="border-2 border-black p-2 bg-orange-500 text-white m-3 hover:bg-orange-700 shadow-[2px_2px_0_#000]">
+                    ENVIAR CAMBIOS
+                  </button>
+                </form>
+                <button
+                  className="mt-2 p-2 border-2 border-black bg-red-500 text-white hover:bg-red-700 shadow-[2px_2px_0_#000]"
+                  onClick={closeModalEdit}
+                >
+                  CANCELAR
+                </button>
               </div>
-
             </div>
-          ))}
+          </div>
+        ))}
+      </section>
+    )}
+  </div>
+);
 
-        </section>
-
-      )}
-    </div>
-  );
 }

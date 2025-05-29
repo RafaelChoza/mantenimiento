@@ -17,16 +17,20 @@ export default function Menu() {
     { to: "/mantenimiento/users", label: "👨 Lista de Usuarios" },
   ];
 
-  const visibleLinks = role === "USER" ? allLinks.slice(0, 4) : role === "SUPERUSER" ? allLinks : allLinks.slice(0,6);
+  const visibleLinks =
+    role === "USER"
+      ? allLinks.slice(0, 4)
+      : role === "SUPERUSER"
+      ? allLinks
+      : allLinks.slice(0, 6);
 
   return (
-    <nav className="bg-yellow-300 border-4 border-black shadow-[6px_6px_0_#333] p-4 rounded-lg mb-6 flex flex-wrap justify-center gap-4">
+    <nav className="bg-gray-300 border-4 border-black shadow-[4px_4px_0_#000] p-4 rounded-lg mb-6 flex flex-wrap justify-center gap-4 font-mono">
       {visibleLinks.map((link) => (
         <Link
           key={link.to}
           to={link.to}
-          className="bg-white border-2 border-black text-black px-4 py-2 text-xs hover:bg-yellow-400 transition-all shadow-[3px_3px_0_#333]"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
+          className="bg-white border-2 border-black text-black px-4 py-2 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000]"
         >
           {link.label}
         </Link>

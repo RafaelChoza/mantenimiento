@@ -113,25 +113,19 @@ export default function TechList() {
     }
   };
 
-  return (
-    <div className="max-w-5xl mx-auto p-6 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
-      <ToastContainer />
-      <Menu />
-      <h1
-        className="text-center text-yellow-700 text-sm mb-6"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
-        👨‍🔧 Lista de Técnicos
+ return (
+  <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+    <ToastContainer />
+    <Menu />
+    <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-5xl mx-auto rounded-lg">
+      <h1 className="text-center text-black text-sm mb-6 font-bold">
+        👨‍🔧 LISTA DE TÉCNICOS
       </h1>
+
       {editingTech && (
-        <div className="fixed inset-0 bg-yellow-100 bg-opacity-95 flex justify-center items-center z-50">
-          <div className="bg-white border-4 border-black p-6 rounded shadow-[6px_6px_0_#333] max-w-md w-full">
-            <h2
-              className="text-xs text-blue-700 mb-4 text-center"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
-            >
-              Editar Técnico
-            </h2>
+        <div className="fixed inset-0 bg-blue-900 bg-opacity-95 flex justify-center items-center z-50">
+          <div className="bg-gray-300 border-4 border-black p-6 rounded shadow-[4px_4px_0_#000] max-w-md w-full text-black">
+            <h2 className="text-xs text-center font-bold mb-4">✏️ EDITAR TÉCNICO</h2>
             <form onSubmit={handleUpdateTech} className="space-y-4">
               <input
                 type="text"
@@ -140,7 +134,6 @@ export default function TechList() {
                 onChange={handleInputChange}
                 placeholder="Nombre del técnico"
                 className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
               />
               <input
                 type="text"
@@ -149,7 +142,6 @@ export default function TechList() {
                 onChange={handleInputChange}
                 placeholder="Apellido del técnico"
                 className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
               />
               <input
                 type="email"
@@ -158,7 +150,6 @@ export default function TechList() {
                 onChange={handleInputChange}
                 placeholder="Correo electrónico"
                 className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
               />
               <input
                 type="number"
@@ -167,7 +158,6 @@ export default function TechList() {
                 onChange={handleInputChange}
                 placeholder="Número de nómina"
                 className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
               />
               <input
                 type="date"
@@ -175,58 +165,47 @@ export default function TechList() {
                 value={editingTech.fechaAlta}
                 onChange={handleInputChange}
                 className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
               />
               <div className="flex justify-end gap-4 pt-4">
                 <button
                   type="button"
                   onClick={() => setEditingTech(null)}
-                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[3px_3px_0_#333]"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
+                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[2px_2px_0_#000]"
                 >
-                  Cancelar
+                  CANCELAR
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-400 hover:bg-blue-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[3px_3px_0_#333]"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
+                  className="bg-green-400 hover:bg-green-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[2px_2px_0_#000]"
                 >
-                  Guardar Cambios
+                  GUARDAR CAMBIOS
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+
       {cargando ? (
         <div className="flex justify-center items-center h-12">
           <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-black"></div>
-          <p
-            className="ml-2 text-black text-xs font-semibold"
-            style={{ fontFamily: '"Press Start 2P", cursive' }}
-          >
-            Cargando...
-          </p>
+          <p className="ml-2 text-black text-xs font-bold">CARGANDO...</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {techs.map((tech) => (
             <div
               key={tech.idTecnico}
-              className="bg-white p-3 border-4 border-black rounded shadow-[4px_4px_0_#333]"
+              className="bg-white p-3 border-4 border-black rounded shadow-[4px_4px_0_#000] text-black"
             >
-              <h2
-                className="text-xs font-bold text-blue-700 mb-2"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              >
-                🆔 Técnico {tech.idTecnico}
+              <h2 className="text-xs font-bold text-blue-700 mb-2">
+                🆔 TÉCNICO {tech.idTecnico}
               </h2>
               <div className="grid grid-cols-1 text-[10px] gap-1">
                 {Object.entries(tech).map(([key, value]) => (
                   <p
                     key={key}
                     className="bg-yellow-50 border border-black p-1 rounded"
-                    style={{ fontFamily: '"Press Start 2P", cursive' }}
                   >
                     <strong>{key.replace(/([A-Z])/g, " $1").toUpperCase()}:</strong>{" "}
                     {value?.toString() || "N/A"}
@@ -236,17 +215,15 @@ export default function TechList() {
               <div className="mt-2 flex justify-between">
                 <button
                   onClick={() => handleEdit(tech)}
-                  className="bg-green-400 hover:bg-green-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#333]"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
+                  className="bg-green-400 hover:bg-green-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
                 >
-                  Editar
+                  EDITAR
                 </button>
                 <button
                   onClick={() => onDelete(tech.idTecnico)}
-                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#333]"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
+                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
                 >
-                  Eliminar
+                  ELIMINAR
                 </button>
               </div>
             </div>
@@ -254,5 +231,7 @@ export default function TechList() {
         </div>
       )}
     </div>
-  );
+  </div>
+);
+
 }

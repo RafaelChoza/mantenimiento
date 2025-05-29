@@ -13,7 +13,7 @@ export default function ChangePassword() {
     newPassword: "",
     newPassword_confirmation: "",
   });
-  
+
   useEffect(() => {
     if (username) {
       setFormData((prev) => ({ ...prev, username }));
@@ -28,47 +28,39 @@ export default function ChangePassword() {
     });
   };
 
-  const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>,) => {
+  const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("🔍 Validando contraseñas...");
-    console.log("Old Password:", formData.oldPassword);
-    console.log("New Password:", formData.newPassword);
-    console.log("Confirmation:", formData.newPassword_confirmation);
+
     if (formData.oldPassword === formData.newPassword) {
       toast.error("La nueva contraseña no puede ser igual a la actual");
       return;
     }
     if (formData.newPassword !== formData.newPassword_confirmation) {
-      console.log("La nueva contraseña debe coincidir con la confirmación")
       toast.error("La nueva contraseña debe coincidir con la confirmación");
       return;
     }
+
     try {
-      console.log("Datos que se envían al backend: ", formData);
       const token = localStorage.getItem("token");
       if (!token) {
         toast.error("El token está vacío");
         return;
       }
 
-      const response = await fetch(
-        "http://localhost:8080/auth/update-password",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("http://localhost:8080/auth/update-password", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
         toast.success("Contraseña actualizada correctamente");
         setTimeout(() => {
-          navigate("/mantenimiento")
-        }, 6000)
-        navigate("/mantenimiento")
+          navigate("/mantenimiento");
+        }, 6000);
       } else {
         toast.error("Error al actualizar la contraseña");
       }
@@ -79,56 +71,49 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
+    <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       <Menu />
       <ToastContainer />
 
-      <h1
-        className="text-center text-yellow-700 text-sm mb-6"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
-        🔒 Cambio de Contraseña
-      </h1>
-      <p>{username}</p>
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-3xl mx-auto rounded-lg">
+        <h1 className="text-center text-black text-sm mb-6 font-bold">
+          🔒 CAMBIO DE CONTRASEÑA
+        </h1>
 
-      <form  onSubmit={(e) => handleSubmitPassword(e)}>
-        <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-          <h2
-            className="text-xs text-blue-700 mb-4"
-            style={{ fontFamily: '"Press Start 2P", cursive' }}
+        <form onSubmit={handleSubmitPassword}>
+          <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#000]">
+            <h2 className="text-xs text-blue-700 mb-4 font-bold">
+              INFORMACIÓN DE SEGURIDAD
+            </h2>
+
+            <div className="grid grid-cols-1 gap-4">
+              {[
+                { name: "oldPassword", value: formData.oldPassword, type: "password", placeholder: "Contraseña actual" },
+                { name: "newPassword", value: formData.newPassword, type: "password", placeholder: "Nueva contraseña" },
+                { name: "newPassword_confirmation", value: formData.newPassword_confirmation, type: "password", placeholder: "Confirmar nueva contraseña" },
+              ].map((field) => (
+                <input
+                  key={field.name}
+                  className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                  type={field.type}
+                  name={field.name}
+                  value={field.value}
+                  placeholder={field.placeholder}
+                  onChange={handleChangePassword}
+                  required
+                />
+              ))}
+            </div>
+          </section>
+
+          <button
+            type="submit"
+            className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#000] mt-6"
           >
-            Información de Seguridad
-          </h2>
-
-          <div className="grid grid-cols-1 gap-4">
-            {[
-              { name: "oldPassword", value: formData.oldPassword, type: "password", placeholder: "Contraseña actual" },
-              { name: "newPassword", value: formData.newPassword, type: "password", placeholder: "Nueva contraseña" },
-              { name: "newPassword_confirmation", value: formData.newPassword_confirmation, type: "password", placeholder: "Confirmar nueva contraseña" },
-            ].map((field) => (
-              <input
-                key={field.name}
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
-                type={field.type}
-                name={field.name}
-                value={field.value}
-                placeholder={field.placeholder}
-                onChange={handleChangePassword}
-                required
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              />
-            ))}
-          </div>
-        </section>
-
-        <button
-          type="submit"
-          className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
-          Actualizar Contraseña
-        </button>
-      </form>
+            ACTUALIZAR CONTRASEÑA
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

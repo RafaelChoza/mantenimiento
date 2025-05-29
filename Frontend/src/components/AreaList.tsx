@@ -105,103 +105,84 @@ export default function AreaList() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
+    <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       <ToastContainer />
       <Menu />
-      <h1
-        className="text-center text-yellow-700 text-lg mb-6"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
-        🏢 Lista de Áreas
-      </h1>
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-6xl mx-auto">
+        <h1 className="text-center text-black text-lg mb-6 font-bold">
+          🏢 LISTA DE ÁREAS
+        </h1>
 
-      {editingArea && (
-        <div className="fixed inset-0 bg-yellow-200 bg-opacity-90 flex justify-center items-center z-50">
-          <div className="bg-white p-6 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg max-w-md w-full">
-            <h2
-              className="text-center text-blue-700 text-sm mb-4"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
-            >
-              ✏️ Editar Área
-            </h2>
-            <form onSubmit={handleUpdateArea} className="space-y-4">
-              <input
-                type="text"
-                name="areaName"
-                value={editingArea.areaName}
-                onChange={handleInputChange}
-                placeholder="Nombre del Área"
-                className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              />
-              <div className="flex justify-end gap-4">
-                <button
-                  type="button"
-                  onClick={() => setEditingArea(null)}
-                  className="bg-gray-400 border-2 border-black text-white px-4 py-2 text-xs hover:bg-gray-500"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-green-400 border-2 border-black text-black px-4 py-2 text-xs hover:bg-green-500"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Guardar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {cargando ? (
-        <div className="flex justify-center items-center h-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-yellow-500"></div>
-          <p className="ml-2 text-yellow-700 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
-            Cargando...
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {areas.map((area) => (
-            <div
-              key={area.id}
-              className="bg-white p-4 border-4 border-black shadow-[4px_4px_0_#333] rounded-md"
-            >
-              <h2
-                className="text-xs text-black mb-2"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              >
-                📌 Área #{area.id}
+        {editingArea && (
+          <div className="fixed inset-0 bg-blue-900 bg-opacity-90 flex justify-center items-center z-50">
+            <div className="bg-gray-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] rounded-lg max-w-md w-full text-black">
+              <h2 className="text-center text-black text-sm mb-4 font-bold">
+                ✏️ EDITAR ÁREA
               </h2>
-              <p
-                className="bg-yellow-50 p-2 border border-black text-xs mb-2"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              >
-                <strong>Nombre:</strong> {area.areaName}
-              </p>
-              <div className="flex justify-between">
-                <button
-                  onClick={() => handleEdit(area)}
-                  className="bg-green-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-green-500"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(area.id)}
-                  className="bg-red-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-red-500"
-                  style={{ fontFamily: '"Press Start 2P", cursive' }}
-                >
-                  Eliminar
-                </button>
-              </div>
+              <form onSubmit={handleUpdateArea} className="space-y-4">
+                <input
+                  type="text"
+                  name="areaName"
+                  value={editingArea.areaName}
+                  onChange={handleInputChange}
+                  placeholder="Nombre del Área"
+                  className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+                />
+                <div className="flex justify-end gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setEditingArea(null)}
+                    className="bg-gray-400 border-2 border-black text-white px-4 py-2 text-xs hover:bg-gray-500"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-green-400 border-2 border-black text-black px-4 py-2 text-xs hover:bg-green-500"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </form>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+
+        {cargando ? (
+          <div className="flex justify-center items-center h-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-yellow-500"></div>
+            <p className="ml-2 text-black text-xs">Cargando...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {areas.map((area) => (
+              <div
+                key={area.id}
+                className="bg-white p-4 border-4 border-black shadow-[4px_4px_0_#000] rounded-md text-black"
+              >
+                <h2 className="text-xs mb-2 font-bold">📌 Área #{area.id}</h2>
+                <p className="bg-yellow-50 p-2 border border-black text-xs mb-2">
+                  <strong>Nombre:</strong> {area.areaName}
+                </p>
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => handleEdit(area)}
+                    className="bg-green-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-green-500"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => handleDelete(area.id)}
+                    className="bg-red-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-red-500"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
