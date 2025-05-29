@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logout from "./Logout";
 import { useAuth } from "./AuthContext";
 
 export default function Principal() {
   const { role, username } = useAuth();
+
+  const navigate = useNavigate()
 
   const buttonClass =
     "relative flex items-center justify-center h-20 bg-yellow-400 text-black text-xs p-6 border-4 border-black shadow-[4px_4px_0_#333] hover:shadow-[2px_2px_0_#333] transition-transform duration-200 transform hover:scale-105 text-center";
@@ -17,6 +19,11 @@ export default function Principal() {
       >
         {username && <div className="truncate">👤 {username}</div>}
         {role && <div className="truncate">🔐 {role}</div>}
+        <div>
+          <button className="text-blue-600 underline hover:scale-105 cursor-pointer" onClick={() => navigate("change-password")}>
+            Cambiar Contraseña
+          </button>
+        </div>
         <div className="mt-2">
           <Logout />
         </div>

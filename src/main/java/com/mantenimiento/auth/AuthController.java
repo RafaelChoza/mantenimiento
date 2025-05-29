@@ -33,11 +33,10 @@ public class AuthController {
         return ResponseEntity.ok("Logout exitoso");
     }
 
-    @PostMapping(value = "update-password")
-    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String token,
-            @RequestBody UpdatePasswordRequest request) {
-        authService.updatePassword(token.replace("Bearer ", ""), request.getOldPassword(), request.getNewPassword());
-        return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    @PostMapping("/update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordRequest request) {
+        authService.updatePassword(request.getUsername(), request.getOldPassword(), request.getNewPassword());
+        return ResponseEntity.ok("Contraseña actualizada con éxito");
     }
 
 }

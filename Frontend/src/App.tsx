@@ -12,6 +12,7 @@ import Users from "./components/Users";
 import OrdersCompleted from "./components/OrdersCompleted";
 import OrderCompletedDetail from "./components/OrderCompletedDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/user-register" element={<ProtectedRoute><UserRegister /></ProtectedRoute>} />
         <Route path="/mantenimiento-completado" element={<ProtectedRoute><OrdersCompleted /></ProtectedRoute>} />
         <Route path="/detalle/:id" element={<ProtectedRoute><OrderCompletedDetail /></ProtectedRoute>} />
+        <Route path="/mantenimiento/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

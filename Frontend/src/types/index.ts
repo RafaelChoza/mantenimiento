@@ -128,6 +128,7 @@ export type AuthContextType = {
 }
 
 export type RegisterUserUpdate = {
+  username: string;
   firstname: string;
   lastname: string;
   country: string;

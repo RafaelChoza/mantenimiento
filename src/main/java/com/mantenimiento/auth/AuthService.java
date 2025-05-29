@@ -67,18 +67,14 @@ public class AuthService {
     }
 
     public void updatePassword(String username, String oldPassword, String newPassword) {
-        // Buscar al usuario en la base de datos
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario" + username + " no encontrado"));
 
-        // Validar la contraseña actual
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new IllegalArgumentException("La contraseña actual es incorrecta");
         }
 
-        // Actualizar la contraseña y guardar el usuario
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
-
 }

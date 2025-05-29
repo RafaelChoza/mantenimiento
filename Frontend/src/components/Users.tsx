@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import type { RegisterUser, RegisterUserUpdate, Role } from "../types";
 import Menu from "./Menu";
 import { toast, ToastContainer } from "react-toastify";
+import { useAuth } from "./AuthContext";
 
 export default function Users() {
+  const { username } = useAuth();
   const [users, setUsers] = useState<RegisterUser[]>([]);
   const [cargando, setCargando] = useState(true);
   const [roles, setRoles] = useState<Role[]>([]);
@@ -11,6 +13,7 @@ export default function Users() {
   const [selectedUser, setSelectedUser] = useState<RegisterUser | null>(null);
   const [showModalEdit, setShowModalEdit] = useState(false)
   const [formData, setFormData] = useState<RegisterUserUpdate>({
+    username : username || "",
     firstname: selectedUser?.firstname ?? "",
     lastname: selectedUser?.lastname ?? "",
     country: selectedUser?.country ?? "",
@@ -116,6 +119,7 @@ export default function Users() {
   useEffect(() => {
     if (selectedUser) {
       setFormData({
+        username: selectedUser.username,
         firstname: selectedUser.firstname,
         lastname: selectedUser.lastname,
         country: selectedUser.country,
@@ -146,6 +150,7 @@ export default function Users() {
   }
 
   try {
+    console.log("Datos que se envian al backend", formData)
     const token = localStorage.getItem("token");
 
     if (!token) {
