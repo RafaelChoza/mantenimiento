@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import Menu from "./Menu";
+import { useNavigate } from "react-router-dom";
 
 export default function ChangePassword() {
   const { username } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: username,
     oldPassword: "",
     newPassword: "",
     newPassword_confirmation: "",
   });
+  
+  useEffect(() => {
+    if (username) {
+      setFormData((prev) => ({ ...prev, username }));
+    }
+  }, [username]);
 
   const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,18 +28,18 @@ export default function ChangePassword() {
     });
   };
 
-  const handleSubmitPassword = async (
-    e: React.FormEvent<HTMLFormElement>,
-    oldPassword: string,
-    newPassword: string,
-    newPassword_confirmation: string
-  ) => {
+  const handleSubmitPassword = async (e: React.FormEvent<HTMLFormElement>,) => {
     e.preventDefault();
-    if (oldPassword === newPassword) {
+    console.log("🔍 Validando contraseñas...");
+    console.log("Old Password:", formData.oldPassword);
+    console.log("New Password:", formData.newPassword);
+    console.log("Confirmation:", formData.newPassword_confirmation);
+    if (formData.oldPassword === formData.newPassword) {
       toast.error("La nueva contraseña no puede ser igual a la actual");
       return;
     }
-    if (newPassword !== newPassword_confirmation) {
+    if (formData.newPassword !== formData.newPassword_confirmation) {
+      console.log("La nueva contraseña debe coincidir con la confirmación")
       toast.error("La nueva contraseña debe coincidir con la confirmación");
       return;
     }
@@ -57,6 +65,10 @@ export default function ChangePassword() {
 
       if (response.ok) {
         toast.success("Contraseña actualizada correctamente");
+        setTimeout(() => {
+          navigate("/mantenimiento")
+        }, 6000)
+        navigate("/mantenimiento")
       } else {
         toast.error("Error al actualizar la contraseña");
       }
@@ -77,8 +89,9 @@ export default function ChangePassword() {
       >
         🔒 Cambio de Contraseña
       </h1>
+      <p>{username}</p>
 
-      <form className="space-y-6" onSubmit={() => handleSubmitPassword}>
+      <form  onSubmit={(e) => handleSubmitPassword(e)}>
         <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
           <h2
             className="text-xs text-blue-700 mb-4"
@@ -89,15 +102,16 @@ export default function ChangePassword() {
 
           <div className="grid grid-cols-1 gap-4">
             {[
-              { name: "oldPassword", type: "password", placeholder: "Contraseña actual" },
-              { name: "newPassword", type: "password", placeholder: "Nueva contraseña" },
-              { name: "newPassword_confirmation", type: "password", placeholder: "Confirmar nueva contraseña" },
+              { name: "oldPassword", value: formData.oldPassword, type: "password", placeholder: "Contraseña actual" },
+              { name: "newPassword", value: formData.newPassword, type: "password", placeholder: "Nueva contraseña" },
+              { name: "newPassword_confirmation", value: formData.newPassword_confirmation, type: "password", placeholder: "Confirmar nueva contraseña" },
             ].map((field) => (
               <input
                 key={field.name}
                 className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
                 type={field.type}
                 name={field.name}
+                value={field.value}
                 placeholder={field.placeholder}
                 onChange={handleChangePassword}
                 required
