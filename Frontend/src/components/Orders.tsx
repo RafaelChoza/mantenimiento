@@ -152,35 +152,35 @@ export default function Orders() {
 
 
   return (
-    <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
+    <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       {editingOrder && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           
-          <div className="bg-yellow-100 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] p-6 w-full max-w-xl overflow-y-auto max-h-[90vh]">
+          <div className="bg-gray-300 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] p-6 w-full max-w-xl overflow-y-auto max-h-[90vh]">
             <button 
               className="text-red-700 my-2 font-bold hover:scale-110"
               onClick={() => setEditingOrder(null)}
             >X <span className="text-black">Cerrar</span></button>
             <h2
               className="text-xs text-blue-700 mb-4"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
+             
             >
               Editar Orden #{editingOrder.id}
             </h2>
-            <form onSubmit={handleUpdateOrder} className="space-y-10" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+            <form onSubmit={handleUpdateOrder} className="space-y-10">
               {role !== "ADMIN" && (
                 <div>
                   {/* Sección Solicitante */}
-                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                  <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
                     <h2
                       className="text-xs text-blue-700 mb-4"
-                      style={{ fontFamily: '"Press Start 2P", cursive' }}
+                      
                     >
                       Exclusivo Solicitante
                     </h2>
-                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700"
                         type="text"
                         name="requestorName"
                         value={editingOrder.requestorName}
@@ -188,7 +188,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700"
                         type="text"
                         name="requestorLastName"
                         value={editingOrder.requestorLastName}
@@ -196,7 +196,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <select
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700"
                         name="area"
                         value={editingOrder.area}
                         onChange={handleInputChange}
@@ -209,7 +209,7 @@ export default function Orders() {
                         ))}
                       </select>
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700"
                         type="text"
                         name="idMachine"
                         value={editingOrder.idMachine}
@@ -235,7 +235,7 @@ export default function Orders() {
                         <span>Requiere atención inmediata</span>
                       </label>
                       <textarea
-                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        className="border-2 border-black p-2 bg-blue-700   col-span-2"
                         name="serviceDescription"
                         value={editingOrder.serviceDescription}
                         placeholder="Descripción del servicio"
@@ -250,23 +250,23 @@ export default function Orders() {
               {role !== "USER" && (
                 <div>
                   {/* Sección Supervisor */}
-                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                  <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
                     <h2
                       className="text-xs text-green-700 mb-4"
-                      style={{ fontFamily: '"Press Start 2P", cursive' }}
+                      
                     >
                       Exclusivo Supervisor de Mantenimiento
                     </h2>
-                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="date"
                         name="receptionDate"
                         value={editingOrder.receptionDate}
                         onChange={handleInputChange}
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="time"
                         name="receptionTime"
                         value={editingOrder.receptionTime}
@@ -274,7 +274,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <select
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         name="personnelAsigned"
                         value={editingOrder.personnelAsigned}
                         onChange={handleInputChange}
@@ -289,21 +289,21 @@ export default function Orders() {
                         ))}
                       </select>
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="date"
                         name="programmedDate"
                         value={editingOrder.programmedDate}
                         onChange={handleInputChange}
                       />
                       <textarea
-                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        className="border-2 border-black p-2 bg-blue-700  col-span-2"
                         name="observations"
                         value={editingOrder.observations}
                         placeholder="Observaciones encontradas"
                         onChange={handleInputChange}
                       />
                       <textarea
-                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        className="border-2 border-black p-2 bg-blue-700  col-span-2"
                         name="problemCauseSolution"
                         value={editingOrder.problemCauseSolution}
                         placeholder="Problema, causa y solución"
@@ -330,16 +330,15 @@ export default function Orders() {
                     </div>
                   </section>
                   {/* Sección Técnico */}
-                  <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
+                  <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
                     <h2
                       className="text-xs text-purple-700 mb-4"
-                      style={{ fontFamily: '"Press Start 2P", cursive' }}
                     >
                       Técnico Asignado
                     </h2>
-                    <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                    <div className="grid grid-cols-2 gap-4 text-xs">
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="number"
                         name="usedParts"
                         value={editingOrder.usedParts}
@@ -347,7 +346,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="text"
                         name="partNumber"
                         value={editingOrder.partNumber}
@@ -355,7 +354,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="text"
                         name="descriptionPart"
                         value={editingOrder.descriptionPart}
@@ -363,7 +362,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 "
                         type="text"
                         name="partOrigin"
                         value={editingOrder.partOrigin}
@@ -416,7 +415,7 @@ export default function Orders() {
               <button
                 type="submit"
                 className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
+                
               >
                 Enviar Cambios
               </button>
@@ -429,8 +428,7 @@ export default function Orders() {
 
       <Menu />
       <h1
-        className="text-center text-yellow-700 text-sm mb-6"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
+        className="text-center text-yellow-300 text-sm mb-6"
       >
         📌 Órdenes de Mantenimiento
       </h1>
@@ -440,7 +438,6 @@ export default function Orders() {
           <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500"></div>
           <p
             className="ml-2 text-blue-600 text-xs"
-            style={{ fontFamily: '"Press Start 2P", cursive' }}
           >
             Cargando...
           </p>
@@ -451,7 +448,6 @@ export default function Orders() {
             <div
               key={order.id}
               className="bg-yellow-50 border-4 border-black p-4 rounded shadow-[4px_4px_0_#333] transition-all"
-              style={{ fontFamily: '"Press Start 2P", cursive' }}
             >
               <h2 className="text-xs text-blue-700 mb-2 flex items-center">
                 🔧 Orden #{order.id}

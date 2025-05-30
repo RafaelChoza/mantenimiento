@@ -125,26 +125,19 @@ const MantenimientoOrdenForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-yellow-100 border-4 border-black shadow-[6px_6px_0_#333] rounded-lg">
+  <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+    <div className="bg-gray-300 border-4 border-black shadow-[4px_4px_0_#000] p-4 rounded-lg mb-6 max-w-5xl mx-auto">
       <ToastContainer />
       <Menu />
-      <h1
-        className="text-center text-yellow-700 text-sm mb-6"
-        style={{ fontFamily: '"Press Start 2P", cursive' }}
-      >
+      <h1 className="text-center text-yellow-700 text-xs mb-4">
         🛠️ Orden de Mantenimiento Correctivo
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-10">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Sección Solicitante */}
-        <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-          <h2
-            className="text-xs text-blue-700 mb-4"
-            style={{ fontFamily: '"Press Start 2P", cursive' }}
-          >
-            Exclusivo Solicitante
-          </h2>
-          <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+        <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
+          <h2 className="text-blue-700 mb-2">Exclusivo Solicitante</h2>
+          <div className="grid grid-cols-2 gap-4">
             <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorName" placeholder="Nombre del solicitante" onChange={handleChange} />
             <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorLastName" placeholder="Apellido del solicitante" onChange={handleChange} />
             <select className="border-2 border-black p-2 bg-yellow-50" name="area" value={formData.area} onChange={handleChange}>
@@ -167,17 +160,11 @@ const MantenimientoOrdenForm: React.FC = () => {
         </section>
 
         {role != "USER" && (
-
-          <div>
+          <>
             {/* Sección Supervisor */}
-            <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-              <h2
-                className="text-xs text-green-700 mb-4"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              >
-                Exclusivo Supervisor de Mantenimiento
-              </h2>
-              <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+            <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
+              <h2 className="text-green-700 mb-2">Exclusivo Supervisor de Mantenimiento</h2>
+              <div className="grid grid-cols-2 gap-4">
                 <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="receptionDate" onChange={handleChange} />
                 <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleChange} />
                 <select className="border-2 border-black p-2 bg-yellow-50" name="personnelAsigned" value={formData.personnelAsigned} onChange={handleChange}>
@@ -201,14 +188,11 @@ const MantenimientoOrdenForm: React.FC = () => {
                 </label>
               </div>
             </section>
-            <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#333]">
-              <h2
-                className="text-xs text-purple-700 mb-4"
-                style={{ fontFamily: '"Press Start 2P", cursive' }}
-              >
-                Técnico Asignado
-              </h2>
-              <div className="grid grid-cols-2 gap-4 text-xs" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+
+            {/* Sección Técnico */}
+            <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
+              <h2 className="text-purple-700 mb-2">Técnico Asignado</h2>
+              <div className="grid grid-cols-2 gap-4">
                 {[
                   { name: "coversInstalled", label: "Cubiertas instaladas" },
                   { name: "interlocksTested", label: "Interlocks probados" },
@@ -232,25 +216,16 @@ const MantenimientoOrdenForm: React.FC = () => {
                 <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
               </div>
             </section>
-          </div>
+          </>
         )}
 
-
-        {/* Sección Técnico */}
-
-
-        <button
-          className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
-          style={{ fontFamily: '"Press Start 2P", cursive' }}
-        >
+        <button className="w-full bg-white border-2 border-black text-black px-4 py-2 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000]">
           Enviar Orden
         </button>
       </form>
     </div>
-  );
-
-
-
+  </div>
+);
 }
 
 export default MantenimientoOrdenForm;
