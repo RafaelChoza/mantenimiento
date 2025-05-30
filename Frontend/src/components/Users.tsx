@@ -229,7 +229,7 @@ export default function Users() {
 
     {showModal && selectedUser && (
       <div className="fixed inset-0 bg-blue-900 bg-opacity-90 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-yellow-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] text-xs font-mono">
+        <div className="bg-gray-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] text-xs font-mono">
           <h2 className="text-sm mb-4 font-bold text-black">
             CAMBIAR ROL PARA {selectedUser.username}
           </h2>

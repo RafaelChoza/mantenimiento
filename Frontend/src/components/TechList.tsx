@@ -215,13 +215,13 @@ export default function TechList() {
               <div className="mt-2 flex justify-between">
                 <button
                   onClick={() => handleEdit(tech)}
-                  className="bg-green-400 hover:bg-green-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
+                  className="bg-cyan-700 hover:bg-green-500 border-2 border-black text-white text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
                 >
                   EDITAR
                 </button>
                 <button
                   onClick={() => onDelete(tech.idTecnico)}
-                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
+                  className="bg-gray-600 hover:bg-red-500 border-2 border-black text-white text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
                 >
                   ELIMINAR
                 </button>

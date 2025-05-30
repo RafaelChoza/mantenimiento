@@ -7,7 +7,7 @@ export default function Principal() {
   const navigate = useNavigate();
 
   const buttonClass =
-    "relative flex items-center justify-center h-20 bg-gray-300 text-black text-xs p-6 border-2 border-black shadow-[2px_2px_0_#000] hover:bg-yellow-300 hover:shadow-[1px_1px_0_#000] transition-transform duration-200 transform hover:scale-105 text-center font-mono";
+    "relative flex items-center justify-center h-20 bg-gray-300 text-black text-xl font-bold p-6 border-2 border-black shadow-[2px_2px_0_#000] hover:bg-yellow-300 hover:shadow-[1px_1px_0_#000] transition-transform duration-200 transform hover:scale-105 text-center font-mono";
 
   return (
     <div className="min-h-screen bg-blue-900 text-white font-mono p-6">

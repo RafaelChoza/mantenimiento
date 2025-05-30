@@ -135,18 +135,18 @@ const MantenimientoOrdenForm: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Sección Solicitante */}
-        <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
-          <h2 className="text-blue-700 mb-2">Exclusivo Solicitante</h2>
+        <section className="bg-gray-400 border-2 border-black text-black p-4 text-xs hover:bg-gray-500 transition-all shadow-[2px_2px_0_#000] rounded">
+          <h2 className="text-yellow- mb-2">Exclusivo Solicitante</h2>
           <div className="grid grid-cols-2 gap-4">
-            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorName" placeholder="Nombre del solicitante" onChange={handleChange} />
-            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="requestorLastName" placeholder="Apellido del solicitante" onChange={handleChange} />
-            <select className="border-2 border-black p-2 bg-yellow-50" name="area" value={formData.area} onChange={handleChange}>
+            <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="requestorName" placeholder="Nombre del solicitante" onChange={handleChange} />
+            <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="requestorLastName" placeholder="Apellido del solicitante" onChange={handleChange} />
+            <select className="border-2 border-black p-2 bg-blue-800 text-white" name="area" value={formData.area} onChange={handleChange}>
               <option value="" disabled>Seleccionar Área</option>
               {areas.map((area) => (
                 <option key={area.id} value={area.areaName}>{area.areaName}</option>
               ))}
             </select>
-            <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="idMachine" placeholder="ID Máquina" onChange={handleChange} />
+            <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="idMachine" placeholder="ID Máquina" onChange={handleChange} />
             <label className="flex items-center space-x-2 col-span-2">
               <input type="checkbox" name="stoppedMachine" onChange={handleChange} />
               <span>Máquina detenida</span>
@@ -155,19 +155,19 @@ const MantenimientoOrdenForm: React.FC = () => {
               <input type="checkbox" name="attentionRequired" onChange={handleChange} />
               <span>Requiere atención inmediata</span>
             </label>
-            <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="serviceDescription" placeholder="Descripción del servicio" onChange={handleChange} />
+            <textarea className="border-2 border-black p-2 bg-blue-800 text-white col-span-2" name="serviceDescription" placeholder="Descripción del servicio" onChange={handleChange} />
           </div>
         </section>
 
         {role != "USER" && (
           <>
             {/* Sección Supervisor */}
-            <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
+            <section className="bg-gray-400 border-2 border-black text-black p-4 text-xs hover:bg-gray-500 transition-all shadow-[2px_2px_0_#000] rounded">
               <h2 className="text-green-700 mb-2">Exclusivo Supervisor de Mantenimiento</h2>
               <div className="grid grid-cols-2 gap-4">
-                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="receptionDate" onChange={handleChange} />
-                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleChange} />
-                <select className="border-2 border-black p-2 bg-yellow-50" name="personnelAsigned" value={formData.personnelAsigned} onChange={handleChange}>
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="date" name="receptionDate" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="receptionTime" placeholder="Hora de recepción" onChange={handleChange} />
+                <select className="border-2 border-black p-2 bg-blue-800 text-white" name="personnelAsigned" value={formData.personnelAsigned} onChange={handleChange}>
                   <option value="" disabled>Seleccionar Técnico</option>
                   {techs.map((tech) => (
                     <option key={tech.idTecnico} value={`${tech.nombreTecnico} ${tech.apellidoTecnico}`}>
@@ -175,9 +175,9 @@ const MantenimientoOrdenForm: React.FC = () => {
                     </option>
                   ))}
                 </select>
-                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="programmedDate" onChange={handleChange} />
-                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="observations" placeholder="Observaciones encontradas" onChange={handleChange} />
-                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="problemCauseSolution" placeholder="Problema, causa y solución" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="date" name="programmedDate" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-blue-800 text-white col-span-2" name="observations" placeholder="Observaciones encontradas" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-blue-800 text-white col-span-2" name="problemCauseSolution" placeholder="Problema, causa y solución" onChange={handleChange} />
                 <label className="flex items-center space-x-2">
                   <span>¿Equipo para desecho?</span>
                   <input type="checkbox" name="equipmentDisposal" onChange={handleChange} />
@@ -190,7 +190,7 @@ const MantenimientoOrdenForm: React.FC = () => {
             </section>
 
             {/* Sección Técnico */}
-            <section className="bg-white border-2 border-black text-black p-4 text-xs hover:bg-yellow-300 transition-all shadow-[2px_2px_0_#000] rounded">
+            <section className="bg-gray-400 border-2 border-black text-black p-4 text-xs hover:bg-gray-500 transition-all shadow-[2px_2px_0_#000] rounded">
               <h2 className="text-purple-700 mb-2">Técnico Asignado</h2>
               <div className="grid grid-cols-2 gap-4">
                 {[
@@ -208,12 +208,12 @@ const MantenimientoOrdenForm: React.FC = () => {
                     <span>{item.label}</span>
                   </label>
                 ))}
-                <input className="border-2 border-black p-2 bg-yellow-50" type="number" name="usedParts" value={formData.usedParts} placeholder="Partes usadas" onChange={handleChange} />
-                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partNumber" value={formData.partNumber} placeholder="Número de parte" onChange={handleChange} />
-                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="descriptionPart" value={formData.descriptionPart} placeholder="Descripción de la parte" onChange={handleChange} />
-                <input className="border-2 border-black p-2 bg-yellow-50" type="text" name="partOrigin" value={formData.partOrigin} placeholder="Origen de la parte" onChange={handleChange} />
-                <textarea className="border-2 border-black p-2 bg-yellow-50 col-span-2" name="comments" value={formData.comments} placeholder="Comentarios" onChange={handleChange} />
-                <input className="border-2 border-black p-2 bg-yellow-50" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="number" name="usedParts" value={formData.usedParts} placeholder="Partes usadas" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="partNumber" value={formData.partNumber} placeholder="Número de parte" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="descriptionPart" value={formData.descriptionPart} placeholder="Descripción de la parte" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="partOrigin" value={formData.partOrigin} placeholder="Origen de la parte" onChange={handleChange} />
+                <textarea className="border-2 border-black p-2 bg-blue-800 text-white col-span-2" name="comments" value={formData.comments} placeholder="Comentarios" onChange={handleChange} />
+                <input className="border-2 border-black p-2 bg-blue-800 text-white" type="date" name="closeDate" value={formData.closeDate} onChange={handleChange} />
               </div>
             </section>
           </>

@@ -60,13 +60,13 @@ export default function CreateTech() {
         </h1>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#000]">
+          <section className="border-4 border-black bg-gray400 p-6 rounded shadow-[4px_4px_0_#000]">
             <h2 className="text-xs text-blue-700 mb-4 font-bold">
               INFORMACIÓN DEL TÉCNICO
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                 type="text"
                 name="nombreTecnico"
                 placeholder="Nombre del técnico"
@@ -74,7 +74,7 @@ export default function CreateTech() {
                 required
               />
               <input
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                 type="text"
                 name="apellidoTecnico"
                 placeholder="Apellido del técnico"
@@ -82,7 +82,7 @@ export default function CreateTech() {
                 required
               />
               <input
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                 type="email"
                 name="correo"
                 placeholder="Correo electrónico"
@@ -90,7 +90,7 @@ export default function CreateTech() {
                 required
               />
               <input
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                 type="number"
                 name="numNomina"
                 placeholder="Número de nómina"
@@ -98,7 +98,7 @@ export default function CreateTech() {
                 required
               />
               <input
-                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                 type="date"
                 name="fechaAlta"
                 onChange={handleChange}

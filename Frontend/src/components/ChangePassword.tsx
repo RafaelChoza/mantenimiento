@@ -81,8 +81,8 @@ export default function ChangePassword() {
         </h1>
 
         <form onSubmit={handleSubmitPassword}>
-          <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#000]">
-            <h2 className="text-xs text-blue-700 mb-4 font-bold">
+          <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#000]">
+            <h2 className="text-xs text-blue-900 mb-4 font-bold">
               INFORMACIÓN DE SEGURIDAD
             </h2>
 
@@ -94,7 +94,7 @@ export default function ChangePassword() {
               ].map((field) => (
                 <input
                   key={field.name}
-                  className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                  className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
                   type={field.type}
                   name={field.name}
                   value={field.value}

@@ -167,13 +167,13 @@ export default function AreaList() {
                 <div className="flex justify-between">
                   <button
                     onClick={() => handleEdit(area)}
-                    className="bg-green-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-green-500"
+                    className="bg-cyan-700 border-2 border-black text-white px-2 py-1 text-xs hover:bg-green-500"
                   >
                     Editar
                   </button>
                   <button
                     onClick={() => handleDelete(area.id)}
-                    className="bg-red-400 border-2 border-black text-black px-2 py-1 text-xs hover:bg-red-500"
+                    className="bg-gray-600 border-2 border-black text-white px-2 py-1 text-xs hover:bg-red-500"
                   >
                     Eliminar
                   </button>

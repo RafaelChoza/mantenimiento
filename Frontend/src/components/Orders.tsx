@@ -3,6 +3,7 @@ import type { Area, MantenimientoOrden, Tech } from "../types";
 import Menu from "../components/Menu"
 import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
+import Swal from "sweetalert2";
 
 export default function Orders() {
   const { role } = useAuth();
@@ -130,12 +131,24 @@ export default function Orders() {
   }
 
   const manttoCompletar = async (id: MantenimientoOrden['id']) => {
+
+    const confirmDelete = await Swal.fire({
+      title: "¿Estás seguro de marcar como COMPLETADA?",
+      text: "¡No podrás revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, COMPLETADA",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (!confirmDelete.isConfirmed) return;
+
     if (id === undefined) {
       console.error("ID no definido");
       return;
     }
-
-    if (!window.confirm('¿Marcar este servicio como completado?')) return;
     try {
       const response = await fetch(`http://localhost:8080/mantenimiento/${id}/completado`, {
         method: "POST",
@@ -155,15 +168,15 @@ export default function Orders() {
     <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       {editingOrder && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          
+
           <div className="bg-gray-300 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] p-6 w-full max-w-xl overflow-y-auto max-h-[90vh]">
-            <button 
+            <button
               className="text-red-700 my-2 font-bold hover:scale-110"
               onClick={() => setEditingOrder(null)}
             >X <span className="text-black">Cerrar</span></button>
             <h2
               className="text-xs text-blue-700 mb-4"
-             
+
             >
               Editar Orden #{editingOrder.id}
             </h2>
@@ -174,7 +187,7 @@ export default function Orders() {
                   <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
                     <h2
                       className="text-xs text-blue-700 mb-4"
-                      
+
                     >
                       Exclusivo Solicitante
                     </h2>
@@ -253,7 +266,7 @@ export default function Orders() {
                   <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
                     <h2
                       className="text-xs text-green-700 mb-4"
-                      
+
                     >
                       Exclusivo Supervisor de Mantenimiento
                     </h2>
@@ -264,6 +277,7 @@ export default function Orders() {
                         name="receptionDate"
                         value={editingOrder.receptionDate}
                         onChange={handleInputChange}
+                        required
                       />
                       <input
                         className="border-2 border-black p-2 bg-blue-700 "
@@ -272,12 +286,14 @@ export default function Orders() {
                         value={editingOrder.receptionTime}
                         placeholder="Hora de recepción"
                         onChange={handleInputChange}
+                        required
                       />
                       <select
                         className="border-2 border-black p-2 bg-blue-700 "
                         name="personnelAsigned"
                         value={editingOrder.personnelAsigned}
                         onChange={handleInputChange}
+                        required
                       >
                         <option value={editingOrder.personnelAsigned} disabled>
                           Seleccionar Técnico
@@ -294,6 +310,7 @@ export default function Orders() {
                         name="programmedDate"
                         value={editingOrder.programmedDate}
                         onChange={handleInputChange}
+                        required
                       />
                       <textarea
                         className="border-2 border-black p-2 bg-blue-700  col-span-2"
@@ -301,6 +318,7 @@ export default function Orders() {
                         value={editingOrder.observations}
                         placeholder="Observaciones encontradas"
                         onChange={handleInputChange}
+                        required
                       />
                       <textarea
                         className="border-2 border-black p-2 bg-blue-700  col-span-2"
@@ -308,6 +326,7 @@ export default function Orders() {
                         value={editingOrder.problemCauseSolution}
                         placeholder="Problema, causa y solución"
                         onChange={handleInputChange}
+                        required
                       />
                       <label className="flex items-center space-x-2">
                         <span>¿Equipo para desecho?</span>
@@ -392,18 +411,20 @@ export default function Orders() {
                       ))}
 
                       <textarea
-                        className="border-2 border-black p-2 bg-yellow-50 col-span-2"
+                        className="border-2 border-black p-2 bg-blue-700 text-white col-span-2"
                         name="comments"
                         value={editingOrder.comments}
                         placeholder="Comentarios"
                         onChange={handleInputChange}
+                        required
                       />
                       <input
-                        className="border-2 border-black p-2 bg-yellow-50"
+                        className="border-2 border-black p-2 bg-blue-700 text-white"
                         type="date"
                         name="closeDate"
                         value={editingOrder.closeDate}
                         onChange={handleInputChange}
+                        required
                       />
                     </div>
                   </section>
@@ -415,7 +436,7 @@ export default function Orders() {
               <button
                 type="submit"
                 className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#333]"
-                
+
               >
                 Enviar Cambios
               </button>
