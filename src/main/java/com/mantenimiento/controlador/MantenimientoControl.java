@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mantenimiento.dto.MantenimientoOrden;
@@ -34,12 +35,21 @@ public class MantenimientoControl {
     UserService userService;
 
     @GetMapping("/mantenimiento")
-    public ResponseWrapper<List<MantenimientoOrden>> obtenerTodosMantenimientos() {
-        System.out.println("Obteniendo todos los mantenimientos...");
-        List<MantenimientoOrden> listaDeMantenimientos = mantenimientoServicio.obtenerTodasLasOrdenesMantenimiento();
-        ResponseEntity<List<MantenimientoOrden>> response = ResponseEntity.ok(listaDeMantenimientos);
-        return new ResponseWrapper<>(true, "Listado de Mantenimientos", response);
+public ResponseWrapper<List<MantenimientoOrden>> obtenerMantenimientos(
+        @RequestParam(required = false) String username) {
+
+    List<MantenimientoOrden> listaDeMantenimientos;
+
+    if (username != null && !username.isEmpty()) {
+        listaDeMantenimientos = mantenimientoServicio.obtenerOrdenesPorUsername(username);
+    } else {
+        listaDeMantenimientos = mantenimientoServicio.obtenerTodasLasOrdenesMantenimiento();
     }
+
+    ResponseEntity<List<MantenimientoOrden>> response = ResponseEntity.ok(listaDeMantenimientos);
+    return new ResponseWrapper<>(true, "Listado de Mantenimientos", response);
+}
+
 
     @GetMapping("/mantenimiento/{id}")
     public ResponseWrapper<MantenimientoOrden> obtenerOrdenPorId(@PathVariable Long id) {

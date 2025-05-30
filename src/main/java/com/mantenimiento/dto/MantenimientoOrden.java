@@ -22,6 +22,7 @@ public class MantenimientoOrden {
     private String serviceDateTime;
     private String serviceTime;
     private String requestorName;
+    private String username;
     private String requestorLastName;
     private String area;
     private String idMachine;
@@ -56,6 +57,8 @@ public class MantenimientoOrden {
     private boolean taggedProperly;
     private String comments;
     private Date closeDate;
+
+    
 
     public String getProblemCauseSolution() {
         return problemCauseSolution;
@@ -340,7 +343,7 @@ public class MantenimientoOrden {
     @Override
     public String toString() {
         return "MantenimientoOrden [id=" + id + ", serviceDateTime=" + serviceDateTime + ", serviceTime=" + serviceTime
-                + ", requestorName=" + requestorName + ", requestorLastName=" + requestorLastName + ", area=" + area
+                + ", requestorName=" + requestorName + ", requestorLastName=" + username + ", username=" + requestorLastName + " area=" + area
                 + ", idMachine=" + idMachine + ", stoppedMachine=" + stoppedMachine + ", attentionRequired="
                 + attentionRequired + ", serviceDescription=" + serviceDescription + ", receptionDate=" + receptionDate
                 + ", receptionTime=" + receptionTime + ", personnelAssigned=" + personnelAssigned + ", programmedDate="
@@ -369,5 +372,13 @@ public class MantenimientoOrden {
                 + ", isElectricityConnected()=" + isElectricityConnected() + ", getComments()=" + getComments()
                 + ", getCloseDate()=" + getCloseDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
                 + ", toString()=" + super.toString() + "]";
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -82,12 +82,13 @@ export default function Orders() {
   const getOrders = async () => {
     setCargando(true);
     try {
-      const response = await fetch("http://localhost:8080/mantenimiento", {
+      const response = await fetch(`http://localhost:8080/mantenimiento`, {
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
       });
       const data = await response.json();
+      console.log(data)
       setOrders(data.responseEntity.body);
     } catch (error) {
       console.error("Error al obtener los datos", error);

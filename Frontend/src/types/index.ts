@@ -31,6 +31,7 @@ export type Area = {
 
 export type MantenimientoOrden = {
   id?: number;
+  username: string,
   requestorName: string;
   requestorLastName: string;
   area: string;

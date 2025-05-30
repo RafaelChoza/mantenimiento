@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 const MantenimientoOrdenForm: React.FC = () => {
+  const { username } = useAuth();
   const [formData, setFormData] = useState<MantenimientoOrden>({
     requestorName: "",
     requestorLastName: "",
+    username: username ?? "",
     area: "",
     idMachine: "",
     stoppedMachine: false,
@@ -110,11 +112,11 @@ const MantenimientoOrdenForm: React.FC = () => {
         body: JSON.stringify(formData)
       })
       if (response.ok) {
-        console.log("Datos de orden de mantenimiento enviados a la base de datos con éxito")
+        console.log("Datos de orden de mantenimiento enviados a la base de datos con éxito", formData)
         toast.success("Orden creada con exito")
 
         setTimeout(() => {
-          navigate("/mantenimiento/orden-list");
+          navigate("/mantenimiento/orders");
         }, 5000);
       } else {
         console.log("Error al enviar los datos de la orden de mantenimiento")
