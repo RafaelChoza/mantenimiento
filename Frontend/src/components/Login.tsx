@@ -34,7 +34,7 @@ export default function Login() {
       toast.success("Inicio de sesión exitoso");
       setTimeout(() => {
         window.location.href = "/mantenimiento";
-      }, 3000);
+      }, 1500);
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión");
     }

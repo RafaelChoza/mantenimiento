@@ -10,4 +10,6 @@ public interface MantenimientoRepositorio extends JpaRepository<MantenimientoOrd
 
     List<MantenimientoOrden> findAllByUsername(String username);
 
+    List<MantenimientoOrden> findByPersonnelAssigned(String personnelAssigned);
+
 }

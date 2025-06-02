@@ -22,42 +22,52 @@ public class TecnicoServicio {
     }
 
     public Tecnico crearTecnico(Tecnico tecnico) {
-    boolean existNumNomina = tecnicoRepositorio.existsByNumNomina(tecnico.getNumNomina());
-    boolean existCorreo = tecnicoRepositorio.existsByCorreo(tecnico.getCorreo());
-    System.out.println("¿El número de nómina ya existe? " + existNumNomina);
+        boolean existNumNomina = tecnicoRepositorio.existsByNumNomina(tecnico.getNumNomina());
+        boolean existCorreo = tecnicoRepositorio.existsByCorreo(tecnico.getCorreo());
+        System.out.println("¿El número de nómina ya existe? " + existNumNomina);
 
-    if (existNumNomina) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina " + tecnico.getNumNomina() + " ya existe, no pueden duplicarse, verifique que sea el correcto");
+        if (existNumNomina) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nómina " + tecnico.getNumNomina()
+                    + " ya existe, no pueden duplicarse, verifique que sea el correcto");
+        }
+
+        if (existCorreo) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El correo " + tecnico.getCorreo() + " ya existe en la base de datos");
+        }
+
+        return tecnicoRepositorio.save(tecnico);
     }
-
-    if (existCorreo) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo " + tecnico.getCorreo() + " ya existe en la base de datos");
-    }
-
-    return tecnicoRepositorio.save(tecnico);
-}
-
 
     public Optional<Tecnico> obtenerTecnicoPorId(Long id) {
         return tecnicoRepositorio.findById(id);
     }
 
     public Tecnico actualizarTecnico(Tecnico tecnicoActualizado) {
-    Optional<Tecnico> existentePorNomina = tecnicoRepositorio.findByNumNomina(tecnicoActualizado.getNumNomina());
-    if (existentePorNomina.isPresent() && !existentePorNomina.get().getIdTecnico().equals(tecnicoActualizado.getIdTecnico())) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El número de nomina " + tecnicoActualizado.getNumNomina() + " ya existe en la base de datos");
+        Optional<Tecnico> existentePorNomina = tecnicoRepositorio.findByNumNomina(tecnicoActualizado.getNumNomina());
+        if (existentePorNomina.isPresent()
+                && !existentePorNomina.get().getIdTecnico().equals(tecnicoActualizado.getIdTecnico())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El número de nomina " + tecnicoActualizado.getNumNomina() + " ya existe en la base de datos");
+        }
+
+        Optional<Tecnico> existentePorCorreo = tecnicoRepositorio.findByCorreo(tecnicoActualizado.getCorreo());
+        if (existentePorCorreo.isPresent()
+                && !existentePorCorreo.get().getIdTecnico().equals(tecnicoActualizado.getIdTecnico())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El correo " + tecnicoActualizado.getCorreo() + " ya existe en la base de datos");
+        }
+
+        return tecnicoRepositorio.save(tecnicoActualizado);
     }
-
-    Optional<Tecnico> existentePorCorreo = tecnicoRepositorio.findByCorreo(tecnicoActualizado.getCorreo());
-    if (existentePorCorreo.isPresent() && !existentePorCorreo.get().getIdTecnico().equals(tecnicoActualizado.getIdTecnico())) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El correo " + tecnicoActualizado.getCorreo() + " ya existe en la base de datos");
-    }
-
-    return tecnicoRepositorio.save(tecnicoActualizado);
-}
-
 
     public void eliminarTecnico(Long id) {
         tecnicoRepositorio.deleteById(id);
+    }
+
+    public Tecnico obtenerTecnicoPorCorreo(String correo) {
+        return tecnicoRepositorio.findByCorreo(correo)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Técnico no encontrado con el correo " + correo));
     }
 }

@@ -38,5 +38,9 @@ public class MantenimientoServicio {
     public List<MantenimientoOrden> obtenerOrdenesPorUsername(String username) {
         return mantenimientoRepositorio.findAllByUsername(username);
        
-    }    
+    }
+
+    public List<MantenimientoOrden> obtenerOrdenesPorPersonalAsignado(String personnelAssigned) {
+        return mantenimientoRepositorio.findByPersonnelAssigned(personnelAssigned);
+    }
 }

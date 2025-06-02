@@ -71,6 +71,13 @@ export default function Principal() {
                 Lista de Técnicos
                 <div className="absolute top-2 right-4 text-black text-lg">👨‍🔧</div>
               </Link>
+              <Link
+                to="/mantenimiento/asignadas"
+                className={buttonClass.replace("bg-gray-300", "bg-green-600")}
+              >
+                Mis Ordenes Asignadas
+                <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+              </Link>
 
               {role === "SUPERUSER" && (
                 <>

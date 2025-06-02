@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mantenimiento.dto.MantenimientoOrden;
 import com.mantenimiento.dto.ResponseWrapper;
+import com.mantenimiento.dto.Tecnico;
 import com.mantenimiento.servicio.MantenimientoServicio;
+import com.mantenimiento.servicio.TecnicoServicio;
 import com.mantenimiento.user.RolDTO;
 import com.mantenimiento.user.Role;
 import com.mantenimiento.user.User;
@@ -32,24 +35,26 @@ public class MantenimientoControl {
     MantenimientoServicio mantenimientoServicio;
 
     @Autowired
+    TecnicoServicio tecnicoServicio;
+
+    @Autowired
     UserService userService;
 
     @GetMapping("/mantenimiento")
-public ResponseWrapper<List<MantenimientoOrden>> obtenerMantenimientos(
-        @RequestParam(required = false) String username) {
+    public ResponseWrapper<List<MantenimientoOrden>> obtenerMantenimientos(
+            @RequestParam(required = false) String username) {
 
-    List<MantenimientoOrden> listaDeMantenimientos;
+        List<MantenimientoOrden> listaDeMantenimientos;
 
-    if (username != null && !username.isEmpty()) {
-        listaDeMantenimientos = mantenimientoServicio.obtenerOrdenesPorUsername(username);
-    } else {
-        listaDeMantenimientos = mantenimientoServicio.obtenerTodasLasOrdenesMantenimiento();
+        if (username != null && !username.isEmpty()) {
+            listaDeMantenimientos = mantenimientoServicio.obtenerOrdenesPorUsername(username);
+        } else {
+            listaDeMantenimientos = mantenimientoServicio.obtenerTodasLasOrdenesMantenimiento();
+        }
+
+        ResponseEntity<List<MantenimientoOrden>> response = ResponseEntity.ok(listaDeMantenimientos);
+        return new ResponseWrapper<>(true, "Listado de Mantenimientos", response);
     }
-
-    ResponseEntity<List<MantenimientoOrden>> response = ResponseEntity.ok(listaDeMantenimientos);
-    return new ResponseWrapper<>(true, "Listado de Mantenimientos", response);
-}
-
 
     @GetMapping("/mantenimiento/{id}")
     public ResponseWrapper<MantenimientoOrden> obtenerOrdenPorId(@PathVariable Long id) {
@@ -134,6 +139,22 @@ public ResponseWrapper<List<MantenimientoOrden>> obtenerMantenimientos(
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    
+    @GetMapping("/mantenimiento/asignadas")
+    public ResponseWrapper<List<MantenimientoOrden>> obtenerOrdenesAsignadas(
+            @RequestHeader("username") String username) {
+        Tecnico tecnico = tecnicoServicio.obtenerTecnicoPorCorreo(username);
+        System.out.println("Se recibe el nombre de usuario: " + username + " y el tecnico: " + tecnico);
+        if (tecnico == null) {
+            System.out.println("EL tecnico no se encontró");
+            return new ResponseWrapper<>(false, "Técnico no encontrado", null);
+        }
+        List<MantenimientoOrden> ordenesAsignadas = mantenimientoServicio
+                .obtenerOrdenesPorPersonalAsignado(tecnico.getNombreTecnico() + " " + tecnico.getApellidoTecnico());
+        ResponseEntity<List<MantenimientoOrden>> response = ResponseEntity.ok(ordenesAsignadas);
+        return new ResponseWrapper<>(true, "Listado de Órdenes Asignadas", response);
     }
 
 }

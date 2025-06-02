@@ -6,7 +6,7 @@ import { useAuth } from "./AuthContext";
 import Swal from "sweetalert2";
 
 export default function Orders() {
-  const { role } = useAuth();
+  const { role, username } = useAuth();
   const [orders, setOrders] = useState<MantenimientoOrden[]>([]);
   const [cargando, setCargando] = useState(true);
   const [editingOrder, setEditingOrder] = useState<MantenimientoOrden | null>(null)
@@ -164,6 +164,26 @@ export default function Orders() {
     }
   }
 
+  const filtrarOrdenes = () => {
+    if (username) {
+      const tecInfo = techs.filter((tech) => tech.correo === username);
+      console.log("Info del técnico:", tecInfo);
+
+      if (tecInfo.length > 0) {
+        const nombreTec = tecInfo[0];
+        const nombreApellido = `${nombreTec.nombreTecnico} ${nombreTec.apellidoTecnico}`;
+        console.log("Nombre completo del técnico:", nombreApellido);
+
+        const asignadas = orders.filter(order => order.personnelAsigned === nombreApellido);
+        setOrders(asignadas);
+      } else {
+        setOrders([])
+        console.warn("No se encontró un técnico con ese correo.");
+        return
+      }
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
@@ -182,7 +202,7 @@ export default function Orders() {
               Editar Orden #{editingOrder.id}
             </h2>
             <form onSubmit={handleUpdateOrder} className="space-y-10">
-              {role !== "ADMIN" && (
+              {(role === "USER" || role === "ADMIN" || role === "SUPERUSER") && (
                 <div>
                   {/* Sección Solicitante */}
                   <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#333]">
@@ -200,6 +220,7 @@ export default function Orders() {
                         value={editingOrder.requestorName}
                         placeholder="Nombre del solicitante"
                         onChange={handleInputChange}
+                        disabled={role === "ADMIN"}
                       />
                       <input
                         className="border-2 border-black p-2 bg-blue-700"
@@ -208,12 +229,14 @@ export default function Orders() {
                         value={editingOrder.requestorLastName}
                         placeholder="Apellido del solicitante"
                         onChange={handleInputChange}
+                        disabled={role === "ADMIN"}
                       />
                       <select
                         className="border-2 border-black p-2 bg-blue-700"
                         name="area"
                         value={editingOrder.area}
                         onChange={handleInputChange}
+                        disabled={role === "ADMIN"}
                       >
                         <option value="" disabled>Seleccionar Área</option>
                         {areas.map((area) => (
@@ -229,6 +252,7 @@ export default function Orders() {
                         value={editingOrder.idMachine}
                         placeholder="ID Máquina"
                         onChange={handleInputChange}
+                        disabled={role === "ADMIN"}
                       />
                       <label className="flex items-center space-x-2 col-span-2">
                         <input
@@ -236,6 +260,7 @@ export default function Orders() {
                           name="stoppedMachine"
                           checked={!!editingOrder?.stoppedMachine}
                           onChange={handleInputChange}
+                          disabled={role === "ADMIN"}
                         />
                         <span>Máquina detenida</span>
                       </label>
@@ -245,6 +270,7 @@ export default function Orders() {
                           name="attentionRequired"
                           checked={!!editingOrder?.attentionRequired}
                           onChange={handleInputChange}
+                          disabled={role === "ADMIN"}
                         />
                         <span>Requiere atención inmediata</span>
                       </label>
@@ -254,6 +280,7 @@ export default function Orders() {
                         value={editingOrder.serviceDescription}
                         placeholder="Descripción del servicio"
                         onChange={handleInputChange}
+                        disabled={role === "ADMIN"}
                       />
                     </div>
                   </section>
@@ -296,7 +323,7 @@ export default function Orders() {
                         onChange={handleInputChange}
                         required
                       >
-                        <option value={editingOrder.personnelAsigned} disabled>
+                        <option value="" disabled>
                           Seleccionar Técnico
                         </option>
                         {techs.map((tech) => (
@@ -454,6 +481,15 @@ export default function Orders() {
       >
         📌 Órdenes de Mantenimiento
       </h1>
+
+      <button
+        onClick={filtrarOrdenes}
+        className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition hover:scale-105 mb-4"
+      >
+        Ver órdenes asignadas para {username}
+      </button>
+
+
 
       {cargando ? (
         <div className="flex justify-center items-center h-12">

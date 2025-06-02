@@ -13,6 +13,7 @@ import OrdersCompleted from "./components/OrdersCompleted";
 import OrderCompletedDetail from "./components/OrderCompletedDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ChangePassword from "./components/ChangePassword";
+import OrderPerAssigned from "./components/OrderPerAssigned";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/mantenimiento-completado" element={<ProtectedRoute><OrdersCompleted /></ProtectedRoute>} />
         <Route path="/detalle/:id" element={<ProtectedRoute><OrderCompletedDetail /></ProtectedRoute>} />
         <Route path="/mantenimiento/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
+        <Route path="/mantenimiento/asignadas" element={<ProtectedRoute><OrderPerAssigned /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
