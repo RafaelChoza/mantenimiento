@@ -97,6 +97,9 @@ export default function Login() {
             REGÍSTRATE
           </Link>
         </div>
+        <div className="m-5 text-center font-bold underline hover:scale-90">
+          <Link to="reset-password" >¿Olvidaste la contraseña?</Link>
+        </div>
       </div>
     </div>
   );

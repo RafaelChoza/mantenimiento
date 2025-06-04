@@ -4,6 +4,8 @@ import Menu from "../components/Menu"
 import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
 import Swal from "sweetalert2";
+import { getTechs } from "../api/getTechs";
+import { getAreas } from "../api/getAreas";
 
 export default function Orders() {
   const { role, username } = useAuth();
@@ -15,8 +17,8 @@ export default function Orders() {
 
   useEffect(() => {
     getOrders();
-    getAreas();
-    getTechs();
+    getAreas(setAreas, setCargando);
+    getTechs(setTechs, setCargando);
   }, []);
 
   const handleEdit = (order: MantenimientoOrden) => {
@@ -96,41 +98,7 @@ export default function Orders() {
       setCargando(false);
     }
   };
-
-  const getAreas = async () => {
-    setCargando(true)
-    try {
-      const response = await fetch("http://localhost:8080/areas", {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await response.json()
-      setAreas(data.responseEntity.body)
-    } catch (error) {
-      console.error("Error al obtener los datos", error)
-    } finally {
-      setCargando(false)
-    }
-  }
-
-  const getTechs = async () => {
-    setCargando(true)
-    try {
-      const response = await fetch("http://localhost:8080/tecnicos", {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await response.json()
-      setTechs(data.responseEntity.body)
-    } catch (error) {
-      console.error("Error al obtener los datos", error)
-    } finally {
-      setCargando(false)
-    }
-  }
-
+  
   const manttoCompletar = async (id: MantenimientoOrden['id']) => {
 
     const confirmDelete = await Swal.fire({

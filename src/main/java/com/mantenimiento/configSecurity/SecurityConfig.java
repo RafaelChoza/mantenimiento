@@ -31,10 +31,8 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http.csrf(csrf -> csrf.disable());
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
-        http.authorizeHttpRequests(authRequest -> authRequest
-                .requestMatchers("/auth/**", "/h2-console/**").permitAll()
-                .requestMatchers("/matenimiento/**", "/areas/**", "/tecnicos/**").authenticated()
-                .anyRequest().authenticated());
+        http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+
         http.sessionManagement(sessionManager -> sessionManager
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authProvider);

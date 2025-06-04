@@ -14,12 +14,14 @@ import OrderCompletedDetail from "./components/OrderCompletedDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ChangePassword from "./components/ChangePassword";
 import OrderPerAssigned from "./components/OrderPerAssigned";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/login/reset-password" element={<ResetPassword />} />
         <Route path="/mantenimiento" element={<ProtectedRoute><Principal /></ProtectedRoute>} />
         <Route path="/mantenimiento/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
         <Route path="/mantenimiento/create-order" element={<ProtectedRoute><CreateOrder /></ProtectedRoute>} />
