@@ -113,73 +113,72 @@ export default function TechList() {
     }
   };
 
-  return (
-    <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
-      <ToastContainer/>
-      <Menu />
-      <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">
-        👨‍🔧 Lista de Técnicos
+ return (
+  <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+    <ToastContainer />
+    <Menu />
+    <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-5xl mx-auto rounded-lg">
+      <h1 className="text-center text-black text-sm mb-6 font-bold">
+        👨‍🔧 LISTA DE TÉCNICOS
       </h1>
 
-      {/* Modal de edición con estilos actualizados */}
       {editingTech && (
-        <div className="fixed inset-0 bg-blue-50 bg-opacity-90 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full border-l-4 border-blue-500">
-            <h2 className="text-xl font-bold text-blue-700 mb-4 text-center">Editar Área</h2>
+        <div className="fixed inset-0 bg-blue-900 bg-opacity-95 flex justify-center items-center z-50">
+          <div className="bg-gray-300 border-4 border-black p-6 rounded shadow-[4px_4px_0_#000] max-w-md w-full text-black">
+            <h2 className="text-xs text-center font-bold mb-4">✏️ EDITAR TÉCNICO</h2>
             <form onSubmit={handleUpdateTech} className="space-y-4">
               <input
                 type="text"
                 name="nombreTecnico"
                 value={editingTech.nombreTecnico}
                 onChange={handleInputChange}
-                placeholder="Nombre del tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
+                placeholder="Nombre del técnico"
+                className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
               />
               <input
                 type="text"
                 name="apellidoTecnico"
                 value={editingTech.apellidoTecnico}
                 onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
+                placeholder="Apellido del técnico"
+                className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
               />
               <input
                 type="email"
                 name="correo"
                 value={editingTech.correo}
                 onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
+                placeholder="Correo electrónico"
+                className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
               />
               <input
                 type="number"
                 name="numNomina"
                 value={editingTech.numNomina}
                 onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
+                placeholder="Número de nómina"
+                className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
               />
               <input
                 type="date"
                 name="fechaAlta"
                 value={editingTech.fechaAlta}
                 onChange={handleInputChange}
-                placeholder="Apellido del Tecnico"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
+                className="w-full p-2 bg-yellow-50 border-2 border-black text-black text-xs"
               />
               <div className="flex justify-end gap-4 pt-4">
                 <button
                   type="button"
                   onClick={() => setEditingTech(null)}
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition"
+                  className="bg-red-400 hover:bg-red-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[2px_2px_0_#000]"
                 >
-                  Cancelar
+                  CANCELAR
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+                  className="bg-green-400 hover:bg-green-500 border-2 border-black text-black py-2 px-4 text-xs shadow-[2px_2px_0_#000]"
                 >
-                  Guardar Cambios
+                  GUARDAR CAMBIOS
                 </button>
               </div>
             </form>
@@ -189,55 +188,50 @@ export default function TechList() {
 
       {cargando ? (
         <div className="flex justify-center items-center h-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500"></div>
-          <p className="ml-2 text-blue-600 text-sm font-semibold">Cargando...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-black"></div>
+          <p className="ml-2 text-black text-xs font-bold">CARGANDO...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {techs.map(tech => {
-            console.log("Técnico actual:", tech); // 👈 Aquí puedes ver si tech.id existe
-
-            return (
-              <div
-                key={tech.idTecnico}
-                className="bg-white p-3 rounded-md shadow-sm border-l-2 border-blue-500 hover:shadow-md transition-all"
-              >
-                <h2 className="text-sm font-bold text-blue-700 mb-2 flex items-center">
-                  🆔 Técnico {tech.idTecnico}
-                </h2>
-
-                <hr className="mb-2 border-blue-300" />
-
-                <div className="grid grid-cols-2 gap-1 text-xs text-gray-800">
-                  {Object.entries(tech).map(([key, value]) => (
-                    <p key={key} className="bg-gray-100 p-1 rounded-md shadow-xs">
-                      <strong className="text-blue-600">
-                        {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
-                      </strong>{" "}
-                      {value?.toString() || "N/A"}
-                    </p>
-                  ))}
-                </div>
-
-                <div className="mt-2 flex justify-between">
-                  <button
-                    className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition"
-                    onClick={() => handleEdit(tech)}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {techs.map((tech) => (
+            <div
+              key={tech.idTecnico}
+              className="bg-white p-3 border-4 border-black rounded shadow-[4px_4px_0_#000] text-black"
+            >
+              <h2 className="text-xs font-bold text-blue-700 mb-2">
+                🆔 TÉCNICO {tech.idTecnico}
+              </h2>
+              <div className="grid grid-cols-1 text-[10px] gap-1">
+                {Object.entries(tech).map(([key, value]) => (
+                  <p
+                    key={key}
+                    className="bg-yellow-50 border border-black p-1 rounded"
                   >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => onDelete(tech.idTecnico)}
-                    className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition"
-                  >
-                    Eliminar
-                  </button>
-                </div>
+                    <strong>{key.replace(/([A-Z])/g, " $1").toUpperCase()}:</strong>{" "}
+                    {value?.toString() || "N/A"}
+                  </p>
+                ))}
               </div>
-            );
-          })}
+              <div className="mt-2 flex justify-between">
+                <button
+                  onClick={() => handleEdit(tech)}
+                  className="bg-cyan-700 hover:bg-green-500 border-2 border-black text-white text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
+                >
+                  EDITAR
+                </button>
+                <button
+                  onClick={() => onDelete(tech.idTecnico)}
+                  className="bg-gray-600 hover:bg-red-500 border-2 border-black text-white text-xs px-2 py-1 shadow-[2px_2px_0_#000]"
+                >
+                  ELIMINAR
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
-  );
+  </div>
+);
+
 }

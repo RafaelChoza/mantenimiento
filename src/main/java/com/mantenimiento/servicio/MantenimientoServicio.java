@@ -33,5 +33,14 @@ public class MantenimientoServicio {
 
     public void eliminarOrdenMantenimiento(Long id) {
         mantenimientoRepositorio.deleteById(id);
-    }    
+    }
+
+    public List<MantenimientoOrden> obtenerOrdenesPorUsername(String username) {
+        return mantenimientoRepositorio.findAllByUsername(username);
+       
+    }
+
+    public List<MantenimientoOrden> obtenerOrdenesPorPersonalAsignado(String personnelAssigned) {
+        return mantenimientoRepositorio.findByPersonnelAssigned(personnelAssigned);
+    }
 }

@@ -1,21 +1,21 @@
 import { useNavigate } from "react-router-dom";
 
 export default function Logout() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
-
-
-    return (
-        <div>
-            <button 
-                onClick={handleLogout}
-                className="bg-red-700 text-white font-bold p-2 rounded-2xl hover:scale-105"
-            >Cerrar Sesion</button>
-        </div>
-    )
+  return (
+    <div>
+      <button
+        onClick={handleLogout}
+        className="bg-red-400 cursor-pointer border-4 border-black text-black px-4 py-2 text-xs hover:bg-red-500 transition-all shadow-[4px_4px_0_#000] font-mono"
+      >
+        🚪 CERRAR SESIÓN
+      </button>
+    </div>
+  );
 }

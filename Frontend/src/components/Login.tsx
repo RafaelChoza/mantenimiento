@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -21,67 +22,83 @@ export default function Login() {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Credenciales inválidas");
+        throw new Error("Credenciales inválidas");
       }
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      console.log(data.token)
-      window.location.href = "/mantenimiento";
+      if (localStorage) {
+        localStorage.setItem("isAuthenticated", "true");
+      }
+      toast.success("Inicio de sesión exitoso");
+      setTimeout(() => {
+        window.location.href = "/mantenimiento";
+      }, 1500);
     } catch (err: any) {
       setError(err.message || "Error al iniciar sesión");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 px-4">
-      <h1 className="text-4xl font-extrabold text-center mb-10 text-purple-800 uppercase tracking-wide">
-        Administración de Mantenimientos Correctivos
-      </h1>
+    <div className="min-h-screen bg-blue-900 text-white font-mono flex items-center justify-center p-6">
+      <ToastContainer />
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 rounded-lg w-full max-w-md">
+        <h1 className="text-center text-black text-sm mb-6 font-bold">
+          🔐 INICIAR SESIÓN
+        </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md space-y-6"
-      >
-        <h2 className="text-2xl font-bold text-center text-purple-700">
-          Iniciar Sesión
-        </h2>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <section className="border-4 border-black bg-white p-6 rounded shadow-[4px_4px_0_#000]">
+            <h2 className="text-xs text-purple-700 mb-4 font-bold">
+              CREDENCIALES DE USUARIO
+            </h2>
 
-        {error && (
-          <p className="text-red-500 text-sm text-center font-medium">
-            {error}
-          </p>
-        )}
+            {error && (
+              <p className="text-red-600 text-xs mb-4 text-center font-bold">
+                {error}
+              </p>
+            )}
 
-        <input
-          type="text"
-          name="username"
-          placeholder="Usuario"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          onChange={handleChange}
-          required
-        />
+            <div className="grid grid-cols-1 gap-4">
+              <input
+                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                type="text"
+                name="username"
+                placeholder="Usuario"
+                onChange={handleChange}
+                required
+              />
+              <input
+                className="border-2 border-black p-2 bg-yellow-50 text-black text-xs"
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </section>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-          onChange={handleChange}
-          required
-        />
+          <button
+            type="submit"
+            className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#000]"
+          >
+            ENTRAR
+          </button>
+        </form>
 
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded hover:from-blue-700 hover:to-purple-700 font-semibold transition duration-300"
-        >
-          Entrar
-        </button>
-      </form>
-      <div className="p-3 bg-white m-5 rounded-xl flex flex-col">
-        <p className="font-bold">¿No estas registrado?</p>
-        <Link className="text-center bg-blue-600 rounded-2xl hover:scale-105 m-2 text-white font-bold" to="/user-register">Registrate</Link>
+        <div className="mt-6 text-center text-xs text-black">
+          <p className="mb-2 font-bold">¿NO ESTÁS REGISTRADO?</p>
+          <Link
+            to="/user-register"
+            className="inline-block bg-blue-600 text-white px-4 py-2 border-4 border-black rounded hover:bg-blue-700 transition-all shadow-[4px_4px_0_#000]"
+          >
+            REGÍSTRATE
+          </Link>
+        </div>
+        <div className="m-5 text-center font-bold underline hover:scale-90">
+          <Link to="reset-password" >¿Olvidaste la contraseña?</Link>
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export default function AreaList() {
   const [editingArea, setEditingArea] = useState<Area | null>(null);
 
   useEffect(() => {
-    getAreas();
+    getAreas()
   }, []);
 
   const getAreas = async () => {
@@ -33,7 +33,6 @@ export default function AreaList() {
   };
 
   const handleEdit = (area: Area) => {
-    console.log("Editar área:", area);
     setEditingArea(area);
   };
 
@@ -55,15 +54,14 @@ export default function AreaList() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Barer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(editingArea),
       });
 
       if (response.ok) {
-        setAreas((prevAreas) => prevAreas.map((area) => (area.id === editingArea.id ? editingArea : area)));
-        console.log("Área actualizada");
-        toast.success("Area actualziada con exito")
+        setAreas((prev) => prev.map((a) => (a.id === editingArea.id ? editingArea : a)));
+        toast.success("Área actualizada con éxito");
         setEditingArea(null);
       } else {
         console.log("Error al actualizar el área");
@@ -91,98 +89,101 @@ export default function AreaList() {
       const response = await fetch(`http://localhost:8080/areas/${id}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
 
       if (response.ok) {
-        setAreas((prevAreas) => prevAreas.filter((area) => area.id !== id));
-        Swal.fire("Eliminado", `El área ${id} ha sido eliminada`, "success");
-        toast.success("Area eliminada con exito")
+        setAreas((prev) => prev.filter((a) => a.id !== id));
+        toast.success("Área eliminada con éxito");
       } else {
         Swal.fire("Error", `No se pudo eliminar el área ${id}`, "error");
       }
     } catch (error) {
-      console.error("Error de la red al eliminar el área", error);
+      console.error("Error de red al eliminar el área", error);
       Swal.fire("Error", "Hubo un problema de red al intentar eliminar el área", "error");
     }
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-4 bg-gradient-to-br from-blue-50 to-purple-100 rounded-lg shadow-md">
+    <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       <ToastContainer />
       <Menu />
-      <h1 className="text-2xl font-bold text-center mb-4 text-purple-800 uppercase">🏢 Lista de Áreas</h1>
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-6xl mx-auto">
+        <h1 className="text-center text-black text-lg mb-6 font-bold">
+          🏢 LISTA DE ÁREAS
+        </h1>
 
-      {editingArea && (
-        <div className="fixed inset-0 bg-blue-50 bg-opacity-90 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full border-l-4 border-blue-500">
-            <h2 className="text-xl font-bold text-blue-700 mb-4 text-center">Editar Área</h2>
-            <form onSubmit={handleUpdateArea} className="space-y-4">
-              <input
-                type="text"
-                name="areaName"
-                value={editingArea.areaName}
-                onChange={handleInputChange}
-                placeholder="Nombre de la Operación"
-                className="w-full p-2 rounded-md bg-gray-100 border border-blue-400 text-gray-800"
-              />
-              <div className="flex justify-end gap-4 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setEditingArea(null)}
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
-                >
-                  Guardar Cambios
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {cargando ? (
-        <div className="flex justify-center items-center h-12">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500"></div>
-          <p className="ml-2 text-blue-600 text-sm font-semibold">Cargando...</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {areas.map((area) => (
-            <div key={area.id} className="bg-white p-3 rounded-md shadow-sm border-l-2 border-blue-500 hover:shadow-md transition-all">
-              <h2 className="text-sm font-bold text-blue-700 mb-2 flex items-center">
-                📌 Área #{area.id}
+        {editingArea && (
+          <div className="fixed inset-0 bg-blue-900 bg-opacity-90 flex justify-center items-center z-50">
+            <div className="bg-gray-300 p-6 border-4 border-black shadow-[4px_4px_0_#000] rounded-lg max-w-md w-full text-black">
+              <h2 className="text-center text-black text-sm mb-4 font-bold">
+                ✏️ EDITAR ÁREA
               </h2>
-              <hr className="mb-2 border-blue-300" />
-              <div className="grid grid-cols-1 gap-1 text-xs text-gray-800">
-                <p className="bg-gray-100 p-1 rounded-md shadow-xs">
-                  <strong className="text-blue-600">Nombre:</strong> {area.areaName}
-                </p>
-              </div>
-              <div className="mt-2 flex justify-between">
-                <button
-                  onClick={() => handleEdit(area)}
-                  className="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600 transition"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(area.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition"
-                >
-                  Eliminar
-                </button>
-              </div>
+              <form onSubmit={handleUpdateArea} className="space-y-4">
+                <input
+                  type="text"
+                  name="areaName"
+                  value={editingArea.areaName}
+                  onChange={handleInputChange}
+                  placeholder="Nombre del Área"
+                  className="w-full p-2 border-2 border-black bg-yellow-50 text-black text-xs"
+                />
+                <div className="flex justify-end gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setEditingArea(null)}
+                    className="bg-gray-400 border-2 border-black text-white px-4 py-2 text-xs hover:bg-gray-500"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-green-400 border-2 border-black text-black px-4 py-2 text-xs hover:bg-green-500"
+                  >
+                    Guardar
+                  </button>
+                </div>
+              </form>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+
+        {cargando ? (
+          <div className="flex justify-center items-center h-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-yellow-500"></div>
+            <p className="ml-2 text-black text-xs">Cargando...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {areas.map((area) => (
+              <div
+                key={area.id}
+                className="bg-white p-4 border-4 border-black shadow-[4px_4px_0_#000] rounded-md text-black"
+              >
+                <h2 className="text-xs mb-2 font-bold">📌 Área #{area.id}</h2>
+                <p className="bg-yellow-50 p-2 border border-black text-xs mb-2">
+                  <strong>Nombre:</strong> {area.areaName}
+                </p>
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => handleEdit(area)}
+                    className="bg-cyan-700 border-2 border-black text-white px-2 py-1 text-xs hover:bg-green-500"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => handleDelete(area.id)}
+                    className="bg-gray-600 border-2 border-black text-white px-2 py-1 text-xs hover:bg-red-500"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

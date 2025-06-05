@@ -1,77 +1,77 @@
 import { useState } from "react";
-import Menu from "../components/Menu"
+import Menu from "../components/Menu";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateArea() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ area: "" });
 
-    const navigate = useNavigate();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const [formData, setFormData] = useState({ area: "" });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8080/areas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        toast.success("Área creada con éxito");
+        setTimeout(() => {
+          navigate("/mantenimiento/area-list");
+        }, 5000);
+      } else {
+        console.log("Error al crear el área");
+      }
+    } catch (error) {
+      console.error("Error de red al enviar los datos del área", error);
+    }
+  };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+  return (
+    <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
+      <ToastContainer />
+      <Menu />
+      <div className="bg-gray-300 text-black border-4 border-black shadow-[4px_4px_0_#000] p-6 max-w-4xl mx-auto rounded-lg">
+        <h1 className="text-center text-black text-sm mb-6 font-bold">
+          🏢 FORMULARIO PARA AGREGAR ÁREA
+        </h1>
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(formData);
-        try {
-            const response = await fetch("http://localhost:8080/areas", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
-                },
-                body: JSON.stringify(formData),
-            });
-            if (response.ok) {
-                console.log("Área creada con éxito");
-                toast.success("Area creada con exito")
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <section className="border-4 border-black bg-gray-400 p-6 rounded shadow-[4px_4px_0_#000]">
+            <h2 className="text-xs text-blue-700 mb-4 font-bold">
+              INFORMACIÓN DEL ÁREA
+            </h2>
+            <div className="grid grid-cols-1 gap-4">
+              <input
+                className="border-2 border-black p-2 bg-blue-700 text-white text-xs"
+                type="text"
+                name="areaName"
+                placeholder="Nombre del área"
+                onChange={handleChange}
+              />
+            </div>
+          </section>
 
-                setTimeout(() => {
-                    navigate("/mantenimiento/area-list");
-                }, 5000);
-            } else {
-                console.log("Error al crear el área");
-            }
-        } catch (error) {
-            console.error("Error de red al enviar los datos del área", error);
-        }
-    };
-
-    return (
-        <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-blue-50 to-purple-100 shadow-xl rounded-lg border border-gray-300">
-            <ToastContainer />
-            <Menu/>
-            <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-800 uppercase tracking-wide">
-                Formulario para Agregar Área
-            </h1>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-                <section className="border-l-4 border-blue-400 bg-white p-6 rounded shadow-sm">
-                    <h2 className="text-xl font-semibold uppercase mb-4 text-blue-700">Información del Área</h2>
-                    <div className="grid grid-cols-1 gap-4">
-                        <input
-                            className="border border-blue-300 p-2 rounded focus:ring-2 focus:ring-blue-400"
-                            type="text"
-                            name="areaName"
-                            placeholder="Nombre del área"
-                            onChange={handleChange}
-                        />
-                    </div>
-                </section>
-
-                <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded hover:from-blue-600 hover:to-purple-700 font-bold uppercase transition duration-300"
-                >
-                    Guardar
-                </button>
-            </form>
-        </div>
-    );
+          <button
+            type="submit"
+            className="w-full bg-green-400 border-4 border-black text-black p-3 text-xs hover:bg-green-500 transition-all shadow-[4px_4px_0_#000]"
+          >
+            GUARDAR
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }

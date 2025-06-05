@@ -2,9 +2,16 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { AuthProvider } from './components/AuthContext.tsx'
+import { EmailProvider } from './components/EmailContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <EmailProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </EmailProvider>
+
   </StrictMode>,
 )

@@ -1,9 +1,15 @@
 package com.mantenimiento.repositorio;
 
 import com.mantenimiento.dto.MantenimientoOrden;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MantenimientoRepositorio extends JpaRepository<MantenimientoOrden, Long> {
-    // Aquí puedes agregar métodos personalizados si es necesario
+
+    List<MantenimientoOrden> findAllByUsername(String username);
+
+    List<MantenimientoOrden> findByPersonnelAssigned(String personnelAssigned);
 
 }
