@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import type { Area } from "../types";
 import Menu from "../components/Menu";
 import { toast, ToastContainer } from "react-toastify";
-import { getAreas } from "../api/getAreas";
 
 export default function AreaList() {
   const [areas, setAreas] = useState<Area[]>([]);
@@ -11,8 +10,27 @@ export default function AreaList() {
   const [editingArea, setEditingArea] = useState<Area | null>(null);
 
   useEffect(() => {
-    getAreas(setAreas, setCargando);
+    getAreas()
   }, []);
+
+  const getAreas = async () => {
+    setCargando(true);
+    const token = localStorage.getItem("token")
+    try {
+      const response = await fetch("http://localhost:8080/areas", {
+      headers: {
+        "Authorization": `Bearer ${token}`, // 👈 añade el token al header
+      },
+    });
+      const data = await response.json();
+      console.log(data);
+      setAreas(data.responseEntity?.body || []);
+    } catch (error) {
+      console.error("Error de la red al obtener las áreas", error);
+    } finally {
+      setCargando(false);
+    }
+  };
 
   const handleEdit = (area: Area) => {
     setEditingArea(area);

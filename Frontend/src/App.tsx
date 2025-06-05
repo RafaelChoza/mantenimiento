@@ -16,6 +16,7 @@ import ChangePassword from "./components/ChangePassword";
 import OrderPerAssigned from "./components/OrderPerAssigned";
 import ResetPassword from "./components/ResetPassword";
 import VerificateCode from "./components/VerificateCode";
+import RecoverPasswordForm from "./components/RecoverPasswordForm";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/login/reset-password" element={<ResetPassword />} />
         <Route path="/login/verificar-codigo" element={<VerificateCode />} />
+        <Route path="/login/formulario-cambiar-password" element={<RecoverPasswordForm />} />
         <Route path="/mantenimiento" element={<ProtectedRoute><Principal /></ProtectedRoute>} />
         <Route path="/mantenimiento/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
         <Route path="/mantenimiento/create-order" element={<ProtectedRoute><CreateOrder /></ProtectedRoute>} />

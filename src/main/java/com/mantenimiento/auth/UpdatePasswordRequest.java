@@ -10,5 +10,6 @@ public class UpdatePasswordRequest {
     private String username;
     private String oldPassword;
     private String newPassword;
+    private String newPassword2; 
 
 }

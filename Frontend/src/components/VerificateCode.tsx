@@ -1,8 +1,13 @@
 import React, { useState, useRef } from "react";
+import { useEmail } from "./EmailContext";
+import { useNavigate } from "react-router-dom";
 
 export default function VerificateCode() {
     const [code, setCode] = useState<string[]>(["", "", "", ""]);
     const inputsRef = useRef<Array<HTMLInputElement | null>>([null, null, null, null]);
+
+    const { email } = useEmail();
+    const navigate = useNavigate()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const val = e.target.value;
@@ -16,6 +21,7 @@ export default function VerificateCode() {
             inputsRef.current[index + 1]?.focus();
         }
     };
+    
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (e.key === "Backspace" && !code[index] && index > 0) {
@@ -23,11 +29,27 @@ export default function VerificateCode() {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const verificationCode = code.join("");
-        console.log("Código ingresado:", verificationCode);
-        // Aquí puedes agregar lógica para enviar el código al backend
+
+        try {
+            const response = await fetch(`http://localhost:8080/email/validate?email=${email}&inputCode=${verificationCode}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/jason"
+                }
+            })
+            if(!response.ok) {
+                throw new Error ("Error en la valdiacion del codigo")
+            }
+            const result = await response.text()
+            alert(result)
+            navigate("/login/formulario-cambiar-password")
+        } catch (error) {
+            console.log("Error ", error)
+            alert("Hubo un error al validar el codigo")
+        }
     };
 
     return (

@@ -1,10 +1,14 @@
 package com.mantenimiento.mailSender;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mantenimiento.auth.UpdatePasswordRequest;
 
 @RestController
 @RequestMapping("email/")
@@ -25,6 +29,8 @@ public class EmailSenderController {
 
     @PostMapping("/validate")
     public String validateCode(@RequestParam String email, @RequestParam String inputCode) {
+        System.out.println("El codigo recibido es " + inputCode);
+        System.out.println("El username es " + email);
         boolean isValid = verificationCodeService.validateCode(email, inputCode);
 
         if (isValid) {
@@ -32,6 +38,14 @@ public class EmailSenderController {
         } else {
             return "Código incorrecto, inténtalo de nuevo";
         }
+    }
+
+    @PostMapping("/actualizar-contrasena-codigo")
+    public ResponseEntity<?> actualizarContraseñaCódigo(@RequestBody UpdatePasswordRequest request) {
+        System.out.println("datos recibidos :" + request);
+        emailSenderService.updatePasswordNoOldPassword(request.getUsername(), request.getNewPassword(),
+                request.getNewPassword2());
+        return ResponseEntity.ok("Contraseña actualizada mediante código");
     }
 
 }

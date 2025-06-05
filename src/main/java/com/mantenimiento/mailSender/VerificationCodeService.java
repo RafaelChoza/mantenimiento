@@ -17,6 +17,8 @@ public class VerificationCodeService {
     }
 
     public boolean validateCode(String email, String inputCode) {
+        System.out.println("El codigo recibido es " + inputCode);
+        System.out.println("El username es " + email);
         String storedCode = stringRedisTemplate.opsForValue().get(email);
         return storedCode != null && storedCode.equals(inputCode);
     }

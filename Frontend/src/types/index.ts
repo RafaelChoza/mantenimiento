@@ -137,3 +137,8 @@ export type RegisterUserUpdate = {
   newPassword: string;
   newPassword_confirmation: string;
 }
+
+export type EmailContextType = {
+    email: string;
+    setEmail: React.Dispatch<React.SetStateAction<string>>;
+}
