@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
+
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -23,6 +25,7 @@ export default function ResetPassword() {
       }
 
       toast.success("Correo de recuperación enviado");
+      navigate("/login/verificar-codigo")
     } catch (err: any) {
       toast.error(err.message || "Error al enviar solicitud");
     }
