@@ -503,7 +503,7 @@ export default function Orders() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           {orders.map(order => (
             <div
               key={order.id}
@@ -518,11 +518,11 @@ export default function Orders() {
               </h2>
               <hr className="mb-2 border-black" />
 
-              <div className="grid grid-cols-1 gap-2 text-xs text-black">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-1 text-xs text-black">
                 {Object.entries(order).map(([key, value]) => (
                   <p
                     key={key}
-                    className="bg-white border-2 border-black p-2 rounded shadow-sm"
+                    className="bg-white border-1 border-black px-1 rounded shadow-sm"
                   >
                     <strong className="text-blue-600">
                       {key.replace(/([A-Z])/g, " $1").toUpperCase()}:
@@ -534,14 +534,14 @@ export default function Orders() {
 
               <div className="flex justify-center space-x-4 mt-4">
                 <button
-                  onClick={() => handleEdit(order)}
-                  className="bg-blue-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-blue-500 transition-all shadow-[3px_3px_0_#333]"
-                  disabled={order.username !== username}
+                  onClick={() => handleEdit}
+                  className={`bg-blue-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-blue-500 transition-all shadow-[3px_3px_0_#333] ${role !== "SUPERUSER" && order.username !== username ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={role !== "SUPERUSER" && order.username !== username}
                 >
                   Editar
                 </button>
                 <button
-                  className={`bg-green-400 border-4 border-black text-black px-3 py-2 text-xs transition-all shadow-[3px_3px_0_#333] ${role === "USER" ? "cursor-not-allowed bg-green-300" : "hover:bg-green-500"}`}
+                  className={`bg-green-400 border-4 border-black text-black px-3 py-2 text-xs transition-all shadow-[3px_3px_0_#333] ${role === "USER" ? "cursor-not-allowed opacity-50 bg-green-300" : "hover:bg-green-500"}`}
                   onClick={() => manttoCompletar(order.id)}
                   disabled={role === "USER"}
                 >

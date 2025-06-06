@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function OrdersCompleted() {
   const [ordersCompleted, setOrdersCompleted] = useState<OrderCompleted[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");  
+  const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(0);
   const [size] = useState(6);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -45,7 +45,7 @@ export default function OrdersCompleted() {
     return (
       description.toLowerCase().includes(lowerSearchTerm) ||
       area.toLowerCase().includes(lowerSearchTerm) ||
-      id.includes(lowerSearchTerm)  
+      id.includes(lowerSearchTerm)
     );
   });
 

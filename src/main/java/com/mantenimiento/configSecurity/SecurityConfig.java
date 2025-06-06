@@ -32,8 +32,8 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
         http.authorizeHttpRequests(authRequest -> authRequest
-                .requestMatchers("/auth/**", "/h2-console/**", "/email/**", "/mantenimiento*/**").permitAll()
-                .requestMatchers("/areas/**", "/tecnicos/**").authenticated()
+                .requestMatchers("/auth/**", "/h2-console/**", "/email/**").permitAll()
+                .requestMatchers("/areas/**", "/tecnicos/**", "/mantenimiento*/**").authenticated()
                 .anyRequest().authenticated());
         http.sessionManagement(sessionManager -> sessionManager
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
