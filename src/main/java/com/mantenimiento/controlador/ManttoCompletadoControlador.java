@@ -1,13 +1,16 @@
 package com.mantenimiento.controlador;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mantenimiento.dto.MantenimientoCompletado;
@@ -21,12 +24,16 @@ public class ManttoCompletadoControlador {
     ManttoCompletadoServicio manttoCompletadoServicio;
 
     @GetMapping("/mantenimiento-completado")
-    public ResponseWrapper<List<MantenimientoCompletado>> obtenerManttosCompletados() {
-        System.out.println("Obteniendo todos los mantenimientos completados");
-        List<MantenimientoCompletado> listaManttosCompletados = manttoCompletadoServicio.obtenerListaCompletados();
-        ResponseEntity<List<MantenimientoCompletado>> responseEntity = ResponseEntity.ok(listaManttosCompletados);
+    public ResponseWrapper<Page<MantenimientoCompletado>> obtenerManttosCompletados(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-        return new ResponseWrapper<>(true, "Lista de mantenimientos completados obtenida", responseEntity);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MantenimientoCompletado> listaManttosCompletados = manttoCompletadoServicio
+                .obtenerListaCompletados(pageable);
+
+        ResponseEntity<Page<MantenimientoCompletado>> responseEntity = ResponseEntity.ok(listaManttosCompletados);
+        return new ResponseWrapper<>(true, "Lista de mantenimientos completados paginados", responseEntity);
     }
 
     @PostMapping("/mantenimiento/{id}/completado")

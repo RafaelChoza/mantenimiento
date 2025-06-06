@@ -1,9 +1,10 @@
 package com.mantenimiento.servicio;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mantenimiento.dto.MantenimientoCompletado;
@@ -66,9 +67,10 @@ public class ManttoCompletadoServicio {
         mantenimientoRepositorio.delete(orden);
     }
 
-    public List<MantenimientoCompletado> obtenerListaCompletados() {
-        return manttoCompletadoRepositorio.findAll();
-    }
+    public Page<MantenimientoCompletado> obtenerListaCompletados(Pageable pageable) {
+    return manttoCompletadoRepositorio.findAll(pageable);
+}
+
 
     public Optional<MantenimientoCompletado> obtenerManttoCompletadoPorId (Long id) {
         return manttoCompletadoRepositorio.findById(id);

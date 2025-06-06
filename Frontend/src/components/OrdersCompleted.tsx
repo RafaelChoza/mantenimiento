@@ -4,32 +4,37 @@ import Menu from "./Menu";
 import { useNavigate } from "react-router-dom";
 
 export default function OrdersCompleted() {
-  const [ordersCompleted, setOrdersCompleted] = useState<OrderCompleted[] | null>([]);
-  const [searchTerm, setSearchTerm] = useState("");  // <-- estado para la búsqueda
+  const [ordersCompleted, setOrdersCompleted] = useState<OrderCompleted[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");  
+  const [page, setPage] = useState(0);
+  const [size] = useState(6);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
 
   useEffect(() => {
     getOrdersCompleted();
-  }, []);
+  }, [page, size]);
 
   const getOrdersCompleted = async () => {
+    console.log(page, size)
     try {
-      const response = await fetch("http://localhost:8080/mantenimiento-completado", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+      const response = await fetch(`http://localhost:8080/mantenimiento-completado?page=${page}&size=${size}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
+
       if (!response.ok) {
         throw new Error("Error al obtener los datos de mantenimientos completados");
       }
+
       const data = await response.json();
-      setOrdersCompleted(data.responseEntity.body);
+      setOrdersCompleted(data.responseEntity.body.content);
+      console.log(data.responseEntity.body.totalPages)
+      setTotalPages(data.responseEntity.body.totalPages);
     } catch (error) {
       console.error("Error en el servidor al querer obtener los datos");
     }
   };
 
-  // Filtrar las órdenes en base a la búsqueda (buscando en descripción y área)
   const filteredOrders = ordersCompleted?.filter(order => {
     const description = order.serviceDescription ?? "";
     const area = order.area ?? "";
@@ -40,50 +45,9 @@ export default function OrdersCompleted() {
     return (
       description.toLowerCase().includes(lowerSearchTerm) ||
       area.toLowerCase().includes(lowerSearchTerm) ||
-      id.includes(lowerSearchTerm)  // id es string, comparar directamente
+      id.includes(lowerSearchTerm)  
     );
   });
-
-  function convertToCSV(data: OrderCompleted[]) {
-    if (!data.length) return "";
-
-    // Extraer los encabezados (keys) del primer objeto
-    const headers = Object.keys(data[0]);
-
-    // Crear filas CSV: encabezados + datos
-    const csvRows = [
-      headers.join(","), // encabezados separados por coma
-      ...data.map(row =>
-        headers.map(fieldName => {
-          // Asegurarse que cada campo se convierta a string y escape comillas dobles
-          const escaped = String(row[fieldName as keyof OrderCompleted] ?? "")
-            .replace(/"/g, '""'); // escapar comillas dobles para CSV
-          return `"${escaped}"`; // poner entre comillas dobles
-        }).join(",")
-      )
-    ];
-
-    return csvRows.join("\r\n");
-  }
-
-  function downloadCSV(data: OrderCompleted[], filename = "ordenes_completadas.csv") {
-    const csv = convertToCSV(data);
-    if (!csv) {
-      alert("No hay datos para descargar");
-      return;
-    }
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-
-    URL.revokeObjectURL(url);
-  }
-
-
 
   return (
     <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
@@ -101,14 +65,6 @@ export default function OrdersCompleted() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-
-        <button
-          className="mb-4 bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded"
-          onClick={() => downloadCSV(filteredOrders ?? [])}
-        >
-          Descargar CSV
-        </button>
-
 
         {!ordersCompleted || ordersCompleted.length === 0 ? (
           <p className="text-center text-black text-xs font-bold">CARGANDO...</p>
@@ -134,6 +90,25 @@ export default function OrdersCompleted() {
             ))}
           </div>
         )}
+
+        {/* Controles de paginación */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+            disabled={page === 0}
+            className="mr-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black border-2 border-black"
+          >
+            ⬅️ Anterior
+          </button>
+          <span>Página {page + 1} de {totalPages}</span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages - 1))}
+            disabled={page >= totalPages - 1}
+            className="ml-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black border-2 border-black"
+          >
+            ➡️ Siguiente
+          </button>
+        </div>
       </div>
     </div>
   );
