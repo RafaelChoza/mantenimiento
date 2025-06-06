@@ -536,6 +536,7 @@ export default function Orders() {
                 <button
                   onClick={() => handleEdit(order)}
                   className="bg-blue-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-blue-500 transition-all shadow-[3px_3px_0_#333]"
+                  disabled={order.username !== username}
                 >
                   Editar
                 </button>
