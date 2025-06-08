@@ -75,4 +75,17 @@ public class ManttoCompletadoServicio {
     public Optional<MantenimientoCompletado> obtenerManttoCompletadoPorId (Long id) {
         return manttoCompletadoRepositorio.findById(id);
     }
+
+    public Page<MantenimientoCompletado> obtenerListaPorFiltro(
+        String requestorName, String requestorLastName, String area, String idMachine, String serviceDateTime, Pageable pageable) {
+
+        return manttoCompletadoRepositorio.filtrarMantenimientos(
+            requestorName != null && !requestorName.isBlank() ? requestorName : null,
+            requestorLastName != null && !requestorLastName.isBlank() ? requestorLastName: null,
+            area != null && !area.isBlank() ? area : null,
+            idMachine != null && !idMachine.isBlank() ? idMachine : null,
+            serviceDateTime != null && !serviceDateTime.isBlank() ? serviceDateTime : null,
+            pageable
+        );
+    }
 }

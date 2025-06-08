@@ -61,4 +61,24 @@ public class ManttoCompletadoControlador {
         }
     }
 
+    @GetMapping("/mantenimiento-completado/filtrar")
+    public ResponseWrapper<Page<MantenimientoCompletado>> filtrarMantenimientoCompletado(
+            @RequestParam(required = false) String requestorName,
+            @RequestParam(required = false) String requestorLastName,
+            @RequestParam(required = false) String area,
+            @RequestParam(required = false) String idMachine,
+            @RequestParam(required = false) String serviceDateTime, // corregido el nombre del parámetro
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<MantenimientoCompletado> resultados = manttoCompletadoServicio.obtenerListaPorFiltro(requestorName, requestorLastName, area,
+                idMachine, serviceDateTime, pageable);
+
+        return new ResponseWrapper<>(
+                true,
+                "Filtrado exitoso",
+                ResponseEntity.ok(resultados));
+    }
+
 }
