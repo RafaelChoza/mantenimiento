@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { OrderCompleted } from "../types";
 import Menu from "./Menu";
 import { useNavigate } from "react-router-dom";
@@ -10,13 +10,29 @@ export default function OrdersCompleted() {
   const [size] = useState(6);
   const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
+  const [showModalform, setShowModalForm] = useState<boolean>(false)
+  const [ordersFiltered, setOrdersFiltered] = useState<OrderCompleted[]>([])
+  const [formData, setFormData] = useState({
+    requestorName: "",
+    requestorLastName: "",
+    area: "",
+    idMachine: "",
+    serviceDateTime: ""
+  })
+
+  const initialState = {
+    requestorName: "",
+    requestorLastName: "",
+    area: "",
+    idMachine: "",
+    serviceDateTime: ""
+  }
 
   useEffect(() => {
     getOrdersCompleted();
   }, [page, size]);
 
   const getOrdersCompleted = async () => {
-    console.log(page, size)
     try {
       const response = await fetch(`http://localhost:8080/mantenimiento-completado?page=${page}&size=${size}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -28,7 +44,6 @@ export default function OrdersCompleted() {
 
       const data = await response.json();
       setOrdersCompleted(data.responseEntity.body.content);
-      console.log(data.responseEntity.body.totalPages)
       setTotalPages(data.responseEntity.body.totalPages);
     } catch (error) {
       console.error("Error en el servidor al querer obtener los datos");
@@ -49,6 +64,35 @@ export default function OrdersCompleted() {
     );
   });
 
+  const handleChangeFilterForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+  
+  const handleSubmitFilter = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`http://localhost:8080/mantenimiento-completado/filtrar?requestorName=${formData.requestorName}&requestorLastName=${formData.requestorLastName}&area=${formData.area}&idMachine=${formData.idMachine}&serviceDateTime=${formData.serviceDateTime}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      if(!response) {
+        alert("Error al recibir los datos del servidor")
+      }
+      const data = await response.json()
+      setShowModalForm(false)
+      setFormData(initialState)
+      setOrdersFiltered(data)
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <div className="min-h-screen bg-blue-900 text-white font-mono p-6">
       <Menu />
@@ -65,6 +109,13 @@ export default function OrdersCompleted() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        <button
+          className="m-3 p-2 border-2 bg-amber-400 hover:bg-amber-600 shadow-[4px_4px_0_#000]"
+          onClick={() => setShowModalForm(true)}
+        >
+          Filtrar Ordenes Completadas
+        </button>
 
         {!ordersCompleted || ordersCompleted.length === 0 ? (
           <p className="text-center text-black text-xs font-bold">CARGANDO...</p>
@@ -109,6 +160,68 @@ export default function OrdersCompleted() {
             ➡️ Siguiente
           </button>
         </div>
+      </div>
+
+      <div>
+        {showModalform && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-gray-300 border-4 border-black rounded-lg shadow-[6px_6px_0_#333] p-6 w-full max-w-xl overflow-y-auto max-h-[90vh]">
+              <button
+                className="text-red-700 my-2 font-bold hover:scale-110"
+                onClick={() => setShowModalForm(false)}
+              >
+                X <span className="text-black">Cerrar</span>
+              </button>
+              <h2 className="text-xs text-blue-700 mb-4">Formulario para Filtrar</h2>
+              <p className="text-xs text-black mb-4">Solo escribe los criterios que quieras filtrar</p>
+              <form onSubmit={handleSubmitFilter} className="space-y-4 text-xs">
+                <div className="grid grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    className="border-2 border-black p-2 bg-blue-700"
+                    placeholder="Nombre del requisitor"
+                    onChange={handleChangeFilterForm}
+                    value={formData.requestorName}
+                    name="requestorName"
+                  />
+                  <input
+                    type="text"
+                    className="border-2 border-black p-2 bg-blue-700"
+                    placeholder="Apellido del requisitor"
+                    onChange={handleChangeFilterForm}
+                    value={formData.requestorLastName}
+                    name="requestorLastName"
+                  />
+                  <input
+                    type="text"
+                    className="border-2 border-black p-2 bg-blue-700"
+                    placeholder="Área a filtrar"
+                    onChange={handleChangeFilterForm}
+                    value={formData.area}
+                    name="area"
+                  />
+                  <input
+                    type="text"
+                    className="border-2 border-black p-2 bg-blue-700"
+                    placeholder="ID del equipo"
+                    onChange={handleChangeFilterForm}
+                    value={formData.idMachine}
+                    name="idMachine"
+                  />
+                </div>
+                <div className="flex justify-end pt-4">
+                  <button
+                    type="submit"
+                    className="border-2 bg-amber-400 hover:bg-amber-600 p-2 shadow-[4px_4px_0_#000]"
+                  >
+                    Filtrar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
