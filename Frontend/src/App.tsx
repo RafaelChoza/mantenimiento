@@ -17,6 +17,7 @@ import OrderPerAssigned from "./components/OrderPerAssigned";
 import ResetPassword from "./components/ResetPassword";
 import VerificateCode from "./components/VerificateCode";
 import RecoverPasswordForm from "./components/RecoverPasswordForm";
+import UploadCSV from "./components/UploadCSV";
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
         <Route path="/detalle/:id" element={<ProtectedRoute><OrderCompletedDetail /></ProtectedRoute>} />
         <Route path="/mantenimiento/change-password" element={<ProtectedRoute><ChangePassword /></ProtectedRoute>} />
         <Route path="/mantenimiento/asignadas" element={<ProtectedRoute><OrderPerAssigned /></ProtectedRoute>} />
+        <Route path="/uploadCSV" element={<ProtectedRoute><UploadCSV /></ProtectedRoute>} />
+
       </Routes>
     </BrowserRouter>
   );

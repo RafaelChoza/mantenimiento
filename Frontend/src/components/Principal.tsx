@@ -104,6 +104,13 @@ export default function Principal() {
                     Lista de Usuarios
                     <div className="absolute top-2 right-4 text-black text-lg">📍</div>
                   </Link>
+                  <Link
+                    to="/uploadCSV"
+                    className={buttonClass.replace("bg-gray-300", "bg-orange-300")}
+                  >
+                    Subir archivo CSV
+                    <div className="absolute top-2 right-4 text-black text-lg">📍</div>
+                  </Link>
                 </>
               )}
             </>

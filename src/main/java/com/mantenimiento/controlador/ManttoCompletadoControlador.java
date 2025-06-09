@@ -73,14 +73,7 @@ public class ManttoCompletadoControlador {
                 
         Pageable pageable = PageRequest.of(page, size);
 
-        System.out.println("Se recibe parametro: " + requestorName);
-        System.out.println("Se recibe parametro: " + requestorLastName);
-        System.out.println("Se recibe parametro: " + area);
-        System.out.println("Se recibe parametro: " + idMachine);
-        System.out.println("Se recibe parametro: " + serviceDateTime);
-        System.out.println("Se recibe parametro: " + page);
-        System.out.println("Se recibe parametro: " + size);
-
+        System.out.println("Informacion del formulario para filtrar recibida");
 
         Page<MantenimientoCompletado> resultados = manttoCompletadoServicio.obtenerListaPorFiltro(requestorName, requestorLastName, area,
                 idMachine, serviceDateTime, pageable);

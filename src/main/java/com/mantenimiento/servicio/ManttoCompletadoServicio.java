@@ -79,13 +79,6 @@ public class ManttoCompletadoServicio {
             String requestorName, String requestorLastName, String area, String idMachine, String serviceDateTime,
             Pageable pageable) {
 
-        System.out.println("Se recibe parametro en servicio: " + requestorName);
-        System.out.println("Se recibe parametro en servicio: " + requestorLastName);
-        System.out.println("Se recibe parametro en servicio: " + area);
-        System.out.println("Se recibe parametro en servicio: " + idMachine);
-        System.out.println("Se recibe parametro en servicio: " + serviceDateTime);
-       
-
         return manttoCompletadoRepositorio.filtrarMantenimientos(
                 requestorName != null && !requestorName.isBlank() ? requestorName : null,
                 requestorLastName != null && !requestorLastName.isBlank() ? requestorLastName : null,
