@@ -64,7 +64,9 @@ export default function OrdersCompleted() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:8080/mantenimiento-completado/filtrar?requestorName=${formData.requestorName}&requestorLastName=${formData.requestorLastName}&area=${formData.area}&idMachine=${formData.idMachine}&serviceDateTime=${formData.serviceDateTime}&page=${page}&size=${size}`,
+        `http://localhost:8080/mantenimiento-completado/filtrar?requestorName=${formData.requestorName}
+        &requestorLastName=${formData.requestorLastName}&area=${formData.area}&idMachine=${formData.idMachine}
+        &serviceDateTime=${formData.serviceDateTime}&page=${page}&size=${size}`,
         {
           method: "GET",
           headers: {
