@@ -534,12 +534,16 @@ export default function Orders() {
 
               <div className="flex justify-center space-x-4 mt-4">
                 <button
-                  onClick={() => handleEdit}
-                  className={`bg-blue-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-blue-500 transition-all shadow-[3px_3px_0_#333] ${role !== "SUPERUSER" && order.username !== username ? "opacity-50 cursor-not-allowed" : ""}`}
+                  onClick={() => handleEdit(order)} // Asegúrate de pasar el argumento si se requiere
+                  className={`bg-blue-400 border-4 border-black text-black px-3 py-2 text-xs hover:bg-blue-500 transition-all shadow-[3px_3px_0_#333] ${role !== "SUPERUSER" && order.username !== username
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                    }`}
                   disabled={role !== "SUPERUSER" && order.username !== username}
                 >
                   Editar
                 </button>
+
                 <button
                   className={`bg-green-400 border-4 border-black text-black px-3 py-2 text-xs transition-all shadow-[3px_3px_0_#333] ${role === "USER" ? "cursor-not-allowed opacity-50 bg-green-300" : "hover:bg-green-500"}`}
                   onClick={() => manttoCompletar(order.id)}
