@@ -62,11 +62,10 @@ export default function OrdersCompleted() {
 
   const handleSubmitFilter = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Lso parametros enviados son: ", formData)
     try {
       const response = await fetch(
-        `http://localhost:8080/mantenimiento-completado/filtrar?requestorName=${formData.requestorName}
-        &requestorLastName=${formData.requestorLastName}&area=${formData.area}&idMachine=${formData.idMachine}
-        &serviceDateTime=${formData.serviceDateTime}&page=${page}&size=${size}`,
+        `http://localhost:8080/mantenimiento-completado/filtrar?requestorName=${formData.requestorName}&requestorLastName=${formData.requestorLastName}&area=${formData.area}&idMachine=${formData.idMachine}&serviceDateTime=${formData.serviceDateTime}&page=${page}&size=${size}`,
         {
           method: "GET",
           headers: {
@@ -78,6 +77,7 @@ export default function OrdersCompleted() {
         alert("Error al recibir los datos del servidor");
       }
       const data = await response.json();
+      console.log(data)
       setShowModalForm(false);
       setFormData(initialState);
       setOrdersFiltered(data.responseEntity.body.content);

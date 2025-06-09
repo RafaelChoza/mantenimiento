@@ -68,24 +68,30 @@ public class ManttoCompletadoServicio {
     }
 
     public Page<MantenimientoCompletado> obtenerListaCompletados(Pageable pageable) {
-    return manttoCompletadoRepositorio.findAll(pageable);
-}
+        return manttoCompletadoRepositorio.findAll(pageable);
+    }
 
-
-    public Optional<MantenimientoCompletado> obtenerManttoCompletadoPorId (Long id) {
+    public Optional<MantenimientoCompletado> obtenerManttoCompletadoPorId(Long id) {
         return manttoCompletadoRepositorio.findById(id);
     }
 
     public Page<MantenimientoCompletado> obtenerListaPorFiltro(
-        String requestorName, String requestorLastName, String area, String idMachine, String serviceDateTime, Pageable pageable) {
+            String requestorName, String requestorLastName, String area, String idMachine, String serviceDateTime,
+            Pageable pageable) {
+
+        System.out.println("Se recibe parametro en servicio: " + requestorName);
+        System.out.println("Se recibe parametro en servicio: " + requestorLastName);
+        System.out.println("Se recibe parametro en servicio: " + area);
+        System.out.println("Se recibe parametro en servicio: " + idMachine);
+        System.out.println("Se recibe parametro en servicio: " + serviceDateTime);
+       
 
         return manttoCompletadoRepositorio.filtrarMantenimientos(
-            requestorName != null && !requestorName.isBlank() ? requestorName : null,
-            requestorLastName != null && !requestorLastName.isBlank() ? requestorLastName: null,
-            area != null && !area.isBlank() ? area : null,
-            idMachine != null && !idMachine.isBlank() ? idMachine : null,
-            serviceDateTime != null && !serviceDateTime.isBlank() ? serviceDateTime : null,
-            pageable
-        );
+                requestorName != null && !requestorName.isBlank() ? requestorName : null,
+                requestorLastName != null && !requestorLastName.isBlank() ? requestorLastName : null,
+                area != null && !area.isBlank() ? area : null,
+                idMachine != null && !idMachine.isBlank() ? idMachine : null,
+                serviceDateTime != null && !serviceDateTime.isBlank() ? serviceDateTime : null,
+                pageable);
     }
 }

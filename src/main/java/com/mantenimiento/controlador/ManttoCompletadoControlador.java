@@ -70,7 +70,17 @@ public class ManttoCompletadoControlador {
             @RequestParam(required = false) String serviceDateTime, // corregido el nombre del parámetro
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size) {
+                
         Pageable pageable = PageRequest.of(page, size);
+
+        System.out.println("Se recibe parametro: " + requestorName);
+        System.out.println("Se recibe parametro: " + requestorLastName);
+        System.out.println("Se recibe parametro: " + area);
+        System.out.println("Se recibe parametro: " + idMachine);
+        System.out.println("Se recibe parametro: " + serviceDateTime);
+        System.out.println("Se recibe parametro: " + page);
+        System.out.println("Se recibe parametro: " + size);
+
 
         Page<MantenimientoCompletado> resultados = manttoCompletadoServicio.obtenerListaPorFiltro(requestorName, requestorLastName, area,
                 idMachine, serviceDateTime, pageable);
