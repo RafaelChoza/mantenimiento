@@ -25,7 +25,7 @@ public class Maquina {
     private String marca;
     private String modelo;
     private String fechaAlta;
-    private String codigo;
+    private String idMachine;
     private String tipoDeEquipo;
     private String clasificacion1;
     private String clasificacion2;

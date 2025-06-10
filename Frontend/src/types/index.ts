@@ -139,6 +139,21 @@ export type RegisterUserUpdate = {
 }
 
 export type EmailContextType = {
-    email: string;
-    setEmail: React.Dispatch<React.SetStateAction<string>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export type MachineType = {
+  id: number;
+  descripcion: string;
+  producto: string;
+  marca: string;
+  modelo: string;
+  fechaAlta: string;
+  idMachine: string;
+  tipoDeEquipo: string;
+  clasificacion1: string;
+  clasificacion2: string;
+  centro: string;
+  localizacion: string;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { Tech, Area, MantenimientoOrden } from "../types";
+import type { Tech, Area, MantenimientoOrden, MachineType } from "../types";
 import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -44,13 +44,15 @@ const MantenimientoOrdenForm: React.FC = () => {
   const { role } = useAuth();
 
   const [techs, setTechs] = useState<Tech[]>([]);
-  const [areas, setAreas] = useState<Area[]>([])
+  const [areas, setAreas] = useState<Area[]>([]);
+  const [machines, setMachines] = useState<MachineType[]>([])
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getTechs()
     getAreas()
+    getMachines()
   }, []);
 
   const getTechs = async () => {
@@ -82,6 +84,21 @@ const MantenimientoOrdenForm: React.FC = () => {
     }
   }
 
+  const getMachines = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/maquinas/todas", {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+      setMachines(data.responseEntity.body)
+    } catch (error) {
+      
+    }
+  }
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -102,6 +119,7 @@ const MantenimientoOrdenForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Formulario enviado:", formData);
+    console.log("Listado de maquinas ",machines)
     try {
       const response = await fetch("http://localhost:8080/mantenimiento", {
         method: "POST",
@@ -149,7 +167,12 @@ const MantenimientoOrdenForm: React.FC = () => {
                   <option key={area.id} value={area.areaName}>{area.areaName}</option>
                 ))}
               </select>
-              <input className="border-2 border-black p-2 bg-blue-800 text-white" type="text" name="idMachine" placeholder="ID Máquina" onChange={handleChange} />
+              <select className="border-2 border-black p-2 bg-blue-800 text-white" name="idMachine" value={formData.idMachine} onChange={handleChange}>
+                <option value="" disabled>Seleccionar Maquina</option>
+                {machines.map((machine) => (
+                  <option key={machine.id} value={machine.idMachine}>{machine.descripcion}</option>
+                ))}
+              </select>
               <label className="flex items-center space-x-2 col-span-2">
                 <input type="checkbox" name="stoppedMachine" onChange={handleChange} />
                 <span>Máquina detenida</span>
