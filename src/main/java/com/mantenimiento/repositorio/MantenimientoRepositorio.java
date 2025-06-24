@@ -12,4 +12,5 @@ public interface MantenimientoRepositorio extends JpaRepository<MantenimientoOrd
 
     List<MantenimientoOrden> findByPersonnelAssigned(String personnelAssigned);
 
+    List<MantenimientoOrden> findByServiceDateTimeBetween(String start, String end);
 }

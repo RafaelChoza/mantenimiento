@@ -4,6 +4,8 @@ import Menu from "../components/Menu"
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import AsyncSelect from "react-select/async";
+
 
 const MantenimientoOrdenForm: React.FC = () => {
   const { username } = useAuth();
@@ -49,6 +51,13 @@ const MantenimientoOrdenForm: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const options = machines.map((machine) => ({
+    label: machine.descripcion,
+    value: machine.id
+  }));
+
+  console.log("Las opciones para el segundo select son: ", options)
+
   useEffect(() => {
     getTechs()
     getAreas()
@@ -77,7 +86,6 @@ const MantenimientoOrdenForm: React.FC = () => {
         }
       });
       const data = await response.json();
-      console.log(data);
       setAreas(data.responseEntity.body)
     } catch (error) {
       console.error("Error al obtener los datos", error)
@@ -92,10 +100,9 @@ const MantenimientoOrdenForm: React.FC = () => {
         }
       })
       const data = await response.json()
-      console.log(data)
-      setMachines(data.responseEntity.body)
+      setMachines(data.responseEntity.body);
     } catch (error) {
-      
+
     }
   }
 
@@ -116,10 +123,10 @@ const MantenimientoOrdenForm: React.FC = () => {
   };
 
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Formulario enviado:", formData);
-    console.log("Listado de maquinas ",machines)
+
     try {
       const response = await fetch("http://localhost:8080/mantenimiento", {
         method: "POST",
@@ -168,11 +175,12 @@ const MantenimientoOrdenForm: React.FC = () => {
                 ))}
               </select>
               <select className="border-2 border-black p-2 bg-blue-800 text-white" name="idMachine" value={formData.idMachine} onChange={handleChange}>
-                <option value="" disabled>Seleccionar Maquina</option>
+                <option value="" disabled>Seleccionar Id Maquina</option>
                 {machines.map((machine) => (
-                  <option key={machine.id} value={machine.idMachine}>{machine.descripcion}</option>
+                  <option key={machine.id} value={machine.descripcion}>{machine.descripcion}</option>
                 ))}
               </select>
+{machines.length > 0 && <AsyncSelect options={options} />}
               <label className="flex items-center space-x-2 col-span-2">
                 <input type="checkbox" name="stoppedMachine" onChange={handleChange} />
                 <span>Máquina detenida</span>

@@ -1,5 +1,6 @@
 package com.mantenimiento.controlador;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +142,6 @@ public class MantenimientoControl {
         }
     }
 
-    
     @GetMapping("/mantenimiento/asignadas")
     public ResponseWrapper<List<MantenimientoOrden>> obtenerOrdenesAsignadas(
             @RequestHeader("username") String username) {
@@ -157,6 +157,19 @@ public class MantenimientoControl {
         return new ResponseWrapper<>(true, "Listado de Órdenes Asignadas", response);
     }
 
-    
+    @GetMapping("/mantenimiento/mis-ordenes")
+    public ResponseWrapper<List<MantenimientoOrden>> obtenerMisOrdenesCreadas(@RequestHeader("username") String username) {
+        try {
+            Optional<User> optionalUser = userService.findByUsername(username);
+            List<MantenimientoOrden> ordenesDelUsuario = new ArrayList<>();
+            if(optionalUser.isPresent()) {
+                ordenesDelUsuario = mantenimientoServicio.obtenerOrdenesPorUsername(username);
+            }
+            ResponseEntity<List<MantenimientoOrden>> responseEntity = ResponseEntity.ok(ordenesDelUsuario);
+            return new ResponseWrapper<>(true, "Obteniendo mis ordenes", responseEntity);
+        } catch (Exception e) {
+            return new ResponseWrapper<>(false, "Ordenes no obtenidas porque no existe el ususrioc con el username: " + username, null);
+        }
+    }
 
 }

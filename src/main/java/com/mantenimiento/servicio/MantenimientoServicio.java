@@ -43,4 +43,8 @@ public class MantenimientoServicio {
     public List<MantenimientoOrden> obtenerOrdenesPorPersonalAsignado(String personnelAssigned) {
         return mantenimientoRepositorio.findByPersonnelAssigned(personnelAssigned);
     }
+
+    public List<MantenimientoOrden> obtenerOrdenesRangoFecha(String start, String end) {
+        return mantenimientoRepositorio.findByServiceDateTimeBetween(start, end);
+    }
 }

@@ -18,6 +18,7 @@ import ResetPassword from "./components/ResetPassword";
 import VerificateCode from "./components/VerificateCode";
 import RecoverPasswordForm from "./components/RecoverPasswordForm";
 import UploadCSV from "./components/UploadCSV";
+import MyOrders from "./components/MyOrders";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login/formulario-cambiar-password" element={<RecoverPasswordForm />} />
         <Route path="/mantenimiento" element={<ProtectedRoute><Principal /></ProtectedRoute>} />
         <Route path="/mantenimiento/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+        <Route path="/mantenimiento/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
         <Route path="/mantenimiento/create-order" element={<ProtectedRoute><CreateOrder /></ProtectedRoute>} />
         <Route path="/mantenimiento/create-area" element={<ProtectedRoute><CreateArea /></ProtectedRoute>} />
         <Route path="/mantenimiento/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
